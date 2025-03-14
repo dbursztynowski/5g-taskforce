@@ -1,0 +1,47 @@
+***********************************************
+UERANSIM usage - including nr-binder
+sources:
+https://github.com/aligungr/UERANSIM/wiki/Usage
+***********************************************
+RUNNING nr-cli
+===============================================
+
+- enter selected pod
+$ kubectl -n default exec -ti deployment/ueransim-gnb-ues -- /bin/bash
+or
+$ kubectl -n default exec -ti deployment/ueransim-gnb -- /bin/bash
+
+- enable running nr-cli in the pod
+chmod 777 /usr/local/bin/nr-cli
+
+- help
+/usr/local/bin/nr-cli --help
+
+- show all nodes (ues / gnbs)
+/usr/local/bin/nr-cli --dump (or -d)
+
+- enter UE given by the imsi of the UE (when on ues pod)
+/usr/local/bin/nr-cli imsi-999700000000001
+- show commands available for UE
+/usr/local/bin/nr-cli commands
+- help for a a given command named <command-name>
+<command-name> --help (or -h)
+  e.g. $ deregister -h
+  
+
+- enter gnb given by its nodename (when on gnb pod)
+/usr/local/bin/nr-cli <gnb-name>
+- show commands available for gnb
+/usr/local/bin/nr-cli commands
+
+======================================
+RUNNING nr-binder
+
+$ cd /usr/local/bin
+$ ./nr-binder {PDU-SESSION-IP-ADDRESS} {COMMAND} {ARGS}
+$ ./nr-binder 10.45.0.2 curl google.com
+$ ./nr-binder 10.45.0.2 firefox
+
+
+
+
