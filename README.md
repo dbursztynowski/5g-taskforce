@@ -1,4 +1,4 @@
-### 5G network based on Gradiant Helm charts for UERANSIM+Open5GS on Raspberry Pi cluster
+### 5G network based on Gradiant Helm charts for UERANSIM+Open5GS in Raspberry Pi K3s cluster
 
 # Contents
 
