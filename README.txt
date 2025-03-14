@@ -1,4 +1,4 @@
-ADDITIONAL/AUXLIARY HINTS
+VERY ADDITIONAL/AUXLIARY HINTS
 
 ==============================================
 - minikube with proper version, size, calico CNI, and feature-gate InPlacePodVerticalScaling enabled + settings to enable running kube-prometheus
