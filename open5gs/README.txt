@@ -147,7 +147,7 @@ populate:
 ---------------
 
 - actual install (adjust open5gs directory name to your case)
-$ helm install open5gs ./open5gs<varsion> --version 2.2.5 --values ./5gSA-values.yaml
+$ helm install open5gs ./open5gs-<version> --version 2.2.5 --values ./5gSA-values.yaml
   helm install open5gs ./open5gs-225 --version 2.2.5 --values ./5gSA-values-enable-metrics.yaml
 
 - testing (dry run) (adjust open5gs directory name to your case)
