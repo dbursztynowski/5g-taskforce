@@ -215,7 +215,7 @@ podSecurityContext:
 ## @param containerSecurityContext.runAsNonRoot Set Controller container's Security Context runAsNonRoot
 ##
 containerSecurityContext:
-  enabled: true
+#  enabled: true
   runAsUser: 1001
   runAsNonRoot: true
 ## Configure extra options for startup probe
