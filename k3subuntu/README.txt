@@ -84,11 +84,11 @@ Basically, according to this: https://docs.k3s.io/quick-start with additional --
 Note: to enable external access to the API (e.g., to use kubectl) when server IP address visible externally as <floating-ip-address> is different than server IP address valid within the cluster (e.g., when the server is exposed by floating IP in OpenStack) then additional option --tls-san=<floating-ip-address> should be included in the part INSTALL_K3S_EXEC="...". This will make x509 certificate for this address become valid. For example:
 $ curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" INSTALL_K3S_EXEC="--cluster-cidr=10.42.0.0/16  --kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true --tls-san=<external-master-ip-address>" sh -
 
-curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ v1.32.1+k3s1 }} INSTALL_K3S_EXEC="server --write-kubeconfig-mode 644 --disable servicelb --disable-cloud-controller --kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true"
+- on OpenStack VMs (allow non-critical workloads on controller)
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ v1.32.1+k3s1 }} INSTALL_K3S_EXEC="server --write-kubeconfig-mode 644 --disable servicelb --disable-cloud-controller --kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true" sh -
 
-curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ v1.32.1+k3s1 }} INSTALL_K3S_EXEC="server --node-taint CriticalAddonsOnly=true:NoExecute --write-kubeconfig-mode 644 --disable servicelb --disable-cloud-controller --kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true"
-
-INSTALL KUBERNETES WITH FLANNEL
+- when taintig controller for only critical workloads
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ v1.32.1+k3s1 }} INSTALL_K3S_EXEC="server --node-taint CriticalAddonsOnly=true:NoExecute --write-kubeconfig-mode 644 --disable servicelb --disable-cloud-controller --kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true" sh -
 
   ref. https://github.com/k3s-io/k3s/issues/1381#issuecomment-582013411
        https://docs.k3s.io/installation/configuration#registration-options-for-the-k3s-server
