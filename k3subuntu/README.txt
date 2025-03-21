@@ -130,16 +130,16 @@ $ /usr/local/bin/k3s-uninstall.sh
 - uninstall k3s agents: run on agents
 $ /usr/local/bin/k3s-agent-uninstall.sh
 
-********************************
-********************************
+*****************************************
+*****************************************
 HELM
 - install helm on the management node
 $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 $ chmod 700 get_helm.sh
 $ ./get_helm.sh
 
-********************************
-********************************
+*****************************************
+*****************************************
 Install kubectl
 - using binaries
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux
@@ -155,11 +155,8 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 kubectl version --client
 kubectl get nodes
 
-********************************
-
-$ /usr/local/bin/k3s-uninstall.sh
-
-*********************************
+*****************************************
+*****************************************
 INSTALL LONGHORN
 - according to this
 https://longhorn.io/docs/1.8.1/deploy/install/install-with-kubectl/
@@ -170,7 +167,7 @@ https://longhorn.io/docs/1.8.1/deploy/install/install-with-kubectl/
 $ curl -O https://raw.githubusercontent.com/longhorn/longhorn/refs/tags/v1.8.1/scripts/environment_check.sh
 $ ./environment_check.sh
 
-- enable missing parts on master and worker nodes
+- enable missing parts on the master and worker nodes
 $ sudo lsmod|grep iscsi
 $ sudo modprobe iscsi_tcp
 $ sudo apt install nfs-common
@@ -180,7 +177,7 @@ $ ./environment_check.sh
 - in case of WARNING "multipathd is running on k3s2 known to have a breakage that affects Longhorn.  See des                      cription and solution at https://longhorn.io/kb/troubleshooting-volume-with-multipath" do this
 https://longhorn.io/kb/troubleshooting-volume-with-multipath/
 
-- on the master and workers do:
+- on the master and workers execute:
 $ sudo nano /etc/multipath.conf
 add this et the end and save:
 blacklist {
@@ -192,13 +189,13 @@ $ sudo multipath -t
   Note: the symbol "!^" in response to "sudo mutlipath -t" means "all except" (see https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html-single/configuring_device_mapper_multipath/index#disabling-multipathing-by-device-name_preventing-devices-from-multipathing)
 
 ---------------------------------
-- installation from the management node
+- actual installation of Longhorn, from the management node
 $ kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.8.1/deploy/longhorn.yaml
 - checking all is fine
 $ kubectl -n longhorn-system get pod
 
-*********************************
-*********************************
+*****************************************
+*****************************************
 OTHER HINTS
 
 - remove k3s.service completely
