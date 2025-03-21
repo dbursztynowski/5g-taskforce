@@ -145,6 +145,15 @@ Install kubectl
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux
 https://greenwebpage.com/community/how-to-install-kubectl-on-ubuntu-24-04/#Method-3:-Installing-Kubectl-on-Ubuntu-24.04-Using-Kubectl-Binary-File
 
+- installation of stable release
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+should print: kubectl: OK
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+- check installation
+kubectl version --client
+kubectl get nodes
 
 ********************************
 
