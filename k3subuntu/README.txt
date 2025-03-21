@@ -186,7 +186,8 @@ blacklist {
 $ sudo systemctl restart multipathd.service
 - confirm updating (devnode "^sd[a-z0-9]+" should be added at the beginning of the blacklist)
 $ sudo multipath -t
-  Note: the symbol "!^" in response to "sudo mutlipath -t" means "all except" (see https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html-single/configuring_device_mapper_multipath/index#disabling-multipathing-by-device-name_preventing-devices-from-multipathing)
+  Note: the symbol "!^" in response to "sudo mutlipath -t" means "all except" 
+  (see https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html-single/configuring_device_mapper_multipath/index#disabling-multipathing-by-device-name_preventing-devices-from-multipathing)
 
 ---------------------------------
 - actual installation of Longhorn, from the management node
