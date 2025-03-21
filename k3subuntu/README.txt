@@ -170,7 +170,7 @@ $ ./environment_check.sh
 - on master nad worker npdes
 $ sudo lsmod|grep iscsi
 $ modprobe iscsi_tcp
-
+$ sudo apt install nfs-common
 
 *********************************
 *********************************
