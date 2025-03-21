@@ -169,8 +169,13 @@ $ ./environment_check.sh
 
 - on master nad worker npdes
 $ sudo lsmod|grep iscsi
-$ modprobe iscsi_tcp
+$ sudo modprobe iscsi_tcp
 $ sudo apt install nfs-common
+
+- check again
+$ ./environment_check.sh
+- in case of WARNING "multipathd is running on k3s2 known to have a breakage that affects Longhorn.  See des                      cription and solution at https://longhorn.io/kb/troubleshooting-volume-with-multipath" do this
+https://longhorn.io/kb/troubleshooting-volume-with-multipath/
 
 *********************************
 *********************************
