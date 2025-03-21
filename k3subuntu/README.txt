@@ -160,14 +160,17 @@ kubectl get nodes
 $ /usr/local/bin/k3s-uninstall.sh
 
 *********************************
-
 INSTALL LONGHORN
+- according to this
+https://longhorn.io/docs/1.8.1/deploy/install/install-with-kubectl/
 
-- form management node
+---------------------------------
+- check the compatibility from the management node
+
 $ curl -O https://raw.githubusercontent.com/longhorn/longhorn/refs/tags/v1.8.1/scripts/environment_check.sh
 $ ./environment_check.sh
 
-- on master nad worker npdes
+- enable missing parts on master and worker nodes
 $ sudo lsmod|grep iscsi
 $ sudo modprobe iscsi_tcp
 $ sudo apt install nfs-common
@@ -176,6 +179,24 @@ $ sudo apt install nfs-common
 $ ./environment_check.sh
 - in case of WARNING "multipathd is running on k3s2 known to have a breakage that affects Longhorn.  See des                      cription and solution at https://longhorn.io/kb/troubleshooting-volume-with-multipath" do this
 https://longhorn.io/kb/troubleshooting-volume-with-multipath/
+
+- on the master and workers do:
+$ sudo nano /etc/multipath.conf
+add this et the end and save:
+blacklist {
+    devnode "^sd[a-z0-9]+"
+}
+$ sudo systemctl restart multipathd.service
+- confirm updating
+$ sudo multipath -t
+
+---------------------------------
+- installation from the management node
+$ kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.8.1/deploy/longhorn.yaml
+- checking all is fine
+$ kubectl -n longhorn-system get pod
+
+
 
 *********************************
 *********************************
