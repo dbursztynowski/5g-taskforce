@@ -160,6 +160,19 @@ kubectl get nodes
 $ /usr/local/bin/k3s-uninstall.sh
 
 *********************************
+
+INSTALL LONGHORN
+
+- form management node
+$ curl -O https://raw.githubusercontent.com/longhorn/longhorn/refs/tags/v1.8.1/scripts/environment_check.sh
+$ ./environment_check.sh
+
+- on master nad worker npdes
+$ sudo lsmod|grep iscsi
+$ modprobe iscsi_tcp
+
+
+*********************************
 *********************************
 OTHER HINTS
 
