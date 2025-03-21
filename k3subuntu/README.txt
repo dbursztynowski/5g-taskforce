@@ -74,111 +74,7 @@ $ sudo service ssh restart
 
 *****************************************
 *****************************************
-INSTALL KUBERNETES
-
-Below, we show two options. The first one is to use Calico CNI (INSTALL KUBERNETES FOR CALICO).
-The second one (line 167, search INSTALL KUBERNETES WITH FLANNEL) is to use flannel CNI.
-
-******************************
-INSTALL KUBERNETES FOR CALICO
-
-- install k3s on ubuntu
-https://www.digitalocean.com/community/tutorials/how-to-setup-k3s-kubernetes-cluster-on-ubuntu
-(multinode k3s with Calico) https://docs.tigera.io/calico/latest/getting-started/kubernetes/k3s/multi-node-install
-
-- simplest (no calico, etc.)
-  curl ... | ... sh --     <=== directs the output of the pipe to be run as a command in shell; terminating "-" (equivalent to --)
-      signals the end of options and disables further option processing. Any arguments after the -- would be treated as filenames and
-      arguments. Here -- is unnecessary (because no further arguments are present), but we use it after the original K3s documentation.
-# $ curl -sfL https://get.k3s.io  | INSTALL_K3S_EXEC="--kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true" sh -
-
----
-
-- install control node with appropriate settings (no flannel and traefik, enable InPlacePodVerticalScaling)
-$ curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" INSTALL_K3S_EXEC="--flannel-backend=none --cluster-cidr=10.42.0.0/16 --disable-network-policy --disable=traefik --kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true" sh -
-
-Note: to enable EXTERNAL ACCESS to the Kubernetes API (e.g., to use kubectl) when the server IP address that is visible externally as <floating-ip-address> is different than server IP address valid within the cluster (e.g., when the server is exposed by floating IP in OpenStack) then additional option --tls-san=<floating-ip-address> should be included in the part INSTALL_K3S_EXEC="...". This will make x509 certificate for this address become valid. For example:
-$ curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" INSTALL_K3S_EXEC="--flannel-backend=none --cluster-cidr=10.42.0.0/16 --disable-network-policy --disable=traefik --kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true --tls-san=<external-master-ip-address>" sh -
-  In OpenStack, the above command shoul be used after assigning floatingIP address to the server hosting k3s master. 
-  ref. https://github.com/k3s-io/k3s/issues/1381#issuecomment-582013411
-       https://docs.k3s.io/installation/configuration#registration-options-for-the-k3s-server
-
-- check status
-$ systemctl status k3s.service
-
-- copy k3s.yaml to ~HOME/.kube/config and change ownership for current user
-  Note: adjust nodes / copy FROM master TO management node
-$ sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
-$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
----
-
-- install agent(s)
-  on master
-$ sudo scp /var/lib/rancher/k3s/server/node-token ubuntu@<agent-node-address>:/home/ubuntu/node-token
-  on worker (agent)
-$ curl -sfL https://get.k3s.io | K3S_URL=https://<serverip>:6443 K3S_TOKEN=$(cat node-token) sh -
-  where K3S_TOKEN=$(cat node-token) is stored in /var/lib/rancher/k3s/server/node-token file in the main Node and should first be
-  copied onto agent node to the working directory for curl command, e.g. /home/ubuntu/node-token as in the 'sudo scp ...' command
-  shown above (or one can copy-paste the token from the file directly into the command)
-- check status
-$ systemctl status k3s-agent
-
-- one can additionally assign label to the agent node(s) to mark their node-role as worker, e.g.:
-$ kubectl label nodes k3s02 node-role.kubernetes.io/worker=true
-
-******************************
-INSTALL CALICO
-https://docs.tigera.io/calico/latest/getting-started/kubernetes/k3s/quickstart
-
-Note1: in case of mongodb connectivity problems maybe flannel with IPSec backend can be a solution for CNI (still to be confirmed/checked)
-Note2: on SCTP support in cilium: https://github.com/cilium/cilium/issues/20490
-
-- install calico operator and custom resources
-$ kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/tigera-operator.yaml
-- install calico
-#$ kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/custom-resources.yaml <===== update CIDR in custom-resources.yaml according to your environment if needed - see a couple of lines below.
-$ kubectl create -f calico-custom-resources.yaml
-- final checks
-$ watch kubectl get pods --all-namespaces
-$ kubectl get nodes
-
-File calico-custom-resources.yaml:
-----------------------------------
-# https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/custom-resources.yaml
-# This section includes base Calico installation configuration.
-# For more information, see: https://docs.tigera.io/calico/latest/reference/installation/api#operator.tigera.io/v1.Installation
-apiVersion: operator.tigera.io/v1
-kind: Installation
-metadata:
-  name: default
-spec:
-  # Configures Calico networking.
-  calicoNetwork:
-    ipPools:
-    - name: default-ipv4-ippool
-      # blocks are smaller chunks that are associated with a particular node in the cluster. Each node in the cluster can
-      # have one or more blocks associated with it. Here, the pool will comprise 8 blocks each containing 64 addresses.
-      blockSize: 26
-      # this cidr MUST be the same as the one used during k3s installatio in argument --cluster-cidr=10.42.0.0/16
-      cidr: 10.42.0.0/16
-      encapsulation: VXLANCrossSubnet
-      natOutgoing: Enabled
-      nodeSelector: all()
-
----
-
-# This section configures the Calico API server.
-# For more information, see: https://docs.tigera.io/calico/latest/reference/installation/api#operator.tigera.io/v1.APIServer
-apiVersion: operator.tigera.io/v1
-kind: APIServer
-metadata:
-  name: default
-spec: {}
-
-******************************
 INSTALL KUBERNETES WITH FLANNEL
-(no calico)
 
 Basically, according to this: https://docs.k3s.io/quick-start with additional --cluster-cidr=..., --kube-apiserver-arg=feature-gates=... and --tls-san=... .
 
@@ -187,6 +83,13 @@ Basically, according to this: https://docs.k3s.io/quick-start with additional --
 - install on master (control) node
 Note: to enable external access to the API (e.g., to use kubectl) when server IP address visible externally as <floating-ip-address> is different than server IP address valid within the cluster (e.g., when the server is exposed by floating IP in OpenStack) then additional option --tls-san=<floating-ip-address> should be included in the part INSTALL_K3S_EXEC="...". This will make x509 certificate for this address become valid. For example:
 $ curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" INSTALL_K3S_EXEC="--cluster-cidr=10.42.0.0/16  --kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true --tls-san=<external-master-ip-address>" sh -
+
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ v1.32.1+k3s1 }} INSTALL_K3S_EXEC="server --write-kubeconfig-mode 644 --disable servicelb --disable-cloud-controller --kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true"
+
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ v1.32.1+k3s1 }} INSTALL_K3S_EXEC="server --node-taint CriticalAddonsOnly=true:NoExecute --write-kubeconfig-mode 644 --disable servicelb --disable-cloud-controller --kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true"
+
+INSTALL KUBERNETES WITH FLANNEL
+
   ref. https://github.com/k3s-io/k3s/issues/1381#issuecomment-582013411
        https://docs.k3s.io/installation/configuration#registration-options-for-the-k3s-server
 
