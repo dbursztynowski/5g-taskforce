@@ -187,7 +187,7 @@ blacklist {
     devnode "^sd[a-z0-9]+"
 }
 $ sudo systemctl restart multipathd.service
-- confirm updating
+- confirm updating (devnode "^sd[a-z0-9]+" should be added at the beginning of the blacklist)
 $ sudo multipath -t
 
 ---------------------------------
@@ -195,8 +195,6 @@ $ sudo multipath -t
 $ kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.8.1/deploy/longhorn.yaml
 - checking all is fine
 $ kubectl -n longhorn-system get pod
-
-
 
 *********************************
 *********************************
