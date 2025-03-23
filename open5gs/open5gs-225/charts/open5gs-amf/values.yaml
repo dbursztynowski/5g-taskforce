@@ -112,7 +112,8 @@ customOpen5gsConfig: {}
 
 ## @param replicaCount Number of open5gs-amf Pods to run (requires ReadWriteMany PVC support)
 ##
-replicaCount: 1
+## DB changed to 2
+replicaCount: 2
 ## @param command Override default container command (useful when using custom images)
 ##
 command: []
