@@ -2,9 +2,11 @@
 
 # The script reads amf_sessions from Open5GS Prometheus, compares it to reference ranges and scales UPF accordingly
 
+# Prometheus endpoint
+PROMETHEUS="192.168.10.56"
+
 # Base scan time of the Prometheus in seconds
 BASE_SCAN_TIME=30
-
 # Current namespace
 NAMESPACE=$(kubectl config view --minify --output 'jsonpath={..namespace}'; echo)
 
@@ -53,27 +55,33 @@ continue=true
 while $continue ; do
 
   iter=$((iter+1))
+  
+  echo "0. iter=" $((iter))
 
   # read amf_sessions from Prometheus - choose the version with appropriate namespace
   query="query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"${NAMESPACE}\"}"
-  amf_sessions=$(curl -s 10.0.0.3:9090/api/v1/query -G -d \
+  
+  echo "1. query=" ${query}
+  
+  amf_sessions=$(curl -s $PROMETHEUS:9090/api/v1/query -G -d \
                $query | jq '.data.result[0].value[1]' | tr -d '"')
+  echo "1. amf_sessions=" ${amf_sessions}
 
   # scale the resource
   cpu=$CPU0
-  if [ $amf_sessions -ge $AMFS1 ]
+  if (( ${amf_sessions} >= ${AMFS1} ))
   then
-    cpu=$CPU1
+    cpu=${CPU1}
   fi
 
-  if [ $amf_sessions -ge $AMFS2 ]
+  if (( ${amf_sessions} >= ${AMFS2} ))
   then
-    cpu=$CPU2
+    cpu=${CPU2}
   fi
 
-  if [ $amf_sessions -ge $AMFS3 ]
+  if (( $amf_sessions >= ${AMFS3} ))
   then
-    cpu=$CPU3
+    cpu=${CPU3}
   fi
 
   podname=$(kubectl get pods -n $NAMESPACE | grep open5gs-upf | awk '{print $1}')
@@ -84,7 +92,7 @@ while $continue ; do
           "{\"spec\":{\"containers\":[{\"name\":\"open5gs-upf\", \"resources\":{\"limits\":{\"cpu\":\"$cpu\"}}}]}}"
 
   # SLEEP TIME ============
-  if [ $iter != $MAX_ITER ]
+  if (( ${iter} != ${MAX_ITER} ))
   then
     sleeptime=$BASE_SCAN_TIME
     echo "going asleep for $sleeptime sec."

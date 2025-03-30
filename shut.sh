@@ -10,18 +10,19 @@
 # Adjust the settings according to your environment
 PREFIX="192.168.10.5"
 NUMHOSTS=3
+USERID="ubuntu"
 
 for (( i=1; i<=$NUMHOSTS ; i++ ))
 do
 
 MACHINE=${PREFIX}${i}
 
-echo -n "Contacting" $MACHINE "..."
-ssh -o ConnectTimeout=3 ${MACHINE} exit 2>/dev/null 
+echo -n "Contacting" ${USER}@${MACHINE} "..."
+ssh -o ConnectTimeout=3 ${USERID}@${MACHINE} exit 2>/dev/null 
 if (( $? == 0 ))
 then
 echo " Shutting down"
-ssh ubuntu@${MACHINE} 'bash -s' <<'ENDSSH'
+ssh ${USERID}@${MACHINE} 'bash -s' <<'ENDSSH'
   sudo shutdown now
 ENDSSH
 else
