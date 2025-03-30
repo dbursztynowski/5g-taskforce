@@ -1,3 +1,16 @@
+## This file overwrites ope5gs/values.yaml and ope5gs/values-5g.yaml where necessary.
+## This version uptates Gradiant original to enable Prometheus metrics.
+
+populate:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: gradiant/open5gs-dbctl
+## DB    tag: 0.10.3  <== original Gradiant, works only for linux/AMD64
+    tag: 0.10.2
+    pullPolicy: IfNotPresent
+  initCommands: []
+
 hss:
   enabled: false
 
