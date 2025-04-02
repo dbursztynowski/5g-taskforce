@@ -15,8 +15,9 @@ BASE_SCAN_TIME=30
 SCALED_POD_GENERIC_NAME="open5gs-upf"   # Pod name
 SCALED_CONTAINER_NAME="open5gs-upf"     # Name of the container in the pod to scale
 
+#########################
 # SCRIPT CODE
-#############
+#########################
 
 # Current namespace
 NAMESPACE=$(kubectl config view --minify --output 'jsonpath={..namespace}'; echo)
@@ -33,6 +34,10 @@ AMFS2=8
 CPU2="200m" # if AMFS2 <= amf_sessions < AMFS3
 AMFS3=12
 CPU3="250m" # if AMFS3 <= amf_sessions
+
+#===========================
+# DETERMINE INPUT PARAMETERS
+#===========================
 
 MAX_ITER=-1
 
@@ -54,13 +59,13 @@ if [ $# -gt 0 ] ; then
     else
        NAMESPACE=$1  # only the namespace is specified
        ns=$(kubectl get namespaces | grep $NAMESPACE | awk '{print $1}')
-       if [[ $ns != $NAMESPACE ]] ; then
+       if [[ ${ns} != ${NAMESPACE} ]] ; then
           echo "Error:  $NAMESPACE is not a valid number of iterations nor a valid namespace. Check help." >&2; exit 1
        fi
     fi
     
     # the number of iterations and namespace are determined
-    if (( $MAX_ITER > 0 )) ; then
+    if (( ${MAX_ITER} > 0 )) ; then
        echo "Running $MAX_ITER iterations in current namespace."
     else
        echo "Running infinite loop in namespace $NAMESPACE."
@@ -75,7 +80,7 @@ if [ $# -gt 0 ] ; then
     NAMESPACE=$2
     # check in $NAMESPACE exists in the cluster
     ns=$(kubectl get namespaces | grep $NAMESPACE | awk '{print $1}')
-    if [[ $ns != $NAMESPACE ]] ; then
+    if [[ ${ns} != ${NAMESPACE} ]] ; then
        echo "Error: Invalid namespace $NAMESPACE. Check help." >&2; exit 1
     fi
     echo "Running $MAX_ITER iterations in namespace $NAMESPACE."
@@ -83,6 +88,10 @@ if [ $# -gt 0 ] ; then
 else
   echo "Running infinite loop in namespace $NAMESPACE."
 fi
+
+#===========================
+# RUN THE SCALING LOOP
+#===========================
 
 iter=0
 continue=true
@@ -97,7 +106,7 @@ while $continue ; do
   amf_sessions=$(curl -s $PROMETHEUS_ADDR:9090/api/v1/query -G -d \
                $query | jq '.data.result[0].value[1]' | tr -d '"')
 
-  # derive resource amount
+  # derive resource amount needed
   cpu=$CPU0
   
   if (( ${amf_sessions} >= ${AMFS1} ))
@@ -113,6 +122,8 @@ while $continue ; do
     cpu=${CPU3}
   fi
 
+  # scale the target
+  
   podname=$(kubectl get pods -n $NAMESPACE | grep $SCALED_POD_GENERIC_NAME | awk '{print $1}')
 
   echo -e "\nIteration $iter; query: $query"
