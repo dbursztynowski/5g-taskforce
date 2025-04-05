@@ -1,12 +1,15 @@
 #!/bin/bash
 
+# New version - 2025.04.05
+
 # The script reads amf_sessions from Open5GS Prometheus, compares it to reference ranges and scales UPF accordingly
 
 # PARAMETERS
 #############
 
 # Prometheus endpoint
-PROMETHEUS_ADDR="192.168.10.56"
+#PROMETHEUS_ADDR="192.168.10.56"
+PROMETHEUS_ADDR="10.0.0.63"
 
 # Base scan time of the Prometheus in seconds
 BASE_SCAN_TIME=30
@@ -63,7 +66,7 @@ if [ $# -gt 0 ] ; then
           echo "Error:  $NAMESPACE is not a valid number of iterations nor a valid namespace. Check help." >&2; exit 1
        fi
     fi
-    
+
     # the number of iterations and namespace are determined
     if (( ${MAX_ITER} > 0 )) ; then
        echo "Running $MAX_ITER iterations in current namespace."
@@ -102,28 +105,29 @@ while $continue ; do
 
   # read the metric value: amf_sessions from Prometheus - choose the version with appropriate namespace
   query="query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"$NAMESPACE\"}"
-  
+
   amf_sessions=$(curl -s $PROMETHEUS_ADDR:9090/api/v1/query -G -d \
                $query | jq '.data.result[0].value[1]' | tr -d '"')
 
-  # derive resource amount needed
+  # derive the amount of resource needed
   cpu=$CPU0
-  
-  if (( ${amf_sessions} >= ${AMFS1} ))
+  if [[ $amf_sessions -ge $AMFS1 ]]
   then
-    cpu=${CPU1}
+    cpu=$CPU1
   fi
-  if (( ${amf_sessions} >= ${AMFS2} ))
+
+  if [[ $amf_sessions -ge $AMFS2 ]]
   then
-    cpu=${CPU2}
+    cpu=$CPU2
   fi
-  if (( $amf_sessions >= ${AMFS3} ))
+
+  if [[ $amf_sessions -ge $AMFS3 ]]
   then
-    cpu=${CPU3}
+    cpu=$CPU3
   fi
 
   # scale the target
-  
+
   podname=$(kubectl get pods -n $NAMESPACE | grep $SCALED_POD_GENERIC_NAME | awk '{print $1}')
 
   echo -e "\nIteration $iter, amf_sessions $amf_sessions, pod $podname, scaling resource to $cpu"
