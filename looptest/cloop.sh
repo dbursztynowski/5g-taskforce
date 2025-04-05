@@ -105,9 +105,9 @@ while $continue ; do
 
   # read the metric value: amf_sessions from Prometheus - choose the version with appropriate namespace
   query="query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"$NAMESPACE\"}"
-
-  amf_sessions=$(curl -s $PROMETHEUS_ADDR:9090/api/v1/query -G -d \
-               $query | jq '.data.result[0].value[1]' | tr -d '"')
+  echo -e "\nquery:" ${query}
+  amf_sessions=$(curl -s ${PROMETHEUS_ADDR}:9090/api/v1/query -G -d \
+               ${query} | jq '.data.result[0].value[1]' | tr -d '"')
 
   # derive the amount of resource needed
   cpu=$CPU0
@@ -130,7 +130,7 @@ while $continue ; do
 
   podname=$(kubectl get pods -n $NAMESPACE | grep $SCALED_POD_GENERIC_NAME | awk '{print $1}')
 
-  echo -e "\nIteration $iter, amf_sessions $amf_sessions, pod $podname, scaling resource to $cpu"
+  echo "Iteration $iter, amf_sessions $amf_sessions, pod $podname, scaling resource to $cpu"
 
   ## old version of patching
 #  kubectl -n $NAMESPACE patch pod $podname --subresource resize --patch \
