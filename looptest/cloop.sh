@@ -25,7 +25,7 @@ NAMESPACE=$(kubectl config view --minify --output 'jsonpath={..namespace}'; echo
 #The value of amf_sessions read from Prometheus
 amf_sessions=0
 
-#scaling thresholds and CPU quotas for the number of amf sessions
+#scaling thresholds for the number of AMF sessions and respective CPU limits quotas
 AMFS0=0
 CPU0="100m" # if AMFS0 <= amf_sessions < AMFS1
 AMFS1=4
@@ -126,11 +126,40 @@ while $continue ; do
   
   podname=$(kubectl get pods -n $NAMESPACE | grep $SCALED_POD_GENERIC_NAME | awk '{print $1}')
 
-  echo -e "\nIteration $iter; query: $query"
-  echo "amf_sessions=$amf_sessions, pod=$podname, scaling to $cpu"
+  echo -e "\nIteration $iter, amf_sessions $amf_sessions, pod $podname, scaling resource to $cpu"
 
+  ## old version of patching
+#  kubectl -n $NAMESPACE patch pod $podname --subresource resize --patch \
+#          "{\"spec\":{\"containers\":[{\"name\":\"$SCALED_CONTAINER_NAME\", \"resources\":{\"requests\":{\"cpu\":\"50m\"}, \"limits\":{\"cpu\":\"$cpu\"}}}]}}"
+
+  ## newer version of patching
   kubectl -n $NAMESPACE patch pod $podname --subresource resize --patch \
-          "{\"spec\":{\"containers\":[{\"name\":\"$SCALED_CONTAINER_NAME\", \"resources\":{\"requests\":{\"cpu\":\"50m\"}, \"limits\":{\"cpu\":\"$cpu\"}}}]}}"
+          "{\"spec\": \
+              {\"containers\": \
+                 [ \
+                    {\"name\":\"open5gs-upf\", \"resources\": \
+                        { \
+                           \"requests\":{\"cpu\":\"50m\"}, \
+                           \"limits\"  :{\"cpu\":\"$cpu\"} \
+                        } \
+                    } \
+                 ] \
+              } \
+           }"
+
+  ## or simpler form, equivalent to the old one (only limits is explicitly scaled)
+#  kubectl -n $NAMESPACE patch pod $podname --subresource resize --patch \
+#          "{\"spec\": \
+#              {\"containers\": \
+#                 [ \
+#                    {\"name\":\"open5gs-upf\", \"resources\": \
+#                        { \
+#                           \"limits\"  :{\"cpu\":\"$cpu\"} \
+#                        } \
+#                    } \
+#                 ] \
+#              } \
+#           }"
 
   # SLEEP TIME ============
   if (( ${iter} != ${MAX_ITER} ))
