@@ -7,14 +7,13 @@
 # PARAMETERS
 #############
 
-# Prometheus endpoint
+# Prometheus endpoint (adjust to your environment)
 #PROMETHEUS_ADDR="192.168.10.56"
 #PROMETHEUS_ADDR="10.0.0.63"
-# check reachability
-ping -c 1 "${PROMETHEUS_ADDR}
+# check Prometheus address reachability
+ping -c 1 $PROMETHEUS_addr >/dev/null 2>&1
 if [[ $? -ne 0 ]] ; then
-  echo "Prometheus not reachable, check the address setting." >&2; exit 1
-  exit 
+  echo "Prometheus address not reachable, check the address setting." >&2; exit 1
 fi
 
 # Base scan time of the Prometheus in seconds
