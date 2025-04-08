@@ -540,6 +540,7 @@ containerPorts:
 ## @param livenessProbe.failureThreshold Failure threshold for livenessProbe
 ## @param livenessProbe.successThreshold Success threshold for livenessProbe
 ##
+## DB disabled
 livenessProbe:
   enabled: false
   initialDelaySeconds: 30
@@ -556,6 +557,7 @@ livenessProbe:
 ## @param readinessProbe.failureThreshold Failure threshold for readinessProbe
 ## @param readinessProbe.successThreshold Success threshold for readinessProbe
 ##
+## DB disabled
 readinessProbe:
   enabled: false
   initialDelaySeconds: 5
@@ -573,6 +575,7 @@ readinessProbe:
 ## @param startupProbe.failureThreshold Failure threshold for startupProbe
 ## @param startupProbe.successThreshold Success threshold for startupProbe
 ##
+## DB disabled
 startupProbe:
   enabled: false
   initialDelaySeconds: 5
