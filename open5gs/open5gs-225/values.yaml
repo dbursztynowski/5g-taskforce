@@ -5,7 +5,8 @@ populate:
   image:
     registry: docker.io
     repository: gradiant/open5gs-dbctl
-    tag: 0.10.3
+## DB    tag: 0.10.3  <== works only for linux/AMD64
+    tag: 0.10.2
     pullPolicy: IfNotPresent
   initCommands: []
   # example of initCommands:
