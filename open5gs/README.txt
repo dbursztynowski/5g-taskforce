@@ -13,20 +13,38 @@ https://github.com/Gradiant/5g-charts/tree/main/charts
 
 # ==> if $ cat /proc/cpuinfo | grep avx returns blank output on your host machine (so your host does not support avx
       instruction set extension ) then you have to change the mongodb image to be used
+      
   - download open5gs helm chart
 $ helm pull oci://registry-1.docker.io/gradiant/open5gs --version 2.2.5
-  or since version 2.2.6 changed the path to the repo:
-    $ helm pull oci://registry-1.docker.io/gradiantcharts/open5gs --version 2.2.8
+   or since version 2.2.6 changed the path to the repo:
+$ helm pull oci://registry-1.docker.io/gradiantcharts/open5gs --version 2.2.8
+    
   - unzip to directory ./open5gs (https://phoenixnap.com/kb/extract-tar-gz-files-linux-command-line)
-$ tar -xvzf open5gs-2.2.5.tgz -C ./open5gs   # adjust *.tgz file name according to your case
+$ tar -xvzf open5gs-2.2.5.tgz -C ./open5gs-225   # adjust *.tgz file name according to your case
+or
+$ tar -xvzf open5gs-2.2.8.tgz -C ./open5gs-228
 
-  - adjust values for mongodb to use image docker.io/bitnami/mongodb:4.4.15-debian-10-r8
-    In the values file open5gs/charts/mongodb/values.yaml change to (line 105):
-image:
-     registry: docker.io
-     repository: bitnami/mongodb
-     tag: 4.4.15-debian-10-r8
-# <== end of "change mongodb image"
+From here on, we will refer to open5Gs v2.2.8 only.
+
+- Currently (April 2025) the following changes for mongodb and populate apply:
+  - in 5gc/open5gs/open5gs-228/charts/mongodb/values.yaml set
+      image:
+        registry: docker.io
+        repository: dburszty/mongodb-raspberrypi
+        tag: 7.0.14      
+  - in 5gc/open5gs/open5gs-228/charts/open5gs-webui/templates/deployment.yaml set 
+      initContainers:
+        - name: init
+          # image updated to the latest tested working version for Raspberry Pi 4/5
+          image: dburszty/mongodb-raspberrypi:7.0.14
+  - in 5g-taskforce/open5gs/open5gs-228/values.yaml set
+      populate:
+        enabled: true
+        image:
+          registry: docker.io
+          repository: gradiant/open5gs-dbctl
+      ## DB    tag: 0.10.3  <== works only for linux/AMD64
+          tag: 0.10.2
 
 ===========================================
 OPEN5GS
@@ -35,7 +53,7 @@ OPEN5GS
 
   -------
   - for default UE list (two UEs will be created)
-$ helm install open5gs ./open5gs --version 2.2.5 --values https://gradiant.github.io/5g-charts/docs/open5gs-ueransim-gnb/5gSA-values.yaml
+$ helm install open5gs ./open5gs --version 2.2.8 --values https://gradiant.github.io/5g-charts/docs/open5gs-ueransim-gnb/5gSA-values.yaml
 
   ------- @@@
   - for custom UE list update UEs consistently in 5gSA-values.yaml for 5gcore, and in gnb-ues-values.yaml for the UEs to deploy UERANSIM correctly
@@ -149,12 +167,11 @@ populate:
 ---------------
 
 - actual install (adjust open5gs directory name to your case)
-$ helm install open5gs ./open5gs-<version> --version 2.2.5 --values ./5gSA-values.yaml
-  helm install open5gs ./open5gs-225 --version 2.2.5 --values ./5gSA-values-enable-metrics.yaml
+$ helm install open5gs ./open5gs-228 --version 2.2.8 --values ./5gSA-values-v228.yaml  <=== currently, file 5gSA-values-v228.yaml has to be created
+$ helm install open5gs ./open5gs-228 --version 2.2.8 --values ./5gSA-values-enable-metrics-v228.yaml
 
 - testing (dry run) (adjust open5gs directory name to your case)
-$ helm -n <namespace> install --debug --dry-run open5gs ./open5gs<version> --version 2.2.5 --values ./5gSA-values.yaml
-  helm -n <namespace> install --debug --dry-run open5gs ./open5gs-225 --version 2.2.5 --values ./5gSA-values-enable-metrics.yaml
+  helm -n <namespace> install --debug --dry-run open5gs ./open5gs-228 --version 2.2.8 --values ./5gSA-values-enable-metrics-v228.yaml
 
 -------------------------------------------
 Correcting OPEN5GS mongodb probes if mongodb crashes
@@ -185,8 +202,8 @@ customStartupProbe:
         mongosh --eval 'disableTelemetry()'
         /bitnami/scripts/startup-probe.sh
 
-- testing (dry run)
-$ helm -n <namespace> install --debug --dry-run open5gs ./open5gs --version 2.2.5 --values ./5gSA-values.yaml
+- testing (dry run) (NOTE: file 5gSA-values-v228.yaml has to be created, use 5gSA-values-enable-metrics-v228.yaml which is ready)
+$ helm -n <namespace> install --debug --dry-run open5gs ./open5gs-228 --version 2.2.8 --values ./5gSA-values-v228.yaml
 
 ===========================================
 Basic UERANSIM 
@@ -573,7 +590,7 @@ QUICK GUIDE: ue creation/deletion for UPF scaling
 Handling the network
 
 - install
-$ helm install open5gs ./open5gs-225 --version 2.2.5 --values ./5gSA-values-enable-metrics.yaml
+$ helm install open5gs ./open5gs-228 --version 2.2.8 --values ./5gSA-values-enable-metrics-v228.yaml
 
 $ helm install ueransim-gnb oci://registry-1.docker.io/gradiant/ueransim-gnb --version 0.2.6 --values ./gnb-ues-values.yaml
   from local files:
