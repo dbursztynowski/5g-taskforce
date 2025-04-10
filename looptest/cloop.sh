@@ -4,6 +4,7 @@
 
 # The script reads amf_sessions from Open5GS Prometheus, compares it to reference ranges and scales UPF accordingly
 
+#############
 # PARAMETERS
 #############
 
@@ -156,7 +157,7 @@ while $continue ; do
               } \
            }"
 
-  ## or simpler form, equivalent to the old one (only limits is explicitly scaled)
+  ## or slightly impler form, equivalent to the old one (only limits is explicitly scaled)
 #  kubectl -n $NAMESPACE patch pod $podname --subresource resize --patch \
 #          "{\"spec\": \
 #              {\"containers\": \
@@ -170,7 +171,7 @@ while $continue ; do
 #              } \
 #           }"
 
-  # SLEEP TIME ============
+  # SLEEP TIME AFTER SCALING ========
   if (( ${iter} != ${MAX_ITER} ))
   then
     sleeptime=$BASE_SCAN_TIME
