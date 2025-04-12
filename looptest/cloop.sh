@@ -9,12 +9,14 @@
 #############
 
 # Prometheus endpoint (adjust to your environment)
-#PROMETHEUS_ADDR="192.168.10.56"
+PROMETHEUS_ADDR="192.168.10.57"
 #PROMETHEUS_ADDR="10.0.0.63"
-# check Prometheus address reachability
-ping -c 1 $PROMETHEUS_addr >/dev/null 2>&1
-if [[ $? -ne 0 ]] ; then
-  echo "Prometheus address not reachable, check the address setting." >&2; exit 1
+# check reachabil;ity of Prometheus - TCP/port
+nc -z -v -w5 ${PROMETHEUS_ADDR} 9090 > /dev/null 2>&1
+response=$?
+if [[ $response -ne 0 ]] ; then
+  echo "Prometheus ${PROMETHEUS_ADDR}:9090 is not reachable."
+  exit 1
 fi
 
 # Base scan time of the Prometheus in seconds
@@ -61,7 +63,7 @@ if [ $# -gt 0 ] ; then
        echo -e "Enter the preferred number of loop iterations, or the namespace of your target deployment, or both (in this order).\nIf the numer of iterations is not specified an infinite loop will be run. If the namspace is not specified, the loop will run in current namespace."
        exit
     fi
-    
+
     re='^[0-9]+$'
     if [[ $1 =~ $re ]] ; then
        MAX_ITER=$1   # only the number of iterations is specified

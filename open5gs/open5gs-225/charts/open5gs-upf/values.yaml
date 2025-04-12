@@ -215,7 +215,9 @@ nodeSelector: {}
 ## @param resources.requests [object] The requested resources for the init container
 ## @param resources.limits The resources limits for the init container
 ##
-## DB ==>>
+## SPIW ==>>
+##   pod must not be best effort to be scaled - need to explicitly 
+##   define requests/and or limits
 ##resources:
 ##  requests: {}
 ##  limits: {}
@@ -226,7 +228,7 @@ resources:
   limits:
 ##    memory: "200Mi"
     cpu: "100m"
-## <<== end DB  
+## <<== end SPIW 
 ## Configure Pods Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ## @param podSecurityContext.enabled Enable open5gs-upf pods' Security Context
