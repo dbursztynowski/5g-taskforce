@@ -500,10 +500,13 @@ podSecurityContext:
 ## @param containerSecurityContext.runAsUser User ID for the MongoDB(&reg;) container
 ## @param containerSecurityContext.runAsNonRoot Set MongoDB(&reg;) container's Security Context runAsNonRoot
 ##
+## >>>> DB - set to false
+## sets property spec.template.spec.containers.securityContext in mongodb deployment
 containerSecurityContext:
-  enabled: true
-  runAsUser: 1001
-  runAsNonRoot: true
+  enabled: false
+#  runAsUser: 1001
+#  runAsNonRoot: true
+## <<<< DB end
 ## MongoDB(&reg;) containers' resource requests and limits.
 ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
 ## We usually recommend not to specify default resources and to leave this as a conscious
@@ -538,8 +541,9 @@ containerPorts:
 ## @param livenessProbe.failureThreshold Failure threshold for livenessProbe
 ## @param livenessProbe.successThreshold Success threshold for livenessProbe
 ##
+## DB - disable the probe for ARM64
 livenessProbe:
-  enabled: true
+  enabled: false
   initialDelaySeconds: 30
   periodSeconds: 20
   timeoutSeconds: 10
@@ -554,8 +558,9 @@ livenessProbe:
 ## @param readinessProbe.failureThreshold Failure threshold for readinessProbe
 ## @param readinessProbe.successThreshold Success threshold for readinessProbe
 ##
+## DB - disable the probe for ARM64
 readinessProbe:
-  enabled: true
+  enabled: false
   initialDelaySeconds: 5
   periodSeconds: 10
   timeoutSeconds: 5
@@ -571,6 +576,7 @@ readinessProbe:
 ## @param startupProbe.failureThreshold Failure threshold for startupProbe
 ## @param startupProbe.successThreshold Success threshold for startupProbe
 ##
+## DB - disable the probe for ARM64
 startupProbe:
   enabled: false
   initialDelaySeconds: 5

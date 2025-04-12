@@ -23,3 +23,6 @@ spec:
     app.kubernetes.io/name: prometheus
     app.kubernetes.io/part-of: kube-prometheus
   sessionAffinity: ClientIP
+  # SPIW
+  type: LoadBalancer
+  loadBalancerIP: 192.168.10.56     # predefined MetalLB IP address; adjust to your environment

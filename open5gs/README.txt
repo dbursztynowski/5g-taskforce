@@ -27,11 +27,21 @@ $ tar -xvzf open5gs-2.2.8.tgz -C ./open5gs-228
 From here on, we will refer to open5Gs v2.2.8 only.
 
 - Currently (April 2025) the following changes for mongodb and populate apply:
-  - in 5gc/open5gs/open5gs-228/charts/mongodb/values.yaml set
+  - in 5gc/open5gs/open5gs-228/charts/mongodb/values.yaml, line ~105, set
       image:
         registry: docker.io
         repository: dburszty/mongodb-raspberrypi
-        tag: 7.0.14      
+        tag: 7.0.14
+  -  in 5gc/open5gs/open5gs-228/charts/mongodb/values.yaml, line ~503
+       containerSecurityContext:
+         enabled: false
+  - in 5gc/open5gs/open5gs-228/charts/mongodb/values.yaml disable the liveness-, readfiness- and startup- probes (line ~544)
+      livenessProbe:
+        enabled: false
+      readinessProbe:
+        enabled: false  
+      startupProbe:
+        enabled: false
   - in 5gc/open5gs/open5gs-228/charts/open5gs-webui/templates/deployment.yaml set 
       initContainers:
         - name: init
@@ -47,9 +57,10 @@ From here on, we will refer to open5Gs v2.2.8 only.
           tag: 0.10.2
 
 ===========================================
-OPEN5GS
+OPEN5GS - purely 5G SA setup (no 4G)
 -------------------------------------------
-- install open5gs: decide if default or customized user set is to be created and follow appropriate option out of the two given below
+- install open5gs in purely 5G SA setup
+   Note: decide if default or customized user set is to be created and follow appropriate option out of the two given below
 
   -------
   - for default UE list (two UEs will be created)
@@ -167,6 +178,7 @@ populate:
 ---------------
 
 - actual install (adjust open5gs directory name to your case)
+  - choose adequate version (withut or with metrics)
 $ helm install open5gs ./open5gs-228 --version 2.2.8 --values ./5gSA-values-v228.yaml  <=== currently, file 5gSA-values-v228.yaml has to be created
 $ helm install open5gs ./open5gs-228 --version 2.2.8 --values ./5gSA-values-enable-metrics-v228.yaml
 
@@ -175,7 +187,7 @@ $ helm install open5gs ./open5gs-228 --version 2.2.8 --values ./5gSA-values-enab
 
 -------------------------------------------
 Correcting OPEN5GS mongodb probes if mongodb crashes
-- mongodb readiness probe crasher => kubectl describe pods <mongodb>:
+- mongodb readiness probe crashes => kubectl describe pods <mongodb>:
   Readiness probe failed: command "/bitnami/scripts/readiness-probe.sh" timed out
 
 Note: hints for Helm: https://www.alibabacloud.com/blog/helm-charts-and-template-basics---part-2_595490
