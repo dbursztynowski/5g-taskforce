@@ -8,7 +8,11 @@
 
 # How to navigate
 
-### First, install 5G environment
+### First, install HELM
+
+To this end, run ```install_helm.sh``` script.
+
+### Then install your 5G network
 
 The basic part is contained in directory [open5gs](./open5gs). It is assumed that you have your k3s deployment using Raspberry Pi 4 or 5 cluster up an running, including a monitoring package based on the [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) project. K3s installation is described in repository [k3s-taskforce\](https://github.com/dbursztynowski/k3s-taskforce). Therefore, the content of open5gs directory covers only the installation and very basic operation of our 5G environment. Refer to the [README](...) file therein for remaining instructions. After installing Open5GS, you will have to install RAM network emulator, UERANSIM. It is recommended to use HELM for that. Initial configuration installs UERANSIM with 4 user equipment (UE) termnals attached and active. HELM will also be used to attach new/detach existing UEs to/form the network.
 
