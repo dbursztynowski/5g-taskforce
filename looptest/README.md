@@ -165,17 +165,27 @@ pod/<font color="#26A269"><b>open5gs-upf-8444fdb48d-sv26l</b></font> patched
 
 The number of active sessions registered in the AMF function is read. Prometheus scrapes this metric from the AMF target every 15 seconds. We read it by querying Prometheus.
 
-#### Using browser
+### Using a browser
 ```
 http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-metrics",namespace="default"}`
 ```
-#### Curl on Windows
-```
-curl 10.254.186.64:9090/api/v1/query -G -d "query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"default\"}"
-```
-#### Curl on Linux 
+### Curl on Linux
+- command line (Open5GS is in default namespace)
 ```
 curl 10.254.186.64:9090/api/v1/query -G -d 'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | jq
+```
+- bash script (here, NAMESPACE is the namespace of Open5GS; PROMETHEUS_ADDR is a reacheble address of Prometheus)
+```
+# read the metric value: amf_sessions from Prometheus;
+$ query="query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"$NAMESPACE\"}"
+$ echo -e "\nquery:" ${query}
+$ amf_sessions=$(curl -s ${PROMETHEUS_ADDR}:9090/api/v1/query -G -d \
+     ${query} | jq '.data.result[0].value[1]' | tr -d '"')
+```
+### Curl on Windows
+(Open5GS is in default namespace)
+```
+curl 10.254.186.64:9090/api/v1/query -G -d "query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"default\"}"
 ```
 
 
