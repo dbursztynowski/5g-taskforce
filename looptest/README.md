@@ -163,7 +163,7 @@ pod/<font color="#26A269"><b>open5gs-upf-8444fdb48d-sv26l</b></font> patched
 
 ## Check the number of UE sessions set up in the network
 
-The number of active sessions in the AMF function is read.
+The number of active sessions registered in the AMF function is read. Prometheus scrapes this metric from the AMF target every 15 seconds. We read it by querying Prometheus.
 
 #### Using browser
 ```
