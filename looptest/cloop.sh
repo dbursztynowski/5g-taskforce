@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# New version - 2025.04.05
+# Version 2025.04.17
 
 # The script reads amf_sessions from Open5GS Prometheus, compares it to reference ranges and scales UPF accordingly
 
@@ -9,7 +9,7 @@
 #############
 
 # Prometheus endpoint (adjust to your environment)
-PROMETHEUS_ADDR="192.168.10.57"
+PROMETHEUS_ADDR="192.168.10.56"
 #PROMETHEUS_ADDR="10.0.0.63"
 # check reachabil;ity of Prometheus - TCP/port
 nc -z -v -w5 ${PROMETHEUS_ADDR} 9090 > /dev/null 2>&1
@@ -60,7 +60,7 @@ if [ $# -gt 0 ] ; then
 
   if [ $# -eq 1 ] ; then   # only one parameter specified
     if [ "$1" == "help" ] ; then
-       echo -e "Enter the preferred number of loop iterations, or the namespace of your target deployment, or both (in this order).\nIf the numer of iterations is not specified an infinite loop will be run. If the namspace is not specified, the loop will run in current namespace."
+       echo -e "Enter the preferred number of loop iterations, or the namespace of your target deployment, or both (in this order).\nIf the numer of iterations is not specified an infinite loop will be run.\nIf the namspace is not specified, the loop will run in current namespace. Note: current namespace is taken from current context in the kubeconfig file and should be specified there explicitly."
        exit
     fi
 
@@ -140,26 +140,11 @@ while $continue ; do
 
   echo "Iteration $iter, amf_sessions $amf_sessions, pod $podname, scaling resource to $cpu"
 
-  ## old version of patching
-#  kubectl -n $NAMESPACE patch pod $podname --subresource resize --patch \
-#          "{\"spec\":{\"containers\":[{\"name\":\"$SCALED_CONTAINER_NAME\", \"resources\":{\"requests\":{\"cpu\":\"50m\"}, \"limits\":{\"cpu\":\"$cpu\"}}}]}}"
+  ## patching (Note: only limits is explicitly scaled in this example)
+kubectl patch -n $NAMESPACE pod $podname --subresource resize --patch \
+ "{\"spec\":{\"containers\":[{\"name\":\"open5gs-upf\", \"resources\":{\"limits\":{\"cpu\":\"$cpu\"}}}]}}"
 
-  ## newer version of patching
-  kubectl -n $NAMESPACE patch pod $podname --subresource resize --patch \
-          "{\"spec\": \
-              {\"containers\": \
-                 [ \
-                    {\"name\":\"open5gs-upf\", \"resources\": \
-                        { \
-                           \"requests\":{\"cpu\":\"50m\"}, \
-                           \"limits\"  :{\"cpu\":\"$cpu\"} \
-                        } \
-                    } \
-                 ] \
-              } \
-           }"
-
-  ## or slightly impler form, equivalent to the old one (only limits is explicitly scaled)
+  ## exactly the same as above, but split into lines for readability 
 #  kubectl -n $NAMESPACE patch pod $podname --subresource resize --patch \
 #          "{\"spec\": \
 #              {\"containers\": \
@@ -171,9 +156,24 @@ while $continue ; do
 #                    } \
 #                 ] \
 #              } \
+#           }
+
+  ## more complete patching example (both requests and limits scaled at a time)
+#  kubectl -n $NAMESPACE patch pod $podname --subresource resize --patch \
+#          "{\"spec\": \
+#              {\"containers\": \
+#                 [ \
+#                    {\"name\":\"open5gs-upf\", \"resources\": \
+#                        { \
+#                           \"requests\":{\"cpu\":\"50m\"}, \
+#                           \"limits\"  :{\"cpu\":\"$cpu\"} \
+#                        } \
+#                    } \
+#                 ] \
+#              } \
 #           }"
 
-  # SLEEP TIME AFTER SCALING ========
+  # STOP OR PAUSE AFTER SCALING ========
   if (( ${iter} != ${MAX_ITER} ))
   then
     sleeptime=$BASE_SCAN_TIME
