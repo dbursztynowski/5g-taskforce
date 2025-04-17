@@ -165,6 +165,17 @@ pod/<font color="#26A269"><b>open5gs-upf-8444fdb48d-sv26l</b></font> patched
 
 The number of active sessions in the AMF function is read.
 
-
+#### Using browser
+```
+http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-metrics",namespace="default"}`
+```
+#### Curl on Windows
+```
+curl 10.254.186.64:9090/api/v1/query -G -d "query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"default\"}"
+```
+#### Curl on Linux 
+```
+curl 10.254.186.64:9090/api/v1/query -G -d 'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | jq
+```
 
 
