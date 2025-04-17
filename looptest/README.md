@@ -77,9 +77,9 @@ ubuntu@k3s02:~$ sudo systemctl start k3s-agent.service
 
 (if succesfull, "pod/ patched" is notified as shown below)
 ```
-ubuntu@k3s01:~$ sudo kubectl patch pod open5gs-upf-dcd9db5cb-kl2jq --subresource resize --patch \
-'{"spec":{"containers":[{"name":"open5gs-upf", "resources":{"requests":{"cpu":"50m"}, "limits":{"cpu":"110m"}}}]}}'
-pod/open5gs-upf-dcd9db5cb-kl2jq patched
+ubuntu@k3s01:~$ kubectl patch -n <namespace> pod <pod-name> --subresource resize --patch \
+'{"spec":{"containers":[{"name":"<container-name>", "resources":{"requests":{"cpu":"50m"}, "limits":{"cpu":"110m"}}}]}}'
+pod/<pod-name> patched
 ```
 
 # Testing in place scaling of pods
