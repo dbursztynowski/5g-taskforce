@@ -140,7 +140,7 @@ open5gs-scp-789c9b466c-z7lqn               1/1     Running   0               4h3
 open5gs-smf-74845db7cb-bjjxd               1/1     Running   0               4h39m
 open5gs-udm-8674db49b9-swxhl               1/1     Running   0               4h39m
 open5gs-udr-77fd7748fb-nwwkk               1/1     Running   5 (4h37m ago)   4h39m
-open5gs-upf-8444fdb48d-sv26l               1/1     Running   0               4h39m
+<font color="#FFFF00"><b>open5gs-upf-8444fdb48d-sv26l               1/1     Running   0               4h39m</b></font>
 open5gs-webui-55dbd67878-rpwk9             1/1     Running   0               4h39m
 ueransim-gnb-d7d765f99-zfcdd               1/1     Running   0               4h7m
 ueransim-gnb-ues-5b68cf9b78-gd4lr          1/1     Running   1 (4h7m ago)    4h7m
