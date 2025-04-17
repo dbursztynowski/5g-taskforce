@@ -11,7 +11,7 @@
 # Prometheus endpoint (adjust to your environment)
 PROMETHEUS_ADDR="192.168.10.56"
 #PROMETHEUS_ADDR="10.0.0.63"
-# check reachabil;ity of Prometheus - TCP/port
+# check reachability of Prometheus - TCP/port
 nc -z -v -w5 ${PROMETHEUS_ADDR} 9090 > /dev/null 2>&1
 response=$?
 if [[ $response -ne 0 ]] ; then
