@@ -1,4 +1,27 @@
-Enabling InPlacePodVerticalScaling
+# Enabling InPlacePodVerticalScaling
+
+### Enable during k3s installation
+
+The easiest way is to install k3s with featureGate InPlacePodVerticalScaling enabled. For example for control nodes:
+```
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.32.3+k3s1   INSTALL_K3S_EXEC="server --write-kubeconfig-mode 644 \
+  --disable servicelb --disable-cloud-controller \
+  --kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true \
+  --kube-controller-manager-arg=feature-gates=InPlacePodVerticalScaling=true \
+  --kube-scheduler-arg=feature-gates=InPlacePodVerticalScaling=true \
+  --kubelet-arg=feature-gates=InPlacePodVerticalScaling=true \
+  --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true"   sh -
+```
+For agent nodes, only
+```
+  --kubelet-arg=feature-gates=InPlacePodVerticalScaling=true \
+  --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true
+```
+has to be added for each agent node.
+
+If you did not enable it during installation, follow the steps below.
+
+### Enable on running k3s cluster
 
 (according to: https://github.com/k3s-io/k3s/issues/12025#issuecomment-2769290290)
 
@@ -52,10 +75,56 @@ ubuntu@k3s02:~$ sudo systemctl start k3s-agent.service
 
 (if succesfull, "pod/ patched" is notified as shown below)
 
-ubuntu@k3s01:~$ sudo kubectl patch pod open5gs-upf-dcd9db5cb-kl2jq --subresource resize --patch '{"spec":{"containers":[{"name":"open5gs-upf", "resources":{"requests":{"cpu":"50m"}, "limits":{"cpu":"110m"}}}]}}'
+ubuntu@k3s01:~$ sudo kubectl patch pod open5gs-upf-dcd9db5cb-kl2jq --subresource resize --patch \
+'{"spec":{"containers":[{"name":"open5gs-upf", "resources":{"requests":{"cpu":"50m"}, "limits":{"cpu":"110m"}}}]}}'
 pod/open5gs-upf-dcd9db5cb-kl2jq patched
 
-# Testing scaling the pods
+# Testing the scaling of pods in place
+
+
+
+### Simple pod test
+
+- Define and create the pod
+```
+$ tee testinplace.yaml << EOT
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tests
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: inplacedemo
+  namespace: tests
+spec:
+  containers:
+  - name: inplacedemo
+    image: alpine
+    imagePullPolicy: IfNotPresent
+    command: ["tail", "-f", "/dev/null"]
+    resizePolicy:
+    - resourceName: "memory"
+      restartPolicy: "RestartContainer"
+    resources:
+      limits:
+        cpu: "100m"
+        memory: "1Gi"
+      requests:
+        cpu: "50m"
+        memory: "500Mi"
+EOT
+```
+- Run the pod and test in place scaling
+```
+$ kubectl apply -f testinplace.yaml
+$ kubectl patch -n tests pod inplacedemo --patch '{"spec":{"containers":[{"name":"inplacedemo", "resources":{"limits":{"cpu":"150m"}}}]}}'
+```
+
+### Scalun UPF function
 
 <pre><font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl get pods
 NAME                                       READY   STATUS    RESTARTS        AGE
