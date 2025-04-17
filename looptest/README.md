@@ -79,9 +79,9 @@ ubuntu@k3s01:~$ sudo kubectl patch pod open5gs-upf-dcd9db5cb-kl2jq --subresource
 '{"spec":{"containers":[{"name":"open5gs-upf", "resources":{"requests":{"cpu":"50m"}, "limits":{"cpu":"110m"}}}]}}'
 pod/open5gs-upf-dcd9db5cb-kl2jq patched
 
-# Testing the scaling of pods in place
+# Testing in place scaling of pods
 
-## Scale simple pod test
+## Scale simple test pod
 
 #### Define and create the pod
 ```
