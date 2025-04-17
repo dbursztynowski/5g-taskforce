@@ -1,6 +1,6 @@
 # Enabling InPlacePodVerticalScaling
 
-### Enable during k3s installation
+## Enable during k3s installation
 
 The easiest way is to install k3s with featureGate InPlacePodVerticalScaling enabled. For example for control nodes:
 ```
@@ -21,7 +21,7 @@ has to be added for each agent node.
 
 If you did not enable it during installation, follow the steps below.
 
-### Enable on running k3s cluster
+## Enable on a running k3s cluster
 
 (according to: https://github.com/k3s-io/k3s/issues/12025#issuecomment-2769290290)
 
@@ -81,11 +81,9 @@ pod/open5gs-upf-dcd9db5cb-kl2jq patched
 
 # Testing the scaling of pods in place
 
+## Scale simple pod test
 
-
-### Simple pod test
-
-- Define and create the pod
+#### Define and create the pod
 ```
 $ tee testinplace.yaml << EOT
 apiVersion: v1
@@ -124,7 +122,7 @@ $ kubectl apply -f testinplace.yaml
 $ kubectl patch -n tests pod inplacedemo --patch '{"spec":{"containers":[{"name":"inplacedemo", "resources":{"limits":{"cpu":"150m"}}}]}}'
 ```
 
-### Scalun UPF function
+## Scale Open5GS UPF function
 
 <pre><font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl get pods
 NAME                                       READY   STATUS    RESTARTS        AGE
@@ -158,4 +156,10 @@ pod/open5gs-upf-8444fdb48d-sv26l patched
 <b>}</b>
 <font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$</pre>
 
-ddd
+## Check the number of UE sessions set up in the network
+
+The number of active sessions in the AMF function is read.
+
+
+
+
