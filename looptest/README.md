@@ -148,6 +148,7 @@ ueransim-ues-additional-6bcb88756c-ldjwq   1/1     Running   0               4h5
 <font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl patch -n default pod open5gs-upf-8444fdb48d-sv26l --subresource resize --patch  \
 &apos;{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;open5gs-upf&quot;, &quot;resources&quot;:{&quot;limits&quot;:{&quot;cpu&quot;:&quot;150m&quot;}}}]}}&apos;
 pod/open5gs-upf-8444fdb48d-sv26l patched
+# check if resized as requested
 <font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl get pods/open5gs-upf-8444fdb48d-sv26l \
 -o=jsonpath=&apos;{.status.containerStatuses[0].resources}&apos; | jq
 <b>{</b>
