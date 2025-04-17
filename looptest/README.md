@@ -3,6 +3,7 @@
 ## Enable during k3s installation
 
 The easiest way is to install k3s with featureGate InPlacePodVerticalScaling enabled. For example for control nodes:
+
 ```
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.32.3+k3s1   INSTALL_K3S_EXEC="server --write-kubeconfig-mode 644 \
   --disable servicelb --disable-cloud-controller \
@@ -12,6 +13,7 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.32.3+k3s1   INSTALL_K3S_EX
   --kubelet-arg=feature-gates=InPlacePodVerticalScaling=true \
   --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true"   sh -
 ```
+
 For agent nodes, only
 ```
   --kubelet-arg=feature-gates=InPlacePodVerticalScaling=true \
