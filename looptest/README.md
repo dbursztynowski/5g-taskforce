@@ -126,6 +126,8 @@ $ kubectl patch -n tests pod inplacedemo --patch \
 
 ## Scale Open5GS UPF function
 
+It is assumed that all components (Open5GS and the monitoring platform) have been installe according to our instructions. Otherwise some details may differ.
+
 <pre><font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl get pods
 NAME                                       READY   STATUS    RESTARTS        AGE
 open5gs-amf-57c6c6c65b-vhh8c               1/1     Running   0               4h39m
