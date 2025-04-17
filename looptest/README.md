@@ -55,3 +55,38 @@ ubuntu@k3s02:~$ sudo systemctl start k3s-agent.service
 ubuntu@k3s01:~$ sudo kubectl patch pod open5gs-upf-dcd9db5cb-kl2jq --subresource resize --patch '{"spec":{"containers":[{"name":"open5gs-upf", "resources":{"requests":{"cpu":"50m"}, "limits":{"cpu":"110m"}}}]}}'
 pod/open5gs-upf-dcd9db5cb-kl2jq patched
 
+# Testing scaling the pods
+
+<pre><font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl get pods
+NAME                                       READY   STATUS    RESTARTS        AGE
+open5gs-amf-57c6c6c65b-vhh8c               1/1     Running   0               4h39m
+open5gs-ausf-bcfd48966-bwr2q               1/1     Running   0               4h39m
+open5gs-bsf-796ccbfc56-vvvmj               1/1     Running   0               4h39m
+open5gs-mongodb-9df4bcfdb-pqr5b            1/1     Running   0               4h39m
+open5gs-nrf-54dd7bcd5-f74d5                1/1     Running   0               4h39m
+open5gs-nssf-6577c78cc9-q4vk4              1/1     Running   0               4h39m
+open5gs-pcf-86678b795b-d9pz2               1/1     Running   5 (4h36m ago)   4h39m
+open5gs-populate-84c9dd744c-mxcr8          1/1     Running   0               4h39m
+open5gs-scp-789c9b466c-z7lqn               1/1     Running   0               4h39m
+open5gs-smf-74845db7cb-bjjxd               1/1     Running   0               4h39m
+open5gs-udm-8674db49b9-swxhl               1/1     Running   0               4h39m
+open5gs-udr-77fd7748fb-nwwkk               1/1     Running   5 (4h37m ago)   4h39m
+open5gs-upf-8444fdb48d-sv26l               1/1     Running   0               4h39m
+open5gs-webui-55dbd67878-rpwk9             1/1     Running   0               4h39m
+ueransim-gnb-d7d765f99-zfcdd               1/1     Running   0               4h7m
+ueransim-gnb-ues-5b68cf9b78-gd4lr          1/1     Running   1 (4h7m ago)    4h7m
+ueransim-ues-additional-6bcb88756c-ldjwq   1/1     Running   0               4h5m
+<font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl patch -n default pod open5gs-upf-8444fdb48d-sv26l --subresource resize --patch  &apos;{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;open5gs-upf&quot;, &quot;resources&quot;:{&quot;limits&quot;:{&quot;cpu&quot;:&quot;150m&quot;}}}]}}&apos;
+pod/open5gs-upf-8444fdb48d-sv26l patched
+<font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl get pods/open5gs-upf-8444fdb48d-sv26l -o=jsonpath=&apos;{.status.containerStatuses[0].resources}&apos; | jq
+<b>{</b>
+<b>  </b><font color="#12488B"><b>&quot;limits&quot;</b></font><b>: {</b>
+<b>    </b><font color="#12488B"><b>&quot;cpu&quot;</b></font><b>: </b><font color="#26A269">&quot;150m&quot;</font>
+<b>  },</b>
+<b>  </b><font color="#12488B"><b>&quot;requests&quot;</b></font><b>: {</b>
+<b>    </b><font color="#12488B"><b>&quot;cpu&quot;</b></font><b>: </b><font color="#26A269">&quot;50m&quot;</font>
+<b>  }</b>
+<b>}</b>
+<font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$</pre>
+
+ddd
