@@ -60,7 +60,7 @@ if [ $# -gt 0 ] ; then
 
   if [ $# -eq 1 ] ; then   # only one parameter specified
     if [ "$1" == "help" ] ; then
-       echo -e "Enter the preferred number of loop iterations, or the namespace of your target deployment, or both (in this order).\nIf the numer of iterations is not specified an infinite loop will be run. If the namspace is not specified, the loop will run in current namespace."
+       echo -e "Enter the preferred number of loop iterations, or the namespace of your target deployment, or both (in this order).\nIf the numer of iterations is not specified an infinite loop will be run.\nIf the namspace is not specified, the loop will run in current namespace. Note: in the latter case, current namespace is taken from current context in the kubeconfig file and should be specified there explicitly."
        exit
     fi
 
