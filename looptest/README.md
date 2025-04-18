@@ -1,6 +1,6 @@
 # Enabling InPlacePodVerticalScaling
 
-If InPlacePodVerticalScaling is enabled in your cluster you can skip this section.
+If InPlacePodVerticalScaling is enabled in your cluster you can skip this section and go to [testing](#testing-in-place-scaling-of-pods).
 
 ## Enable during k3s installation
 
