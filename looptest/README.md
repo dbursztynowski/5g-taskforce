@@ -1,5 +1,7 @@
 # Enabling InPlacePodVerticalScaling
 
+If InPlacePodVerticalScaling is enabled in your cluster you can skip this section.
+
 ## Enable during k3s installation
 
 The easiest way is to install k3s with featureGate InPlacePodVerticalScaling enabled. For example for control nodes:
