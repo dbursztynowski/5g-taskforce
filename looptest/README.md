@@ -75,14 +75,7 @@ ubuntu@k3s02:~$ sudo systemctl daemon-reload
 ubuntu@k3s02:~$ sudo systemctl stop k3s-agent.service
 ubuntu@k3s02:~$ sudo systemctl start k3s-agent.service
 ```
-3) Check if in place scaling works
-
-(if succesfull, "pod/ patched" is notified as shown below)
-```
-ubuntu@k3s01:~$ kubectl patch -n <namespace> pod <pod-name> --subresource resize --patch \
-'{"spec":{"containers":[{"name":"<container-name>", "resources":{"requests":{"cpu":"50m"}, "limits":{"cpu":"110m"}}}]}}'
-pod/<pod-name> patched
-```
+3) Check if in place scaling works - see the next section.
 
 # Testing in place scaling of pods
 
