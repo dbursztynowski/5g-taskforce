@@ -15,6 +15,8 @@ This page describes a simple experiment with in place pod vertical scaling using
    2.2 [Scale Open5GS UPF function](#scale-open5gs-upf-function)
    
    2.3 [Retrieve the number of UE sessions set up in the network](#retrieve-the-number-of-ue-sessions-set-up-in-the-network)
+
+3. [Conclusion](#conclusion)
    
 
 # 1. Enabling InPlacePodVerticalScaling
@@ -212,5 +214,11 @@ amf_sessions=$(curl -s ${PROMETHEUS_ADDR}:9090/api/v1/query -G -d \
 ```
 curl 10.254.186.64:9090/api/v1/query -G -d "query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"default\"}"
 ```
+
+# 3. Conclusion
+
+You now know how the number of UEs can bo monitored and how a function can be scaled vertically without restarting the pod. This can be important in case of stateful functions, i.w., functions whose state can not be recreated after restart. This is the case with UPF in Open5GS as UPF pod keeps the information about UE data plane sessions in RAM and not in persistent memory.
+
+As a next step, you can do a small project to design a simple scaler of Open5GS functions based on the number of UE sessions in the network. In simplest form, it can monitor amf_session metric and scale UPF pod. This can correspond to a scenario in which a growth of the numbers of sessions indicates that the data plane load on the UPF is going to increase soon. In anticipation of this we add computing resources to UPF container to be able to handle this growth. A little bit more complex scenario could envolve joint scaling of UPF and AMF, possibly with some dependency of the operations, e.g., demanding that the UPF pod is scaled first and the AMF pod is scaled only once we can confirm the scaling of UPF has been successfull. Notice such a control of the sequence of operations can not be achieved with standard Kubernetes autoscalers - Horizontal and Vertical Pod Autoscalers (HPA, VPA).
 
 
