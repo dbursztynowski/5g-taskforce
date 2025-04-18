@@ -112,20 +112,20 @@ spec:
         memory: "500Mi"
 EOT
 ```
-- Run the pod and test in place scaling
-
-  - kubectl in terminal window
+#### Run the pod and test in place scaling
+  - using kubectl in terminal window
 ```
 $ kubectl apply -f testinplace.yaml
-$ kubectl patch -n tests pod inplacedemo --patch \
+$ kubectl patch -n tests pod inplacedemo --subresource resize --patch \
 '{"spec":{"containers":[{"name":"inplacedemo", "resources":{"limits":{"cpu":"150m"}}}]}}'
 ```
-  - kubectl in bash script
+  - using kubectl in bash script
 
-    Note: this version works also when resource quotas are given as variables as $cpu in this example.
+    Note: this version works also when resource quotas are passed as variables as $cpu in this example.
 ```
+cpu="150m"
 kubectl patch -n $NAMESPACE pod $podname --subresource resize --patch \
- "{\"spec\":{\"containers\":[{\"name\":\"open5gs-upf\", \"resources\":{\"limits\":{\"cpu\":\"$cpu\"}}}]}}"
+ "{\"spec\":{\"containers\":[{\"name\":\"inplacedemo\", \"resources\":{\"limits\":{\"cpu\":\"$cpu\"}}}]}}"
 ```
 
 ## Scale Open5GS UPF function
@@ -176,7 +176,7 @@ The number of active sessions registered in the AMF function is read. Prometheus
 http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-metrics",namespace="default"}`
 ```
 ### Curl on Linux
-- command line (Open5GS is in default namespace)
+- command line (here, Open5GS runs in default namespace)
 ```
 curl 10.254.186.64:9090/api/v1/query -G -d 'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | jq
 ```
@@ -189,7 +189,7 @@ amf_sessions=$(curl -s ${PROMETHEUS_ADDR}:9090/api/v1/query -G -d \
      ${query} | jq '.data.result[0].value[1]' | tr -d '"')
 ```
 ### Curl on Windows
-(Open5GS is in default namespace)
+(here, Open5GS runs in default namespace)
 ```
 curl 10.254.186.64:9090/api/v1/query -G -d "query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"default\"}"
 ```
