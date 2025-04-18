@@ -16,7 +16,7 @@ This page describes a simple experiment with in place pod vertical scaling using
    
    2.3 [Retrieve the number of UE sessions set up in the network](#retrieve-the-number-of-ue-sessions-set-up-in-the-network)
 
-3. [Conclusion](#conclusion)
+3. [Conclusion]([#conclusion](https://github.com/dbursztynowski/5g-taskforce/blob/upf-scaling-spiw/looptest/README.md#3-conclusion))
    
 
 # 1. Enabling InPlacePodVerticalScaling
