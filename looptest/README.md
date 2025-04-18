@@ -113,6 +113,7 @@ spec:
 EOT
 ```
 - Run the pod and test in place scaling
+
   - kubectl in terminal window
 ```
 $ kubectl apply -f testinplace.yaml
@@ -120,8 +121,11 @@ $ kubectl patch -n tests pod inplacedemo --patch \
 '{"spec":{"containers":[{"name":"inplacedemo", "resources":{"limits":{"cpu":"150m"}}}]}}'
 ```
   - kubectl in bash script
-```
 
+    Note: this version works also when resource quotas are given as variables as $cpu in this example.
+```
+kubectl patch -n $NAMESPACE pod $podname --subresource resize --patch \
+ "{\"spec\":{\"containers\":[{\"name\":\"open5gs-upf\", \"resources\":{\"limits\":{\"cpu\":\"$cpu\"}}}]}}"
 ```
 
 ## Scale Open5GS UPF function
