@@ -2,12 +2,20 @@ This page descrives simple experiment with in place pod vertical scaling using O
 
 # Contents
 
-1. [Enabling InPlacePodVerticalScaling]()
-   [Enable during k3s installation]()
-   [Enable on a running k3s cluster]()
-3. [Testing in place scaling of pods]()
-   [Scale simple test pod]()
-   [Scale Open5GS UPF function]()
+1. [Enabling InPlacePodVerticalScaling](#enabling-inplacepodverticalscaling)
+   
+   1.1 [Enable during k3s installation](#enable-during-k3s-installation)
+   
+   1.2 [Enable on a running k3s cluster]( #enable-on-a-running-k3s-cluster)
+   
+2. [Testing in place scaling of pods](#testing-in-place-scaling-of-pods)
+   
+   2.1 [Scale simple test pod](#scale-simple-test-pod)
+   
+   2.2 [Scale Open5GS UPF function](#scale-open5gs-upf-function)
+   
+   2.3 [Retrieve the number of UE sessions set up in the network](#retrieve-the-number-of-ue-sessions-set-up-in-the-network)
+   
 
 # Enabling InPlacePodVerticalScaling
 
