@@ -1,4 +1,4 @@
-This page descrives simple experiment with in place pod vertical scaling using Open5GS.
+This page describes a simple experiment with in place pod vertical scaling using Open5GS.
 
 # Contents
 
@@ -17,11 +17,11 @@ This page descrives simple experiment with in place pod vertical scaling using O
    2.3 [Retrieve the number of UE sessions set up in the network](#retrieve-the-number-of-ue-sessions-set-up-in-the-network)
    
 
-# Enabling InPlacePodVerticalScaling
+# 1. Enabling InPlacePodVerticalScaling
 
 If InPlacePodVerticalScaling is enabled in your cluster you can skip this section and go to [testing](#testing-in-place-scaling-of-pods).
 
-## Enable during k3s installation
+## 1.1. Enable during k3s installation
 
 The easiest way is to install k3s with featureGate InPlacePodVerticalScaling enabled. For example for control nodes:
 
@@ -44,7 +44,7 @@ has to be added for each agent node.
 
 If you did not enable it during installation, follow the steps below.
 
-## Enable on a running k3s cluster
+## 1.2 Enable on a running k3s cluster
 
 (according to: https://github.com/k3s-io/k3s/issues/12025#issuecomment-2769290290)
 
@@ -96,11 +96,11 @@ ubuntu@k3s02:~$ sudo systemctl start k3s-agent.service
 ```
 3) Check if in place scaling works - see the next section.
 
-# Testing in place scaling of pods
+# 2. Testing in place scaling of pods
 
-## Scale simple test pod
+## 2.1 Scale simple test pod
 
-#### Define and create the pod
+### Define and create the pod
 ```
 $ tee testinplace.yaml << EOT
 apiVersion: v1
@@ -131,7 +131,7 @@ spec:
         memory: "500Mi"
 EOT
 ```
-#### Run the pod and test in place scaling
+### Run the pod and test in place scaling
   - using kubectl in terminal window
 ```
 $ kubectl apply -f testinplace.yaml
@@ -147,7 +147,7 @@ kubectl patch -n $NAMESPACE pod $podname --subresource resize --patch \
  "{\"spec\":{\"containers\":[{\"name\":\"inplacedemo\", \"resources\":{\"limits\":{\"cpu\":\"$cpu\"}}}]}}"
 ```
 
-## Scale Open5GS UPF function
+## 2.2 Scale Open5GS UPF function
 
 It is assumed that all components (Open5GS and the monitoring platform) have been installe according to our instructions. Otherwise some details may differ.
 
@@ -186,7 +186,7 @@ pod/<font color="#26A269"><b>open5gs-upf-8444fdb48d-sv26l</b></font> patched
 <b>}</b>
 <font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$</pre>
 
-## Retrieve the number of UE sessions set up in the network
+## 2.3 Retrieve the number of UE sessions set up in the network
 
 The number of active sessions registered in the AMF function is read. Prometheus scrapes this metric from the AMF target every 15 seconds. We read it by querying Prometheus.
 
