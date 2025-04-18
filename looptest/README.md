@@ -4,17 +4,17 @@ This page describes a simple experiment with in place pod vertical scaling using
 
 1. [Enabling InPlacePodVerticalScaling](./README.md#enabling-inplacepodverticalscaling)
    
-   1.1 [Enable during k3s installation](./README.md#enable-during-k3s-installation)
+   1.1 [Enable during k3s installation](./README.md#11-enable-during-k3s-installation)
    
-   1.2 [Enable on a running k3s cluster](./README.md#enable-on-a-running-k3s-cluster)
+   1.2 [Enable on a running k3s cluster](./README.md#12-enable-on-a-running-k3s-cluster)
    
-2. [Testing in place scaling of pods](./README.md#testing-in-place-scaling-of-pods)
+2. [Testing in place scaling of pods](./README.md#2-testing-in-place-scaling-of-pods)
    
-   2.1 [Scale simple test pod](./README.md#scale-simple-test-pod)
+   2.1 [Scale simple test pod](./README.md#21-scale-simple-test-pod)
    
-   2.2 [Scale Open5GS UPF function](./README.md#scale-open5gs-upf-function)
+   2.2 [Scale Open5GS UPF function](./README.md#22-scale-open5gs-upf-function)
    
-   2.3 [Retrieve the number of UE sessions set up in the network](./README.md#retrieve-the-number-of-ue-sessions-set-up-in-the-network)
+   2.3 [Retrieve the number of UE sessions set up in the network](./README.md#23-retrieve-the-number-of-ue-sessions-set-up-in-the-network)
 
 3. [Conclusion](./README.md#3-conclusion)
    
