@@ -26,28 +26,38 @@ Chart modifications cover three following areas:
 
 ### Modifications in mongodb, webui and populate charts
 
-- Currently (April 2025) the following changes for mongodb and populate apply:
-  - in 5gc/open5gs/open5gs-228/charts/mongodb/values.yaml, line ~105, set
+- Currently (April 2025) the following changes for mongodb, webui and populate apply:
+  
+  - in file `5gc/open5gs/open5gs-228/charts/mongodb/values.yaml`, line ~105, set
+    ```
       image:
         registry: docker.io
         repository: dburszty/mongodb-raspberrypi
         tag: 7.0.14
-  -  in 5gc/open5gs/open5gs-228/charts/mongodb/values.yaml, line ~503
+    ```
+  -  in file `5gc/open5gs/open5gs-228/charts/mongodb/values.yaml`, line ~503
+     ```
        containerSecurityContext:
          enabled: false
-  - in 5gc/open5gs/open5gs-228/charts/mongodb/values.yaml disable the liveness-, readfiness- and startup- probes (line ~544)
+     ```
+  - in file `5gc/open5gs/open5gs-228/charts/mongodb/values.yaml` disable the liveness-, readfiness- and startup- probes (line ~544)
+    ```
       livenessProbe:
         enabled: false
       readinessProbe:
         enabled: false  
       startupProbe:
         enabled: false
-  - in 5gc/open5gs/open5gs-228/charts/open5gs-webui/templates/deployment.yaml set 
+    ```
+  - in file `5gc/open5gs/open5gs-228/charts/open5gs-webui/templates/deployment.yaml` set
+    ```
       initContainers:
         - name: init
           # image updated to the latest tested working version for Raspberry Pi 4/5
           image: dburszty/mongodb-raspberrypi:7.0.14
-  - in 5g-taskforce/open5gs/open5gs-228/values.yaml set
+    ```
+  - in file `5g-taskforce/open5gs/open5gs-228/values.yaml` set
+    ```
       populate:
         enabled: true
         image:
@@ -55,6 +65,7 @@ Chart modifications cover three following areas:
           repository: gradiant/open5gs-dbctl
       ## DB    tag: 0.10.3  <== works only for linux/AMD64
           tag: 0.10.2
+    ```
 
 # Deploy Open5GS
 
