@@ -29,6 +29,7 @@ Chart modifications cover three following areas:
 - Currently (April 2025) the following changes for mongodb, webui and populate apply:
   
   - in file `5gc/open5gs/open5gs-228/charts/mongodb/values.yaml`, line ~105, set
+    
     ```
       image:
         registry: docker.io
@@ -36,11 +37,13 @@ Chart modifications cover three following areas:
         tag: 7.0.14
     ```
   -  in file `5gc/open5gs/open5gs-228/charts/mongodb/values.yaml`, line ~503
+    
      ```
        containerSecurityContext:
          enabled: false
      ```
   - in file `5gc/open5gs/open5gs-228/charts/mongodb/values.yaml` disable the liveness-, readfiness- and startup- probes (line ~544)
+  
     ```
       livenessProbe:
         enabled: false
@@ -50,6 +53,7 @@ Chart modifications cover three following areas:
         enabled: false
     ```
   - in file `5gc/open5gs/open5gs-228/charts/open5gs-webui/templates/deployment.yaml` set
+  
     ```
       initContainers:
         - name: init
@@ -57,6 +61,7 @@ Chart modifications cover three following areas:
           image: dburszty/mongodb-raspberrypi:7.0.14
     ```
   - in file `5g-taskforce/open5gs/open5gs-228/values.yaml` set
+  
     ```
       populate:
         enabled: true
