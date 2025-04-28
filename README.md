@@ -1,5 +1,7 @@
 ### 5G network based on Gradiant Helm charts for UERANSIM+Open5GS in a Raspberry Pi K3s cluster
 
+**WARNING: do not use this version/branch - it's development has been suspended.**
+
 # Contents
 
 - open5gs: install and run 5g network setup on RPi cluster
