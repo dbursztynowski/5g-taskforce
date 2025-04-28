@@ -15,7 +15,7 @@ It is assumed that you have your k3s deployment using Raspberry Pi 4 or 5 cluste
 
 2. Having installed 5G network according to the descriptions in open5gs directory, you can start monitoring and managing 5G core network according to guidelines provided in directory [looptest](./looptest). Actually, our focus is to show how selected service-level metrics of the Open5GS core network can be monitored and used to organize a simple control loop. The loop will vertically scale the UPF container of the 5G core. One can then extend this example to design and implement more sophisticated control loops.
 
-**NoteAs** This repo has been derived from another project based on OpenStack installation of k3s. Mentioned project served another purposes and required installation of kube-prometheus package, and kube-prometheus directory is a visible artifact of that. We do not plan to use it here, though aand expect it to be removed in the future. We assume kube-prometheus has already been installed in your cluster in earlier stage of the lab. 
+**Note** This repo has been derived from another project based on OpenStack installation of k3s. Mentioned project served another purposes and required installation of kube-prometheus package, and kube-prometheus directory is a visible artifact of that. We do not plan to use it here, though aand expect it to be removed in the future. We assume kube-prometheus has already been installed in your cluster in earlier stage of the lab. 
 
 # Other hints
 ### (may or may not be useful for you)
