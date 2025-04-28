@@ -22,9 +22,11 @@ Chart modifications cover three following areas:
 
 - enable containers mongod, webui and populate run on Raspberry Pi
 - create extended set of UE when deploying the platform (container populate)
-- enable Prometeus metric exporters in AMF, SMF, UPF and PCF containers (containers amf, upf, smf, pcf)
+- enable Prometheus metric exporters in AMF, SMF, UPF and PCF containers (containers amf, upf, smf, pcf)
 
 ### Modifications in mongodb, webui and populate charts
+
+We use custom image of mongodb container able to run on Raspberry Pi. Another option is to use origunal images, but they would have to be quite old (i.e., versions 4.x while latest mongodb versions come form the range 8.x). 
 
 - Currently (April 2025) the following changes for mongodb, webui and populate apply:
   
@@ -36,12 +38,14 @@ Chart modifications cover three following areas:
         repository: dburszty/mongodb-raspberrypi
         tag: 7.0.14
     ```
+    
   -  in file `5gc/open5gs/open5gs-228/charts/mongodb/values.yaml`, line ~503
     
      ```
        containerSecurityContext:
          enabled: false
      ```
+     
   - in file `5gc/open5gs/open5gs-228/charts/mongodb/values.yaml` disable the liveness-, readfiness- and startup- probes (line ~544)
   
     ```
@@ -52,6 +56,7 @@ Chart modifications cover three following areas:
       startupProbe:
         enabled: false
     ```
+    
   - in file `5gc/open5gs/open5gs-228/charts/open5gs-webui/templates/deployment.yaml` set
   
     ```
@@ -60,6 +65,7 @@ Chart modifications cover three following areas:
           # image updated to the latest tested working version for Raspberry Pi 4/5
           image: dburszty/mongodb-raspberrypi:7.0.14
     ```
+    
   - in file `5g-taskforce/open5gs/open5gs-228/values.yaml` set
   
     ```
