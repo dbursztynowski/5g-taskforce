@@ -18,7 +18,11 @@ $ tar -xvzf open5gs-2.2.8.tgz -C ./open5gs-228
 
 ## Modify Open5GS Helm chart
 
+Chart modifications cover three following areas:
 
+- containers mongod, webui and populate to run them on Raspberry Pi
+- container populate to create extended set of UE when deploying the platform
+- containers for amf, upf, smf and pcf functions to enable Prometeus metric exporters 
 
 # Deploy Open5GS
 
