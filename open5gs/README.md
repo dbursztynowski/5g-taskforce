@@ -197,4 +197,4 @@ Detaching additional connected UEs can be achieved by uninstalling respective He
 $ helm uninstall ueransim-ues-additional
 ```
 
-This results in detaching from the network all the UEs emulated by the uninstalled Helm release (respective deployment/pod is deleted under the hood). In a real network, it would correspond to multiple terminals detaching from the network (e.g., switching off or entering airplane mode).
+This will detach all UEs emulated by the uninstalled Helm release from the network (respective deployment/pod is deleted under the hood). In a real network, it would correspond to multiple terminals undergoing network detach procedure (e.g., switching off or entering airplane mode).
