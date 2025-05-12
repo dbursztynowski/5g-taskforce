@@ -152,7 +152,27 @@ $ helm install ueransim-gnb oci://registry-1.docker.io/gradiant/ueransim-gnb --v
 
 Successfull installation of UERANSIM will print multiple "help" lines on the screen describing different options of using UERANSIM. After that, wait a while until both ueransin-gnb and ueransim-gnb-ues pods are up and running. You can check this running `kubectl get pods --watch`.
 
-## Connecting additional UEs to the network (bulk)
+## Generating UE data plane traffic
+
+This can be achieved by doing `kubectl exec` on respective pod/container. In the following example we log to container shlell and run ping command in the terminal.
+
+Enter container shell and run ping command and curl after that:
+(Note: To check for the name of the UE deployment simply run `kubectl get deployments'.)
+
+```
+$ kubectl exec -it deployment/ueransim-gnb-ues -- /bin/bash
+> ping -I uesimtun0 wp.pl
+...
+> curl --interface uesimtun0 https://google.com
+...
+```
+
+The above commands can be run not entering the container's shell, e.g.:
+```
+$ kubectl exec deployment/ueransim-gnb-ues -- /bin/bash -c "curl --interface uesimtun0 https://google.com"
+```
+
+## Connecting additional UEs to the network (bulk attach)
 
 **sprawdzić nazwę dodatkowego deploymentu - ueransim-ues-additional czy inna? !!!!!!!!!!!!!!!!!**
 
