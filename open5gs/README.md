@@ -4,7 +4,7 @@ This document describes how to install and run Open5GS 5G core network and UERAN
 
 If you cloned this repository, it is ready to use and you can implement the entire platform (Open5GS and UERANSIM) fully customized to our needs. In this case you can skip section **Prepare Open5GS Helm chart** below and go directly to step [Deploy Open5GS](deploy-open5gs). This is the recommended approach to do the lab. However, if you are interested in the details of the modifications necessary to run the platform on Raspberry Pi, you may want to start from scratch and follow all steps beginning from [Prepare Open5GS Helm chart](prepare-open5gs-helm-chart).
 
-The key competencies for our lab are the implementation of Open5GS and UERANSIM and the management of UEs in the network by attaching (joining the network) and detaching (leaving the network) groups of UEs. In opur experiments, attaching/detaching UEs will lead to triggering resource scaling operations. Emulating traffic generation by UEs is not mandatory for our lab  but is also covered in this guide (well, `ping` command can be used to verify if all works fine on the 5G network level).
+The key competencies for our lab are the implementation of Open5GS and UERANSIM and the management of UEs in the network by attaching (joining the network) and detaching (leaving the network) groups of UEs. In particular, we will attach/detach UEs to trigger CPU scaling operations of the UPF (User Plane Function) in our Open5GS core network. Also also covered in this guide is traffic generation by UEs although it is not mandatory for our lab (well, `ping` command can be used to verify if all works fine on the 5G network level).
 
 # Prepare Open5GS Helm chart
 
