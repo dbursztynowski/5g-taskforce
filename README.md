@@ -10,7 +10,7 @@
 
 ### 1. First, install HELM on your management host
 
-If HELM is not installed on your host, install it running the script ```install_helm.sh``` from this repo.
+If HELM is not installed on your host, install it running the script ```install_helm.sh``` from this repo. We will use helm for deploying 5G RAN and core network parts, and also to activate/deactivate user equipment (UE) for scaling purposes.
 
 ### 2. Then install your 5G network
 
