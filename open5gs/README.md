@@ -108,4 +108,4 @@ populate:
 
 # Deploy Open5GS
 
-During deploying our instance of Open5GS core network, 20 user equipments (user SIM cards/user accounts, UE) are populated in the core network data base. This setting is configured in file `5g-taskforce/open5gs/5gSA-values-enable-metrics-v228.yaml` (in the original Gradiant documentation this file is named 5gSA-values.yaml, but we changed this name to emphasize that we are using a customizewd version of the file). During experientation, you will be allowed to attach to the network as many UEs as this number.
+During deploying our instance of Open5GS core network, 20 user equipments (user SIM cards/user accounts, UE) are populated in the core network data base. This setting is configured in file `5g-taskforce/open5gs/5gSA-values-enable-metrics-v228.yaml` (in the original Gradiant documentation this file is named 5gSA-values.yaml, but we changed this name to emphasize that we are using a customizewd version of the file). During the experiments, you will be able to connect as many UE devices to the network as this number.
