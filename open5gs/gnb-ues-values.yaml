@@ -7,9 +7,7 @@
 ## mnc: Mobile Network Code (part of SUPI)
 ## sst: Slice Service Type (part of S-NSSAI)
 ## sd: Slice Differentiator (part of S-NSSAI)
-## tac: Tracking Area Code (tracking area respective cell/gNB belongs to - same as for serving gNB)
-
-
+## tac: Tracking Area Code (tracking area respective cell/gNB belongs to - same as TAC of serving gNB)
 
 image:
   registry: docker.io
