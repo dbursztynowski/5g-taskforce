@@ -1,5 +1,6 @@
-## Adjusted for:
+## DB: Adjusted for:
 ## - container image version gradiant/ueransim:dev-b68de9b (tag dev-b68de9b)
+##   this tag is claimed to support iperf 3 (we do not need it in our lab, but it's good to know)
 ## - four UEs (must be consistent with gnb deployment)
 
 image:
