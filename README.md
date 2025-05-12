@@ -4,7 +4,7 @@
 
 - Directory [_open5gs_](./open5gs): instructions and Helm charts to install and run 5g network on RPi cluster
 - Directory [_looptest_](./looptest): examples of reading Open5GS monitoring information from Prometheus
-- File `install_helm.sh`: script to install HELM
+- File [`install_helm.sh`](./install_helm.sh): script to install HELM
 
 # How to navigate
 
