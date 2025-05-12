@@ -2,7 +2,7 @@
 
 This document describes how to install and run Open5GS 5G core network and UERANSIM RAN emulator using Helm charts from Gradiant on Raspberry Pi. The original reference page can be found [here](https://gradiant.github.io/5g-charts/open5gs-ueransim-gnb.html), but it cannot be used directly, as some adaptations are necessary to make the platform work on Raspberry Pi.
 
-If you cloned this repository, it is ready to use and you can implement the entire platform (Open5GS and UERANSIM) fully customized to our needs. In this case you can skip section **Prepare Open5GS Helm chart** below and go directly to step [Deploy Open5GS](deploy-open5gs). However, if you are interested in the details of the modifications necessary to run the platform on Raspberry Pi, you may want to start from scratch and follow all steps beginning from [Prepare Open5GS Helm chart](prepare-open5gs-helm-chart).
+If you cloned this repository, it is ready to use and you can implement the entire platform (Open5GS and UERANSIM) fully customized to our needs. . In this case you can skip section **Prepare Open5GS Helm chart** below and go directly to step [Deploy Open5GS](deploy-open5gs). This is the recommended approach to do the lab. However, if you are interested in the details of the modifications necessary to run the platform on Raspberry Pi, you may want to start from scratch and follow all steps beginning from [Prepare Open5GS Helm chart](prepare-open5gs-helm-chart).
 
 # Prepare Open5GS Helm chart
 
@@ -67,8 +67,8 @@ We use custom image of mongodb container able to run on Raspberry Pi. Another op
           image: dburszty/mongodb-raspberrypi:7.0.14
     ```
     
-  - in file `5g-taskforce/open5gs/open5gs-228/values.yaml` set
-    Note: With the configuration given below, 20 User Equipment (UE) are registered in the core network database when the 5G core network is deployed. This registration does not set up a bearer session for the terminals. It only corresponds to the network provider registering 20 SIM cards, which allows the terminals to connect to the network in the future. In fact, the mobile network operator registers the UE in a separate process when user accounts are created. Here, the _populate_ container is an add-on from Gradiant that simplifies the use of Open5GS/UERANSIM during experiments by creating user accounts in bulk.
+  - in file `5g-taskforce/open5gs/5gSA-values-enable-metrics-v228.yaml` set
+    Note: With the configuration given below, 20 User Equipments (UE) are registered in the core network database when the 5G core network is deployed. This registration does not set up a bearer session for the terminals, though. It only corresponds to the network provider registering 20 SIM cards (or user accounts), which subsequently will be used in nNAS (Non-Access Stratum) signalling procedures to certify the terminals attaching to the network. In fact, the mobile network operator registers user accounts in the core databases in a separate process when the accounts are created based on orders form customer services. Here, the _populate_ container is a handy add-on from Gradiant that simplifies the use of Open5GS/UERANSIM during experiments by populating user accounts in the Open5GS core network database in bulk.
     
 ```
 populate:
@@ -108,3 +108,4 @@ populate:
 
 # Deploy Open5GS
 
+During deploying our instance of Open5GS core network, 20 user equipments (user SIM cards/user accounts, UE) are populated in the core network data base. This setting is configured in file `5g-taskforce/open5gs/5gSA-values-enable-metrics-v228.yaml` (in the original Gradiant documentation this file is named 5gSA-values.yaml, but we changed this name to emphasize that we are using a customizewd version of the file). During experientation, you will be allowed to attach to the network as many UEs as this number.
