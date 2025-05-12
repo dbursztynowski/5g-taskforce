@@ -2,7 +2,9 @@
 
 This document describes how to install and run Open5GS 5G core network and UERANSIM RAN emulator using Helm charts from Gradiant on Raspberry Pi. The original reference page can be found [here](https://gradiant.github.io/5g-charts/open5gs-ueransim-gnb.html), but it cannot be used directly, as some adaptations are necessary to make the platform work on Raspberry Pi.
 
-If you cloned this repository, it is ready to use and you can implement the entire platform (Open5GS and UERANSIM) fully customized to our needs. . In this case you can skip section **Prepare Open5GS Helm chart** below and go directly to step [Deploy Open5GS](deploy-open5gs). This is the recommended approach to do the lab. However, if you are interested in the details of the modifications necessary to run the platform on Raspberry Pi, you may want to start from scratch and follow all steps beginning from [Prepare Open5GS Helm chart](prepare-open5gs-helm-chart).
+If you cloned this repository, it is ready to use and you can implement the entire platform (Open5GS and UERANSIM) fully customized to our needs. In this case you can skip section **Prepare Open5GS Helm chart** below and go directly to step [Deploy Open5GS](deploy-open5gs). This is the recommended approach to do the lab. However, if you are interested in the details of the modifications necessary to run the platform on Raspberry Pi, you may want to start from scratch and follow all steps beginning from [Prepare Open5GS Helm chart](prepare-open5gs-helm-chart).
+
+The key competencies for our lab are the implementation of Open5GS and UERANSIM and the management of UEs in the network by attaching (joining the network) and detaching (leaving the network) groups of UEs. In opur experiments, attaching/detaching UEs will lead to triggering resource scaling operations. Emulating traffic generation by UEs is not mandatory for our lab  but is also covered in this guide (well, `ping` command can be used to verify if all works fine on the 5G network level).
 
 # Prepare Open5GS Helm chart
 
@@ -140,8 +142,6 @@ Once all the pods are up and running you can step to installing and operating UE
 UERANSIM in RAN network emulator including both gNB and user equipments (terminals, UE). In Gradiant implementation each of these parts is created as a separate deployment/container (`ueransim-gnb` for gNB and `ueransim-gnb-ues` for a set of UEs). UEs are implemented in a container responsible for handling radio interface signalling procedures and bearer session to carry data plane traffic. In fact, UERANSIM handles higher layers of the signalling radio stack - Radio Resource Control (RRC) and Non-Access Stratum (NAS) layers. For the user of the UERANSIM emulator (like us or programs that can be attached) UEs are accessible in the form of TUN interfaces created in the network namespace of `ueransim-gnb-ues` Pod. One can run `exec` on the Pod to run Linux commands for created TUN interfaces and generate UE application traffic. UE application traffic in UERANSIM is handled in the protocol stack IP/SDAP/PDCP/RLC. More on application traffic generation later in this document.
 
 In Gradiant implementation of UERANSIM, UEs can be attached to the network (and detached) in bulk using Helm commands with customized parameters. UEs attached in bulk are run (represented by their TUN interfaces) in distinct deployment/container (with unique name). While it is possible to attach UEs to the network one by one in a single deployment, we will use the bulk (multi-deployment) option in this lab because it better suits our needs and is simpler to use. More on this later.
-
-The key competencies for our lab are the implementation of Open5GS and UERANSIM and the management of UEs in the network by attaching (joining the network) and detaching (leaving the network) groups of UEs. Emulating traffic generation by UEs is not mandatory but is also covered in this guide.
 
 ## Deploying UERANSIM with the initial set of UEs attached
 
