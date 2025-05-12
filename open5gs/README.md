@@ -68,7 +68,8 @@ We use custom image of mongodb container able to run on Raspberry Pi. Another op
     ```
     
   - in file `5g-taskforce/open5gs/open5gs-228/values.yaml` set
-    Note: With the configuration given below, 20 User Equipment (UE) are registered in the core network database when the 5G core network is deployed. This registration does not set up a bearer session for the terminals. It only corresponds to the network provider registering 20 SIM cards, which allows the terminals to connect to the network in the future. In fact, the mobile network operator registers the UE in a separate process when user accounts are created. Here, the _populate_ container is an add-on from Gradiant that simplifies the use of Open5GS/UERANSIM during experiments by creating user accounts in bulk.  
+    Note: With the configuration given below, 20 User Equipment (UE) are registered in the core network database when the 5G core network is deployed. This registration does not set up a bearer session for the terminals. It only corresponds to the network provider registering 20 SIM cards, which allows the terminals to connect to the network in the future. In fact, the mobile network operator registers the UE in a separate process when user accounts are created. Here, the _populate_ container is an add-on from Gradiant that simplifies the use of Open5GS/UERANSIM during experiments by creating user accounts in bulk.
+    
 ```
 populate:
   enabled: true
