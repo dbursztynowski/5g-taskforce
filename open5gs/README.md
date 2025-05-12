@@ -162,3 +162,18 @@ $ helm uninstall ueransim-gnb
 
 The result is detaching from the newtwork the UEs emulated in the uninstalled Helm release (and in respective deployment/pod that is deleted under the hood). In a real network, it would correspond to multiple terminals detaching from the network (e.g., switching off or setting airplane mode).
 
+## Connecting additional UEs to the network (bulk)
+
+Subsequent groups (bulks) of UEs can be created using Helm as distinct Helm releases as show below. In the following, we create Helm release named `ueransim-ues-additional` athat is connected to gNB named 'ueransim-gnb' (implemented by deployment with the same name 'ueransim-gnb') and containing 5 additional UEs. The first of the UEs will be assigned MSISDN `0000000005` and consecutive UEs will receive subsequent MSISDN numbers.
+
+Note 1: More groups can be created in a similar way, but must not exceed the total number of UEs declared in Open5$GS core.
+Note 2: Remember that MSISDN of our UEs start form the value 0000000001 and always keep track of the MSISDN of ubsequent UEs when UEs get connected and disconnected form the network.
+```
+$ helm install -n default ueransim-ues-additional oci://registry-1.docker.io/gradiant/ueransim-ues \
+  --set gnb.hostname=ueransim-gnb --set count=5 --set initialMSISDN="0000000005"
+```
+
+Deleting additional UEs from a given helm release
+```
+$ helm delete ueransim-ues-additional
+```
