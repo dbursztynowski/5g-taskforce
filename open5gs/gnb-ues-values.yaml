@@ -2,6 +2,7 @@
 ## - container image version gradiant/ueransim:dev-b68de9b (tag dev-b68de9b)
 ##   this tag is claimed to support iperf 3 (we do not need it in our lab, but it's good to know)
 ## - four UEs to be initially created
+## Note: initialMSISDN: '0000000001' - MSISDN part of the SUPI of the first UE attached; next UEs attached will be assigned consecutive MSISDN numbers.
 
 image:
   registry: docker.io
