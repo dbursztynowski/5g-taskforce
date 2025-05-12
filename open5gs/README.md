@@ -141,3 +141,24 @@ UERANSIM in RAN network emulator including both gNB and user equipments (termina
 
 In Gradiant implementation of UERANSIM, UEs can be attached to the network (and detached) in bulk using Helm commands with customized parameters. UEs attached in bulk are run (represented by their TUN interfaces) in distinct deployment/container (with unique name). While it is possible to attach UEs to the network one by one in a single deployment, we will use the bulk (multi-deployment) option in this lab because it better suits our needs and is simpler to use. More on this later.
 
+## Deploying UERANSIM with the initial set of UEs attached
+
+Running the following command deployes UERANSIM, connects the gNB to the Open5GS core network and connects an initial set of four UEs to the network (attaching UE corresponds to what happens when you switch on your mobile device). The number of UEs to create is configured in file gnb-ues-values.yaml (currently it equals 4).
+- NOTE: We create UEs in groups (bulk). From the Helm perspective, each group is implemented in a separate Helm release. From the Kubernetes perspective, the group is implemented as deployment (with respective pod and container in the pod). Below command installs Helm relase named `ueransim-gnb`. We assume deploying UERANSIM in the same namespace as Open5GS.
+
+```
+$ helm install ueransim-gnb oci://registry-1.docker.io/gradiant/ueransim-gnb --version 0.2.6 --values ./gnb-ues-values.yaml
+```
+
+Successfull installation of UERANSIM will print multiple "help" lines on the screen describing different options of using UERANSIM. After that, wait a while until both ueransin-gnb and ueransim-gnb-ues pods are up and running. You can check this running `kubectl get pods --watch`.
+
+## Bulk disconnection (detachement) of connected UEs
+
+Detaching connected UEs can be achieved by uninstalling respective Helm release, e.g.:
+
+```
+$ helm uninstall ueransim-gnb
+```
+
+The result is detaching from the newtwork the UEs emulated in the uninstalled Helm release (and in respective deployment/pod that is deleted under the hood). In a real network, it would correspond to multiple terminals detaching from the network (e.g., switching off or setting airplane mode).
+
