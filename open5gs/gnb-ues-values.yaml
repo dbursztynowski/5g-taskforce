@@ -3,6 +3,13 @@
 ##   this tag is claimed to support iperf 3 (we do not need it in our lab, but it's good to know)
 ## - four UEs to be initially created
 ## Note: initialMSISDN: '0000000001' - MSISDN part of the SUPI of the first UE attached; next UEs attached will be assigned consecutive MSISDN numbers.
+## mcc: Mobile Country Code (part of SUPI)
+## mnc: Mobile Network Code (part of SUPI)
+## sst: Slice Service Type (part of S-NSSAI)
+## sd: Slice Differentiator (part of S-NSSAI)
+## tac: Tracking Area Code (tracking area respective cell/gNB belongs to - same as for serving gNB)
+
+
 
 image:
   registry: docker.io
