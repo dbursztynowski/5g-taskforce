@@ -150,7 +150,9 @@ kubectl patch -n $NAMESPACE pod $podname --subresource resize --patch \
 
 ## 2.2 Scale Open5GS UPF function
 
-It is assumed that all components (Open5GS and the monitoring platform) have been installe according to our instructions. Otherwise some details may differ.
+_Note: While doing this exercise, you may want to check the number of amf_sessions independently by querying Prometheus. In that case, first follow the instructions in section 2.3 and use them when scaling the UPF._
+
+Below, it is assumed that all components (Open5GS and the monitoring platform) have been installed according to our instructions. Otherwise some details may differ and soem adaptations may be required.
 
 <pre><font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl get pods
 NAME                                       READY   STATUS    RESTARTS        AGE
@@ -189,18 +191,21 @@ pod/<font color="#26A269"><b>open5gs-upf-8444fdb48d-sv26l</b></font> patched
 
 ## 2.3 Retrieve the number of UE sessions set up in the network
 
-The number of active sessions registered in the AMF function is read. Prometheus scrapes this metric from the AMF target every 15 seconds. We read it by querying Prometheus.
+The number of active sessions registered in the AMF function is read. Prometheus scrapes this metric from the AMF target every 15 seconds. We read it by querying Prometheus. Below, several examples of reading metric value are given. They can be adapted to implement more complex control loops, e.g., in bash or Python.
 
 ### Using a browser
 ```
 http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-metrics",namespace="default"}`
 ```
-### Curl on Linux
-- command line (here, Open5GS runs in default namespace)
+
+### Using curl on Linux
+
+- directly from command line (here, Open5GS runs in default namespace)
 ```
 curl 10.254.186.64:9090/api/v1/query -G -d 'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | jq
 ```
-- bash script (here, NAMESPACE is the namespace of Open5GS; PROMETHEUS_ADDR is a reachable address of Prometheus)
+
+- embedded in a bash script (here, NAMESPACE is the namespace of Open5GS; PROMETHEUS_ADDR is a reachable address of Prometheus)
 ```
 # read the value of metric amf_sessions from Prometheus;
 query="query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"$NAMESPACE\"}"
@@ -208,7 +213,8 @@ echo -e "\nquery:" ${query}
 amf_sessions=$(curl -s ${PROMETHEUS_ADDR}:9090/api/v1/query -G -d \
      ${query} | jq '.data.result[0].value[1]' | tr -d '"')
 ```
-### Curl on Windows
+
+### Using curl on Windows
 (here, Open5GS runs in default namespace)
 ```
 curl 10.254.186.64:9090/api/v1/query -G -d "query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"default\"}"
