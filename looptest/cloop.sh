@@ -2,7 +2,7 @@
 
 # Version 2025.04.17
 
-# The script reads amf_sessions from Open5GS Prometheus, compares it to reference ranges and scales UPF accordingly
+# This script reads amf_sessions metric from Open5GS Prometheus, compares it to reference ranges and scales the UPF accordingly.
 
 #############
 # PARAMETERS
