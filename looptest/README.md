@@ -5,12 +5,11 @@ This page describes a simple experiment with in place pod vertical scaling using
 1. [Enabling InPlacePodVerticalScaling](./README.md#enabling-inplacepodverticalscaling)
    
    1.1 [Enable during k3s installation](./README.md#11-enable-during-k3s-installation)
-   
    1.2 [Enable on a running k3s cluster](./README.md#12-enable-on-a-running-k3s-cluster)
    
-2. [Testing in place scaling of pods](./README.md#2-testing-in-place-scaling-of-pods)
+2. [Testing in-place pod scaling](./README.md#2-testing-in-place-pod-scaling)
    
-   2.1 [Scale simple test pod](./README.md#21-scale-simple-test-pod)
+   2.1 [Scale a simple test pod](./README.md#21-scale-a-simple-test-pod)
    
    2.2 [Scale Open5GS UPF function](./README.md#22-scale-open5gs-upf-function)
    
@@ -18,10 +17,9 @@ This page describes a simple experiment with in place pod vertical scaling using
 
 3. [Conclusion](./README.md#3-conclusion)
    
-
 # 1. Enabling InPlacePodVerticalScaling
 
-If InPlacePodVerticalScaling is enabled in your cluster you can skip this section and go to [testing](#testing-in-place-scaling-of-pods).
+If InPlacePodVerticalScaling is enabled in your cluster you can skip this section and go to [testing](#testing-in-place-scaling-of-pods). This is the case if you installed k3s cluster using our Ansible guide. Otherwise follow the rest of this section.
 
 ## 1.1. Enable during k3s installation
 
@@ -98,9 +96,9 @@ ubuntu@k3s02:~$ sudo systemctl start k3s-agent.service
 ```
 3) Check if in place scaling works - see the next section.
 
-# 2. Testing in place scaling of pods
+# 2. Testing in-place pod scaling
 
-## 2.1 Scale simple test pod
+## 2.1 Scale a simple test pod
 
 ### Define and create the pod
 ```
