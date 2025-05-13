@@ -202,3 +202,7 @@ $ helm uninstall ueransim-ues-additional
 This will detach all UEs emulated by the uninstalled Helm release from the network (respective deployment/pod is deleted under the hood). In a real network, it would correspond to multiple terminals undergoing network detach procedure (e.g., switching off or entering airplane mode). 
 
 _Notice that the above uninstall command applies to a Helm release dedicated only to a group of UEs (and respective deployment/container under the hood). You should not try to adapt this command to detach in bulk the initial set of UEs (those activated together with gNB when UERANSIM was created)._
+
+## Next steps
+
+Having UERANSIM and Open5GS core up and running, and knowing how to manage groups of UEs, you can now proceed to service monitoring and resource scaling documented in [_looptest_](./looptest).
