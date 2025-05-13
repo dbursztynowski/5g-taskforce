@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This file is is for testing purposes
+
 ##name: site-status.sh
 
 #FAIL_CODE=6
