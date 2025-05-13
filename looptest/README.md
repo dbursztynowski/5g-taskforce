@@ -154,6 +154,7 @@ _Note: While doing this exercise, you may want to check the number of amf_sessio
 
 Below, it is assumed that all components (Open5GS and the monitoring platform) have been installed according to our instructions. Otherwise some details may differ and soem adaptations may be required.
 
+```
 <pre><font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl get pods
 NAME                                       READY   STATUS    RESTARTS        AGE
 open5gs-amf-57c6c6c65b-vhh8c               1/1     Running   0               4h39m
@@ -188,6 +189,7 @@ pod/<font color="#26A269"><b>open5gs-upf-8444fdb48d-sv26l</b></font> patched
 <b>  }</b>
 <b>}</b>
 <font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$</pre>
+```
 
 ## 2.3 Retrieve the number of UE sessions set up in the network
 
