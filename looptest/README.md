@@ -136,13 +136,13 @@ EOT
 
 Below, we scale property _limits_ of container CPU resource. We could also scale property _requests_ or scale both properties at a time.
 
-  - using kubectl in terminal window
+  - scale using kubectl in terminal window
 ```
 $ kubectl apply -f testinplace.yaml
 $ kubectl patch -n tests pod inplacedemo --subresource resize --patch \
 '{"spec":{"containers":[{"name":"inplacedemo", "resources":{"limits":{"cpu":"150m"}}}]}}'
 ```
-  - using kubectl in bash script
+  - scale using kubectl in bash script
 
     Note: this version works also when resource quotas are passed as variables as $cpu in this example.
 ```
@@ -153,12 +153,13 @@ kubectl patch -n $NAMESPACE pod $podname --subresource resize --patch \
 
 ## 2.2 Scale Open5GS UPF function
 
-_Note: While doing this exercise, you may want to check the number of amf_sessions independently by querying Prometheus. In that case, first follow the instructions in section 2.3 and use them when scaling the UPF._
+_Note: While doing this exercise, you may want to double check the number of amf_sessions by querying Prometheus. In that case, first follow the instructions in section 2.3 and use them when scaling the UPF._
 
-Below, it is assumed that all components (Open5GS and the monitoring platform) have been installed according to our instructions. Otherwise some details may differ and soem adaptations may be required.
+Below, it is assumed that all components (Open5GS/UERANSIM and the monitoring platform) have been installed following our instructions. Otherwise some details may differ and adaptations may be required.
 
 <pre>
 # get pods to have their names displayed
+
 <font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl get pods
 NAME                                       READY   STATUS    RESTARTS        AGE
 open5gs-amf-57c6c6c65b-vhh8c               1/1     Running   0               4h39m
@@ -180,11 +181,13 @@ ueransim-gnb-ues-5b68cf9b78-gd4lr          1/1     Running   1 (4h7m ago)    4h7
 ueransim-ues-additional-6bcb88756c-ldjwq   1/1     Running   0               4h5m
    
 # patch (scale) the UPF pod (here, we scale property 'limits' of container CPU)
+
 <font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl patch -n default pod <font color="#26A269"><b>open5gs-upf-8444fdb48d-sv26l</b></font> --subresource resize --patch  \
 &apos;{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;<font color="#DC143C"><b>open5gs-upf</b></font>&quot;, &quot;resources&quot;:{&quot;limits&quot;:{&quot;cpu&quot;:&quot;150m&quot;}}}]}}&apos;
 pod/<font color="#26A269"><b>open5gs-upf-8444fdb48d-sv26l</b></font> patched
    
 # check if the pod has been resized as requested
+
 <font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl get pods/<font color="#26A269"><b>open5gs-upf-8444fdb48d-sv26l</b></font> \
 -o=jsonpath=&apos;{.status.containerStatuses[0].resources}&apos; | jq
 <b>{</b>
