@@ -154,7 +154,6 @@ _Note: While doing this exercise, you may want to check the number of amf_sessio
 
 Below, it is assumed that all components (Open5GS and the monitoring platform) have been installed according to our instructions. Otherwise some details may differ and soem adaptations may be required.
 
-*# get pods to have their names displayed*
 <pre><font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl get pods
 NAME                                       READY   STATUS    RESTARTS        AGE
 open5gs-amf-57c6c6c65b-vhh8c               1/1     Running   0               4h39m
