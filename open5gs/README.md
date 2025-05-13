@@ -8,9 +8,9 @@
    - [Deployment](#deployment)
 4. [Deploy UERANSIM](#deploy-ueransim)
    - [Introduction](#introduction)
-   - [Deploying UERANSIM with initial set of UEs attached](#deploying-ueransim-with-initial-set-of-ues-attached)
-   - [Generating UE data plane traffic](#generating-ue-data-plane-traffic)
-   - [Connecting additional UEs to the network (bulk attach)](#connecting-additional-ues-to-the-network-bulk-attach)
+   - [Deploy UERANSIM with initial set of UEs attached](#deploy-ueransim-with-initial-set-of-ues-attached)
+   - [Generate UE data plane traffic](#generate-ue-data-plane-traffic)
+   - [Connect additional UEs to the network (bulk attach)](#connect-additional-ues-to-the-network-bulk-attach)
    - [Bulk disconnection (detachement) of additional connected UEs](#bulk-disconnection-detachement-of-additional-connected-ues)
 5. [Next steps](#next-steps)
 
@@ -159,7 +159,7 @@ UERANSIM in RAN network emulator including both gNB and user equipments (termina
 
 In Gradiant implementation of UERANSIM, UEs can be attached to the network (and detached) in bulk using Helm commands with customized parameters. UEs attached in bulk are run (represented by their TUN interfaces) in distinct deployment/container (with unique name). While it is possible to attach UEs to the network one by one in a single deployment, we will use the bulk (multi-deployment) option in this lab because it better suits our needs and is simpler to use. More on this later.
 
-## Deploying UERANSIM with initial set of UEs attached
+## Deploy UERANSIM with initial set of UEs attached
 
 Running the following command deployes UERANSIM, connects the gNB to the Open5GS core network and connects an initial set of four UEs to the network (attaching UE corresponds to what happens when you switch on your mobile device). The number of UEs to create is configured in file gnb-ues-values.yaml (currently it equals 4).
 - NOTE: We create UEs in groups (bulk). From the Helm perspective, each group is implemented in a separate Helm release. From the Kubernetes perspective, the group is implemented as deployment (with respective pod and container in the pod). Below command installs Helm relase named `ueransim-gnb`. We assume deploying UERANSIM in the same namespace as Open5GS.
@@ -170,7 +170,7 @@ $ helm install ueransim-gnb oci://registry-1.docker.io/gradiant/ueransim-gnb --v
 
 Successfull installation of UERANSIM will print multiple "help" lines on the screen describing different options of using UERANSIM. After that, wait a while until both ueransin-gnb and ueransim-gnb-ues pods are up and running. You can check this running `kubectl get pods --watch`.
 
-## Generating UE data plane traffic
+## Generate UE data plane traffic
 
 This can be achieved by doing `kubectl exec` on respective pod/container. In the following example we log to container shlell and run ping command in the terminal.
 
@@ -190,9 +190,7 @@ The above commands can be run without directly entering the container's shell, e
 $ kubectl exec deployment/ueransim-gnb-ues -- /bin/bash -c "curl --interface uesimtun0 https://google.com"
 ```
 
-## Connecting additional UEs to the network (bulk attach)
-
-**sprawdzić nazwę dodatkowego deploymentu - ueransim-ues-additional czy inna? !!!!!!!!!!!!!!!!!**
+## Connect additional UEs to the network (bulk attach)
 
 Subsequent groups (bulks) of UEs can be created using Helm as distinct Helm releases as show below. 
 
