@@ -189,6 +189,8 @@ $ helm install ueransim-ues-additional oci://registry-1.docker.io/gradiant/ueran
 
 In this example, we create Helm release named `ueransim-ues-additional` that will deploy a separate deployment/container implementing a group of UEs. This deployment will be named `ueransim-ues-additional`, so after its Helm release. Its UEs will be connected to the existing gNB named `ueransim-gnb` (`--set gnb.hostname=ueransim-gnb`) implemented by a deployment with the same name `ueransim-gnb`. This UE group will contain 5 additional UEs (`--set count=5`). The first of the additional UEs will be assigned MSISDN `0000000005` (`initialMSISDN="0000000005"`) and (according the population rules of the `populate` container) consecutive UEs will receive subsequent MSISDN numbers.
 
+You can execute commands related to particular UEs (respective TUN interfaces) the same way as before for the initial set of UEs.
+
 ## Bulk disconnection (detachement) of additional connected UEs
 
 Detaching additional connected UEs can be achieved by uninstalling respective Helm release, e.g.:
@@ -199,4 +201,4 @@ $ helm uninstall ueransim-ues-additional
 
 This will detach all UEs emulated by the uninstalled Helm release from the network (respective deployment/pod is deleted under the hood). In a real network, it would correspond to multiple terminals undergoing network detach procedure (e.g., switching off or entering airplane mode). 
 
-Notice that the above uninstall command applies to a Helm release dedicated only to a group of UEs (and respective deployment/container under the hood). You should not try to adapt this command to detach in bulk the initial set of UEs (those activated together with gNB when UERANSIM was created). 
+_Notice that the above uninstall command applies to a Helm release dedicated only to a group of UEs (and respective deployment/container under the hood). You should not try to adapt this command to detach in bulk the initial set of UEs (those activated together with gNB when UERANSIM was created)._
