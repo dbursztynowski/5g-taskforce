@@ -1,8 +1,10 @@
 # Contents
 1. [Installation of Open5GS and UERANSIM](#installation-of-open5gs-and-ueransim)
 2. [Prepare Open5GS Helm chart](#prepare-open5gs-helm-chart)
-   [Download Open5GS Helm chart](#download-open5gs-helm-chart)
-   [Modify Open5GS Helm chart](#modify-open5gs-helm-chart)
+
+   - [Download Open5GS Helm chart](#download-open5gs-helm-chart)
+
+   - [Modify Open5GS Helm chart](#modify-open5gs-helm-chart)
 
 [Deploy Open5GS](#deploy-open5gs)
 
