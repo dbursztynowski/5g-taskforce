@@ -1,4 +1,17 @@
- - SOURCES:
+*****************************************************************
+*****************************************************************
+
+THIS FILE IS AUXILIARY CONTAINING LOTS OF REDUNDANT AND OBSOLETE 
+INFORMATION.
+
+WE KEEP JUST FOR THE RECORD.
+
+NOT RECOMMENDED FOR USE BY SPIW STUDENTS.
+
+******************************************************************
+******************************************************************
+
+- SOURCES:
 https://gradiant.github.io/5g-charts/open5gs-ueransim-gnb.html
 https://github.com/Gradiant/5g-charts/tree/main/charts
 ******************************************************
