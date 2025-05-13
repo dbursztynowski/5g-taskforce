@@ -194,8 +194,8 @@ $ kubectl exec deployment/ueransim-gnb-ues -- /bin/bash -c "curl --interface ues
 
 Subsequent groups (bulks) of UEs can be created in the form of distinct Helm releases as shown below. 
 
-Note 1: More groups can be created in a similar way, but the total number of connected UEs must not exceed the number of UEs declared (populated) in Open5$GS core (20 if you used our template of container _populate_ shown in this [section](#modifications-in-mongodb-webui-and-populate-charts)).
-Note 2: Remember that MSISDN of our UEs start from the value `0000000001`, and always keep track of the MSISDNs taken by existing UEs and free MSISDNs when the UEs get connected and disconnected from the network.
+- Note 1: More groups can be created in a similar way, but the total number of connected UEs must not exceed the number of UEs declared (populated) in Open5$GS core (20 if you used our template of container _populate_ shown in this [section](#modifications-in-mongodb-webui-and-populate-charts)).
+- Note 2: Remember that MSISDN of our UEs start from the value `0000000001`, and always keep track of the MSISDNs taken by existing UEs and free MSISDNs when the UEs get connected and disconnected from the network.
 ```
 $ helm install ueransim-ues-additional oci://registry-1.docker.io/gradiant/ueransim-ues \
   --set gnb.hostname=ueransim-gnb --set count=5 --set initialMSISDN="0000000005"
