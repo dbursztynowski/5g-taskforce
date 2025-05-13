@@ -143,7 +143,7 @@ UERANSIM in RAN network emulator including both gNB and user equipments (termina
 
 In Gradiant implementation of UERANSIM, UEs can be attached to the network (and detached) in bulk using Helm commands with customized parameters. UEs attached in bulk are run (represented by their TUN interfaces) in distinct deployment/container (with unique name). While it is possible to attach UEs to the network one by one in a single deployment, we will use the bulk (multi-deployment) option in this lab because it better suits our needs and is simpler to use. More on this later.
 
-## Deploying UERANSIM with the initial set of UEs attached
+## Deploying UERANSIM with initial set of UEs attached
 
 Running the following command deployes UERANSIM, connects the gNB to the Open5GS core network and connects an initial set of four UEs to the network (attaching UE corresponds to what happens when you switch on your mobile device). The number of UEs to create is configured in file gnb-ues-values.yaml (currently it equals 4).
 - NOTE: We create UEs in groups (bulk). From the Helm perspective, each group is implemented in a separate Helm release. From the Kubernetes perspective, the group is implemented as deployment (with respective pod and container in the pod). Below command installs Helm relase named `ueransim-gnb`. We assume deploying UERANSIM in the same namespace as Open5GS.
@@ -169,7 +169,7 @@ $ kubectl exec -it deployment/ueransim-gnb-ues -- /bin/bash
 ...
 ```
 
-The above commands can be run not entering the container's shell, e.g.:
+The above commands can be run without directly entering the container's shell, e.g.:
 ```
 $ kubectl exec deployment/ueransim-gnb-ues -- /bin/bash -c "curl --interface uesimtun0 https://google.com"
 ```
@@ -197,4 +197,6 @@ Detaching additional connected UEs can be achieved by uninstalling respective He
 $ helm uninstall ueransim-ues-additional
 ```
 
-This will detach all UEs emulated by the uninstalled Helm release from the network (respective deployment/pod is deleted under the hood). In a real network, it would correspond to multiple terminals undergoing network detach procedure (e.g., switching off or entering airplane mode).
+This will detach all UEs emulated by the uninstalled Helm release from the network (respective deployment/pod is deleted under the hood). In a real network, it would correspond to multiple terminals undergoing network detach procedure (e.g., switching off or entering airplane mode). 
+
+Notice that the above uninstall command applies to a Helm release dedicated only to a group of UEs (and respective deployment/container under the hood). You should not try to adapt this command to detach in bulk the initial set of UEs (those activated together with gNB when UERANSIM was created). 
