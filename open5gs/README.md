@@ -178,7 +178,7 @@ Successfull installation of UERANSIM will print multiple "help" lines on the scr
 
 The structure of our UERANSIM component is depicted in the figure below. There is one deployment/pod performing the functions of gNB and there can be several deployments/pods each emulating a subset of UEs - user mobile devices. Each UE is represented as TUN interface in the pod with name uesimtun0,ueasimtun1, etc. Typical commands (ping, curl, ...) can be applied to these interfaces to generate/receive traffic to/from the ouside of our 5G core network (e.g., to the Internet if our infrastructure provides such connectivity). Our initial setup contains the gNB deployment named `ueransim-gnb` and one UE deployment named `ueransim-gnb-ues`, the latter hosting a group of four UEs. More UEs can be attached to the network and later on we will use an option relying on the creation of additional UE deployment(s). Each such additional UE deployment can host several UEs whose number is specified in the creation command. In the figure below, additional UE deployment is shown with the name `ueransim-additional-ues` (though it is not present after initial installation). Additional UE deployents can be added and deleted thus modifying the number of UEs attached to the network.
 
-<img src="/figures/ueransim-arch.jpg" alt="UERANSIM architecture and UE deployments" width="300">
+<img src="/figures/ueransim-arch.jpg" alt="UERANSIM architecture and UE deployments" width="1000" style="display: block; margin: 0 auto">
 
 ![UERANSIM architecture and UE deployments](/figures/ueransim-arch.jpg "UERANSIM architecture and UE deployments")
 
