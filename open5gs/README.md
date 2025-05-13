@@ -30,6 +30,8 @@ The key competencies for our lab are the implementation of Open5GS and UERANSIM 
 
 This step is necessary, because we have to modify several settings to adapt the platform for Raspberry Pi.
 
+Throughout this document, it is assumed `open5gs` is the the name of the leaf directory on the working directory path.
+
 ```
 $ helm pull oci://registry-1.docker.io/gradiantcharts/open5gs --version 2.2.8
 $ mkdir open5gs-228
@@ -130,6 +132,8 @@ populate:
 
 ## Remarks
 During deploying our instance of Open5GS core network, 20 user equipments (user SIM cards/user accounts, UE) are populated in the core network data base. This setting is configured in file `5g-taskforce/open5gs/5gSA-values-enable-metrics-v228.yaml` (in the original Gradiant documentation this file is named 5gSA-values.yaml, but we changed this name to emphasize that we are using a customizewd version of the file). During the experiments, you will be able to connect as many UE devices to the network as this number.
+
+As stated before, it is assumed `open5gs` is the the name of the leaf directory on the working directory path.
 
 ## Deployment
 
