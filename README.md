@@ -26,3 +26,5 @@ The control loop, driven by a selected service-level metric, will operate on res
 
 IMPORTANT: Before starting, **read the [README](./looptest/README.md) in the the directory looptest**. If you followed all our installation guides then in place pod vertical scaling should be enabled already, but it can be enabled even now which is described [here](./looptest/README.md#README.md#1-enabling-inplacepodverticalscaling).
 
+_Note: Control loops in Kubernetes can be deployed using Kubernetes Operator Framework. This is a native approach to orchestrate resources in Kubernetes, but its entry level exceeds the limitations of our course. Additionally, operators may not be a right choice for managing higher-level abstractions where using dedicated applications may be more suitable. The latter is closer in spirit to the approach adopted in our project._
+
