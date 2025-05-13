@@ -133,6 +133,9 @@ spec:
 EOT
 ```
 ### Run the pod and test in place scaling
+
+Below, we scale property _limits_ of container CPU resource. We could also scale property _requests_ or scale both properties at a time.
+
   - using kubectl in terminal window
 ```
 $ kubectl apply -f testinplace.yaml
@@ -176,7 +179,7 @@ ueransim-gnb-d7d765f99-zfcdd               1/1     Running   0               4h7
 ueransim-gnb-ues-5b68cf9b78-gd4lr          1/1     Running   1 (4h7m ago)    4h7m
 ueransim-ues-additional-6bcb88756c-ldjwq   1/1     Running   0               4h5m
    
-# patch (scale) the UPF pod (we scale container CPU)
+# patch (scale) the UPF pod (here, we scale property 'limits' of container CPU)
 <font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$ kubectl patch -n default pod <font color="#26A269"><b>open5gs-upf-8444fdb48d-sv26l</b></font> --subresource resize --patch  \
 &apos;{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;<font color="#DC143C"><b>open5gs-upf</b></font>&quot;, &quot;resources&quot;:{&quot;limits&quot;:{&quot;cpu&quot;:&quot;150m&quot;}}}]}}&apos;
 pod/<font color="#26A269"><b>open5gs-upf-8444fdb48d-sv26l</b></font> patched
