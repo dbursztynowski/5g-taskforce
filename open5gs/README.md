@@ -3,22 +3,20 @@
 2. [Prepare Open5GS Helm chart](#prepare-open5gs-helm-chart)
 
    - [Download Open5GS Helm chart](#download-open5gs-helm-chart)
-
    - [Modify Open5GS Helm chart](#modify-open5gs-helm-chart)
 
-[Deploy Open5GS](#deploy-open5gs)
+3. [Deploy Open5GS](#deploy-open5gs)
 
-  [Remarks](#remarks)
-  [Deployment](#deployment)
+   - [Remarks](#remarks)
+   - [Deployment](#deployment)
 
-[Deploy UERANSIM](#deploy-ueransim)
-
-  [Introduction](#introduction)
-  [Deploying UERANSIM with initial set of UEs attached](#deploying-ueransim-with-initial-set-of-ues-attached)
-  [Generating UE data plane traffic](#generating-ue-data-plane-traffic)
-  [Connecting additional UEs to the network (bulk attach)](#connecting-additional-ues-to-the-network-bulk-attach)
-  [Bulk disconnection (detachement) of additional connected UEs](#bulk-disconnection-detachement-of-additional-connected-ues)
-  [Next steps](#next-steps)
+4. [Deploy UERANSIM](#deploy-ueransim)
+   - [Introduction](#introduction)
+   - [Deploying UERANSIM with initial set of UEs attached](#deploying-ueransim-with-initial-set-of-ues-attached)
+   - [Generating UE data plane traffic](#generating-ue-data-plane-traffic)
+   - [Connecting additional UEs to the network (bulk attach)](#connecting-additional-ues-to-the-network-bulk-attach)
+   - [Bulk disconnection (detachement) of additional connected UEs](#bulk-disconnection-detachement-of-additional-connected-ues)
+5. [Next steps](#next-steps)
 
 # Installation of Open5GS and UERANSIM
 
