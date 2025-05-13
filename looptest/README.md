@@ -5,17 +5,18 @@ This page describes a simple experiment with in place pod vertical scaling using
 1. [Enabling InPlacePodVerticalScaling](./README.md#enabling-inplacepodverticalscaling)
    
    1.1 [Enable during k3s installation](./README.md#11-enable-during-k3s-installation)
+
    1.2 [Enable on a running k3s cluster](./README.md#12-enable-on-a-running-k3s-cluster)
    
-2. [Testing in-place pod scaling](./README.md#2-testing-in-place-pod-scaling)
+3. [Testing in-place pod scaling](./README.md#2-testing-in-place-pod-scaling)
    
    2.1 [Scale a simple test pod](./README.md#21-scale-a-simple-test-pod)
-   
+
    2.2 [Scale Open5GS UPF function](./README.md#22-scale-open5gs-upf-function)
-   
+
    2.3 [Retrieve the number of UE sessions set up in the network](./README.md#23-retrieve-the-number-of-ue-sessions-set-up-in-the-network)
 
-3. [Conclusion](./README.md#3-conclusion)
+4. [Conclusion](./README.md#3-conclusion)
    
 # 1. Enabling InPlacePodVerticalScaling
 
@@ -32,7 +33,7 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.32.3+k3s1   INSTALL_K3S_EX
   --kube-controller-manager-arg=feature-gates=InPlacePodVerticalScaling=true \
   --kube-scheduler-arg=feature-gates=InPlacePodVerticalScaling=true \
   --kubelet-arg=feature-gates=InPlacePodVerticalScaling=true \
-  --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true"   sh -
+  --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true" sh -
 ```
 
 For agent nodes, only
@@ -199,9 +200,9 @@ http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-me
 ```
 curl 10.254.186.64:9090/api/v1/query -G -d 'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | jq
 ```
-- bash script (here, NAMESPACE is the namespace of Open5GS; PROMETHEUS_ADDR is a reacheble address of Prometheus)
+- bash script (here, NAMESPACE is the namespace of Open5GS; PROMETHEUS_ADDR is a reachable address of Prometheus)
 ```
-# read the metric value: amf_sessions from Prometheus;
+# read the value of metric amf_sessions from Prometheus;
 query="query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"$NAMESPACE\"}"
 echo -e "\nquery:" ${query}
 amf_sessions=$(curl -s ${PROMETHEUS_ADDR}:9090/api/v1/query -G -d \
