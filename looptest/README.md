@@ -43,7 +43,7 @@ For agent nodes, only
 ```
 has to be added for each agent node.
 
-If you did not enable it during installation, follow the steps below.
+If you did not enable in-place pod vertical scaling during installation, follow the steps below.
 
 ## 1.2 Enable on a running k3s cluster
 
