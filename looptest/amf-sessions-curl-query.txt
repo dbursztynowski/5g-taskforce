@@ -1,4 +1,9 @@
-- curl query to get integer number of amf sessions (adapt the IP address of your Prometheus server)
-curl -s 10.0.0.3:9090/api/v1/query -G -d \
-     'query=amf_session{service="open5gs-amf-metrics",namespace="give-your-namespace-here"}' | \
-     jq '.[].data.result[0].value[1]' curl.json | tr -d '"'
+- curl query to get whole record for amf sessions (customize the IP address for your Prometheus server and the namespace for your Open5GS project)
+curl -s 192.168.10.56:9090/api/v1/query -G -d \
+     'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | \
+     jq
+
+- curl query to get integer number of amf sessions (customize the IP address for your Prometheus server and the namespace for your Open5GS project)
+curl -s 192.168.10.56:9090/api/v1/query -G -d \
+     'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | \
+     jq '.data.result[0].value[1]' | tr -d '"'
