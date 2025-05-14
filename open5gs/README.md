@@ -1,4 +1,6 @@
-# Installing Open5GS and UERANSIM
+## This the valid version for the SPIW lab.
+
+# Installing and operating Open5GS and UERANSIM
 
 ## Contents
 1. [Introduction](#introduction)
