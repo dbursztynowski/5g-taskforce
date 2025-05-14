@@ -21,8 +21,6 @@
 
 This document describes how to install and run Open5GS 5G core network and UERANSIM RAN emulator using Helm charts from Gradiant on Raspberry Pi. The original reference page can be found [here](https://gradiant.github.io/5g-charts/open5gs-ueransim-gnb.html), but it cannot be used directly, as some adaptations are necessary to make the platform work on ARM64/Raspberry Pi.
 
-If you cloned this repository, it is ready to use and you can implement the entire platform (Open5GS and UERANSIM) fully customized to our needs. In this case you can skip section **Prepare Open5GS Helm chart** below and go directly to step [Deploy Open5GS](deploy-open5gs). This is the recommended approach to do the lab. However, if you are interested in the details of the modifications necessary to run the platform on Raspberry Pi, you may want to start from scratch and follow all steps beginning from [Prepare Open5GS Helm chart](prepare-open5gs-helm-chart).
-
 The key competencies for our lab are the implementation of Open5GS and UERANSIM and the management of UEs in the network by attaching (joining the network) and detaching (leaving the network) groups of UEs. In particular, we will attach/detach UEs to trigger CPU scaling operations of the UPF (User Plane Function) in our Open5GS core network. Also also covered in this guide is traffic generation by UEs although it is not mandatory for our lab (well, `ping` command can be used to verify if all works fine on the 5G network level).
 
 A simplified top-level view of the 5G environment we are going to work with is shown in the figure below. There are two main part: Open5GS playing the role of 5G core network and UERANSIM being combined user equipment and RAN network emulator. Open5GS exhibits standard 3GPP interfaces (compliant with Release 17 as of this writing) and both parts interwork using standard N2 and N3 (and hidden N1) interfaces. In the figure, we explicitly present only AMF, SMF and UPF fuctions of the core because we will make explicit use of them (actually, SMF can be used, but we omit even this for simplicity). Remaining functions of the core are represented in the figure in aggregated way (but you can list them as Kubernetes deployments). As we will see later, each part (Open5GS, UERANSIM) can be created using Helm. User equipment groups (UE groups) in the figure correspond to groups of terminals emulated by UERANSIM, each group being implemented by a distinct Kubernetes deployment. Each group (thee container that implements the group) can be logged in to execute commands generating user traffic (ICMP/ping, HTTP/curl, etc.) More information about the internal structure of UERANSIM that is needed for the lab will be presented later on in this document.
@@ -31,7 +29,11 @@ A simplified top-level view of the 5G environment we are going to work with is s
 <img src="/figures/open5gs-ueransim-arch.jpg" alt="Open5GS/UERANSIM architecture" width="600" style="display: block; margin: 0 auto" />
 </p>
 
+If you cloned this repository, it is ready to use and you can implement the entire platform (Open5GS and UERANSIM) fully customized to our needs. In this case you can skip section **Prepare Open5GS Helm chart** below and go directly to step [Deploy Open5GS](deploy-open5gs). This is the recommended approach to do the lab. However, if you are interested in the details of the modifications necessary to run the platform on Raspberry Pi, you may want to start from scratch and follow all steps beginning from [Prepare Open5GS Helm chart](prepare-open5gs-helm-chart).
+
 # Prepare Open5GS Helm chart
+
+If you cloned this repository, you are ready to go directly to step [Deploy Open5GS](deploy-open5gs). This section is for newcomers and/or users interested in the adaptations required for deploying Gradiant Open5GS/UERANSIM on ARM64/Raspberry Pi.
 
 ## Download Open5GS Helm chart
 
