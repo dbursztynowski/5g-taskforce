@@ -27,7 +27,7 @@ The key competencies for our lab are the implementation of Open5GS and UERANSIM 
 
 A top-level view of the 5G environment we are going to work with is shown in the figure below. There are two main part: Open5GS playing the role of 5G core network and UERANSIM being combined user equipment and RAN network emulator. Open5GS exhibits standard 3GPP interfaces (compliant with Release 17 as of this writing) and both parts interwork using standard N2 and N3 (and hidden N1) interfaces. As we will see later, each part (Open5GS, UERANSIM) can be created using Helm. User equipment groups (UE groups) in the figure correspond to groups of terminals emulated by UERANSIM, each group being implemented by a distinct Kubernetes deployment. More information about the internal structure of UERANSIM that is needed for the lab will be presented later on in this document.
 
-<img src="/figures/open5gs-ueransim-arch.jpg" alt="Open5GS/UERANSIM architecture" width="700" style="display: block; margin: 0 auto">
+<img src="/figures/open5gs-ueransim-arch.jpg" alt="Open5GS/UERANSIM architecture" width="500" style="display: block; margin: 100 auto">
 
 # Prepare Open5GS Helm chart
 
