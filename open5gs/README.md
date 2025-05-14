@@ -18,7 +18,7 @@
 
 # Introduction
 
-This document describes how to install and run Open5GS 5G core network and UERANSIM RAN emulator using Helm charts from Gradiant on Raspberry Pi. The original reference page can be found [here](https://gradiant.github.io/5g-charts/open5gs-ueransim-gnb.html), but it cannot be used directly, as some adaptations are necessary to make the platform work on Raspberry Pi/ARM64.
+This document describes how to install and run Open5GS 5G core network and UERANSIM RAN emulator using Helm charts from Gradiant on Raspberry Pi. The original reference page can be found [here](https://gradiant.github.io/5g-charts/open5gs-ueransim-gnb.html), but it cannot be used directly, as some adaptations are necessary to make the platform work on ARM64/Raspberry Pi.
 
 If you cloned this repository, it is ready to use and you can implement the entire platform (Open5GS and UERANSIM) fully customized to our needs. In this case you can skip section **Prepare Open5GS Helm chart** below and go directly to step [Deploy Open5GS](deploy-open5gs). This is the recommended approach to do the lab. However, if you are interested in the details of the modifications necessary to run the platform on Raspberry Pi, you may want to start from scratch and follow all steps beginning from [Prepare Open5GS Helm chart](prepare-open5gs-helm-chart).
 
