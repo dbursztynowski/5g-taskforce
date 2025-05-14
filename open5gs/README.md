@@ -8,6 +8,7 @@
 3. [Deploy Open5GS](#deploy-open5gs)
    - [Remarks](#remarks)
    - [Deployment](#deployment)
+   - [Delete Open5GS](#delete-open5gs)
 4. [Deploy UERANSIM](#deploy-ueransim)
    - [Introduction](#introduction)
    - [Deploy UERANSIM with initial set of UEs attached](#deploy-ueransim-with-initial-set-of-ues-attached)
@@ -145,6 +146,9 @@ $ helm -n <namespace> install --debug --dry-run open5gs ./open5gs-228 --version 
 ```
 
 ### Actual deployment
+
+Open5GS is deployed in the form of Helm release. Below, the release is created in namespace `<namespace>` and is given the name `open5gs` (`helm -n <namespace> install open5gs').
+
 ```
 $ helm -n <namespace> install open5gs ./open5gs-228 --version 2.2.8 --values ./5gSA-values-enable-metrics-v228.yaml
 ```
@@ -156,6 +160,13 @@ $ kubectl get pods --watch
 ```
 
 Once all the pods are up and running you can step to installing and operating UERANSIM as described in the next section.
+
+### Delete Open5GS
+
+Deletion of Open5GS is done by uninstalling/deleting respective Helm release, e.g.:
+```
+$ helm uninstall open5gs
+```
 
 # Deploy UERANSIM
 
@@ -179,6 +190,11 @@ Successfull installation of UERANSIM will print multiple "help" lines on the scr
 The structure of our UERANSIM component is depicted in the figure below. There is one deployment/pod performing the functions of gNB and there can be several deployments/pods each emulating a subset of UEs - user mobile devices. Each UE is represented in the pod as TUN interface with name uesimtun0,ueasimtun1, etc. Typical commands (ping, curl, ...) can be applied to these interfaces to generate/receive traffic to/from the ouside of our 5G core network (e.g., to the Internet if our infrastructure provides such connectivity). Our initial setup contains the gNB deployment named `ueransim-gnb` and one UE deployment named `ueransim-gnb-ues`, the latter hosting a group of four UEs. More UEs can be attached to the network. Later on we will use perhaps the simplest option relying on the creation of additional UE deployment(s) with the use of Helm release. Each such additional UE deployment can host several UEs whose number is specified as a parameter in the creation command. Additional UE deployments (each created within Helm release with a unique name) can be added and deleted thus allowing us to modify the number of UEs attached to the network. In the figure below, one additional UE deployment is shown with the name `ueransim-ues-additional` (though it is not present after initial installation).
 
 <img src="/figures/ueransim-arch.jpg" alt="UERANSIM architecture and UE deployments" width="700" style="display: block; margin: 0 auto">
+
+To delete this initial configuration of UERANSIM uninstall its Helm release:
+```
+$ helm uninstall ueransim-gnb
+```
 
 ## Generate UE data plane traffic
 
@@ -223,7 +239,7 @@ Detaching additional connected UEs can be achieved by uninstalling respective He
 $ helm uninstall ueransim-ues-additional
 ```
 
-This will detach all UEs emulated by the uninstalled Helm release from the network (respective deployment/pod is deleted under the hood). In a real network, it would correspond to multiple terminals undergoing network detach procedure (e.g., switching off or entering airplane mode). 
+This will detach all UEs emulated by the uninstalled Helm release from the network (respective deployment/pod is deleted under the hood). In a real network, it would correspond to multiple terminals undergoing network detach procedure (e.g., switching off or entering airplane mode). This procedure does not have impact on the initial setup so gNB and the initial group of UEs remain intact.
 
 _Notice that the above uninstall command applies to a Helm release dedicated only to a group of additional UEs (and to respective deployment/container operating under the hood). You should not try to adapt this command to detach in bulk the initial set of UEs (those activated together with gNB when UERANSIM was created)._
 
