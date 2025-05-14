@@ -57,7 +57,7 @@ Chart modifications cover three following areas:
 
 We use custom image of mongodb container able to run on Raspberry Pi. Another option is to use origunal images, but they would have to be quite old (i.e., versions 4.x while latest mongodb versions come form the range 8.x). 
 
-- Currently (April 2025) the following changes for mongodb, webui and populate apply:
+- Currently (May 2025) the following changes for mongodb, webui and populate apply:
   Note: the configuratiuon file are specified using YAML so watch the leading blanks if you modify the files yourself.
   
   - in file `5gc/open5gs/open5gs-228/charts/mongodb/values.yaml`, line ~105, set
