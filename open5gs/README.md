@@ -207,13 +207,13 @@ Enter container shell and run ping command and curl after that:
 $ kubectl exec -it deployment/ueransim-gnb-ues -- /bin/bash
 > ping -I uesimtun0 wp.pl
 ...
-> curl --interface uesimtun0 https://google.com
+> curl -k --interface uesimtun0 https://pw.ed.pl
 ...
 ```
 
-The above commands can be run without directly entering the container's shell, e.g.:
+The above commands can be run without directly entering the container shell (no `-it` option in the command), e.g.:
 ```
-$ kubectl exec deployment/ueransim-gnb-ues -- /bin/bash -c "curl --interface uesimtun0 https://google.com"
+$ kubectl exec deployment/ueransim-gnb-ues -- /bin/bash -c "curl -k --interface uesimtun0 https://pw.edu.pl"
 ```
 
 ## Connect additional UEs to the network (bulk attach)
