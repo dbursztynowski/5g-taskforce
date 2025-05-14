@@ -101,6 +101,8 @@ ubuntu@k3s02:~$ sudo systemctl start k3s-agent.service
 
 ## 2.1 Scale a simple test pod
 
+In place pod scaling becomes increasingly better documented than a time ago with official description available [here](https://kubernetes.io/docs/tasks/configure-pod-container/resize-container-resources/). The example provided below derives from an earlier version of that page.
+
 ### Define and create the pod
 ```
 $ tee testinplace.yaml << EOT
