@@ -35,7 +35,7 @@ A simplified top-level view of the 5G environment we are going to work with is s
 
 # Prepare Open5GS Helm chart
 
-If you cloned this repository, you are ready to go directly to step [Deploy Open5GS](deploy-open5gs). This section is for newcomers and/or users interested in the adaptations required for deploying Gradiant Open5GS/UERANSIM on ARM64/Raspberry Pi.
+#### If you cloned this repository, you are ready to go directly to step [Deploy Open5GS](deploy-open5gs). This section is for newcomers and/or users interested in the adaptations required for deploying Gradiant Open5GS/UERANSIM on ARM64/Raspberry Pi.
 
 ## Download Open5GS Helm chart
 
