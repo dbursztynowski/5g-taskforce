@@ -213,9 +213,9 @@ http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-me
 
 ### Using curl on Linux
 
-- directly from command line (here, Open5GS runs in default namespace, -s option means "silent")
+- directly from command line (here, Open5GS runs in default namespace)
 ```
-# complete record
+# complete record (option -s stands for "silent")
 curl 10.254.186.64:9090/api/v1/query -G -d 'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | jq
 
 # only the value
