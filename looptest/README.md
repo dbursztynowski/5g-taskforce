@@ -213,9 +213,13 @@ http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-me
 
 ### Using curl on Linux
 
-- directly from command line (here, Open5GS runs in default namespace)
+- directly from command line (here, Open5GS runs in default namespace, -s option means "silent")
 ```
+complete record
 curl 10.254.186.64:9090/api/v1/query -G -d 'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | jq
+
+or only the value
+curl -s 10.254.186.64:9090/api/v1/query -G -d 'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | jq '.data.result[0].value[1]' | tr -d '"'
 ```
 
 - embedded in a bash script (here, NAMESPACE is the namespace of Open5GS; PROMETHEUS_ADDR is a reachable address of Prometheus)
