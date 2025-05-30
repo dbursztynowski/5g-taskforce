@@ -215,10 +215,10 @@ http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-me
 
 - directly from command line (here, Open5GS runs in default namespace)
 ```
-# complete record (option -s stands for "silent")
+# complete record
 curl 10.254.186.64:9090/api/v1/query -G -d 'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | jq
 
-# only the value
+# only the value (option -s stands for "silent")
 curl -s 10.254.186.64:9090/api/v1/query -G -d 'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | jq '.data.result[0].value[1]' | tr -d '"'
 ```
 
