@@ -208,7 +208,7 @@ The number of active sessions registered in the AMF function is read. Prometheus
 
 ### Using a browser
 ```
-http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-metrics",namespace="default"}`
+http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-metrics",namespace="default"}
 ```
 
 ### Using curl on Linux
