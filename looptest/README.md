@@ -20,7 +20,7 @@
    
 # 1. Enabling InPlacePodVerticalScaling
 
-If InPlacePodVerticalScaling is enabled in your cluster you can skip this section and go to [Testing in-place pod scaling](#testing-in-place-scaling-of-pods). This is the case if you installed k3s cluster using our Ansible guide. Otherwise follow the rest of this section.
+If InPlacePodVerticalScaling is enabled in your cluster you can skip this section and go to [Testing in-place pod scaling](#testing-in-place-scaling-of-pods). This is the case if you installed k3s cluster using our [Ansible guide](https://github.com/dbursztynowski/k3s-taskforce). Otherwise follow the rest of this section.
 
 ## 1.1. Enable during k3s installation
 
