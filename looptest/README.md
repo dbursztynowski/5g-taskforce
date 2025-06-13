@@ -1,4 +1,4 @@
-### This page describes a simple experiment illustrating in-place pod vertical scaling and monitoring network function metric in Open5GS using Prometheus.
+### This page describes a simple experiment that illustrates monitoring of a network function metric in Open5GS using Prometheus and in-place pod vertical scaling based on the current value of the metric.
 
 # Contents
 
