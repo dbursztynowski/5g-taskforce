@@ -42,7 +42,8 @@ SCALED_CONTAINER_NAME="open5gs-upf"     # Name of the container in the pod to sc
 #   name: default
 # current-context: default
 # ---
-NAMESPACE=$(kubectl config view --minify --output 'jsonpath={..namespace}'; echo)
+NAMESPACE=$(kubectl config view --minify --output jsonpath='{..namespace}')
+# alternative form: $(kubectl config view --minify --output jsonpath='{.contexts[0].context.namespace}')
 
 #The value of amf_sessions read from Prometheus
 amf_sessions=0
