@@ -30,7 +30,18 @@ SCALED_CONTAINER_NAME="open5gs-upf"     # Name of the container in the pod to sc
 # SCRIPT CODE
 #########################
 
-# Current namespace
+# --- Current namespace
+# NOTE: The option --minify will remove all information not used by current-context from the output.
+#       The namespace of the context referenced in the current-context property in kubeconfig file "config"
+#       should be explicitly specified in the definition of this context, e.g.:
+# contexts:
+# - context:
+#     cluster: default
+#     user: default
+#     namespace: default     <=== namespace has to be specified explicitly
+#   name: default
+# current-context: default
+# ---
 NAMESPACE=$(kubectl config view --minify --output 'jsonpath={..namespace}'; echo)
 
 #The value of amf_sessions read from Prometheus
