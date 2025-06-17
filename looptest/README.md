@@ -38,7 +38,7 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.32.3+k3s1   INSTALL_K3S_EX
   --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true" sh -
 ```
 
-For agent nodes, only the following two lines related to feature-gates need to be included with respect to the above (refer to k3s documentation to check the format of complete installation command for agent nodes):
+For agent nodes, only the following two lines related to feature-gates need to be included compared to the above (refer to k3s documentation to check the format of complete installation command for agent nodes):
 ```
   --kubelet-arg=feature-gates=InPlacePodVerticalScaling=true
   --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true
