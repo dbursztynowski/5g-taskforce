@@ -43,15 +43,14 @@ For agent nodes, only the following two lines related to feature-gates need to b
   --kubelet-arg=feature-gates=InPlacePodVerticalScaling=true
   --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true
 ```
-has to be added for each agent node.
 
 If you did not enable in-place pod vertical scaling during installation, follow the steps below.
 
-## 1.2 Enable on a running k3s cluster
+## 1.2 Enable in a running k3s cluster
 
 (according to: https://github.com/k3s-io/k3s/issues/12025#issuecomment-2769290290)
 
-1) On the server (master) node(s)
+1) On server (master) node(s)
 
 - modify file /etc/systemd/system/k3s.service to add feature-gates for apiserver, controller-manager and scheduler as follows
 
@@ -80,7 +79,7 @@ ubuntu@k3s01:~$ sudo systemctl start k3s.service
 ```
 2) On each agent node where the feature is to be enabled
 
-(Note: one can enable the feature on a subset of workers, but needs to control pod placement then)
+(Note: one can enable the feature on a subset of workers, but will need to control the placement of vertically scaled pods.)
 
 - modify file /etc/systemd/system/k3s-agent.service to add feature-gates as follows:
 ```
