@@ -36,9 +36,9 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.32.3+k3s1   INSTALL_K3S_EX
   --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true" sh -
 ```
 
-For agent nodes, only
+For agent nodes, only the following two lines need to be included with respect to the above
 ```
-  --kubelet-arg=feature-gates=InPlacePodVerticalScaling=true \
+  --kubelet-arg=feature-gates=InPlacePodVerticalScaling=true
   --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true
 ```
 has to be added for each agent node.
