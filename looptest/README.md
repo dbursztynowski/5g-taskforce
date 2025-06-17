@@ -20,11 +20,13 @@
    
 # 1. Enabling InPlacePodVerticalScaling
 
-If InPlacePodVerticalScaling is enabled in your cluster you can skip this section and go to [Testing in-place pod scaling](#testing-in-place-scaling-of-pods). This is the case if you installed k3s cluster using our [Ansible guide](https://github.com/dbursztynowski/k3s-taskforce/tree/master/pi-cluster-install). Otherwise follow the rest of this section.
+If InPlacePodVerticalScaling has already been enabled in your cluster you can skip this section and go directly to [Testing in-place pod scaling](#testing-in-place-scaling-of-pods). This is the case if you installed k3s cluster using our [Ansible guide](https://github.com/dbursztynowski/k3s-taskforce/tree/master/pi-cluster-install). Otherwise follow the rest of this section.
 
 ## 1.1. Enable during k3s installation
 
-The easiest way is to install k3s with featureGate InPlacePodVerticalScaling enabled. For example for control nodes:
+The easiest way is to install k3s with featureGates InPlacePodVerticalScaling enabled.
+
+For control nodes run the following (for in-place vertical scaling only the lines with feature-gates matter, and remaining options depend on your specific installation):
 
 ```
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.32.3+k3s1   INSTALL_K3S_EXEC="server --write-kubeconfig-mode 644 \
@@ -36,7 +38,7 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.32.3+k3s1   INSTALL_K3S_EX
   --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true" sh -
 ```
 
-For agent nodes, only the following two lines need to be included with respect to the above
+For agent nodes, only the following two lines related to feature-gates need to be included with respect to the above (refer to k3s documentation to check the format of complete installation command for agent nodes):
 ```
   --kubelet-arg=feature-gates=InPlacePodVerticalScaling=true
   --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true
