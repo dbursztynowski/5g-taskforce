@@ -257,4 +257,4 @@ _Notice that the above uninstall command applies to a Helm release dedicated onl
 
 ## Next steps
 
-Having UERANSIM and Open5GS core up and running, and knowing how to manage groups of UEs, you can now proceed to service monitoring and resource scaling documented in [_looptest_](../looptest).
+With UERANSIM and the Open5GS core up and running, and knowledge of UE group management, you can move on to service monitoring and resource scaling, as documented in [_looptest_](../looptest).
