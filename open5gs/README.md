@@ -53,16 +53,16 @@ $ tar -xvzf open5gs-2.2.8.tgz -C ./open5gs-228
 
 Chart modifications cover three following areas:
 
-- enable containers mongod, webui and populate run on Raspberry Pi
+- customize containers `mongod`, `webui` and `populate` to run on Raspberry Pi
 - create extended set of UE when deploying the platform (container populate)
-- enable Prometheus metric exporters in AMF, SMF, UPF and PCF containers (containers amf, upf, smf, pcf)
+- enable Prometheus metric exporters in AMF, SMF, UPF and PCF containers (containers `amf`, `upf`, `smf`, `pcf`)
 
 ### Modifications in mongodb, webui and populate charts
 
 We use custom image of mongodb container able to run on Raspberry Pi. Another option is to use origunal images, but they would have to be quite old (i.e., versions 4.x while latest mongodb versions come form the range 8.x). 
 
 - Currently (May 2025) the following changes for mongodb, webui and populate apply:
-  Note: the configuratiuon file are specified using YAML so watch the leading blanks if you modify the files yourself.
+  Note: configuration files are specified using YAML, so pay attention to leading spaces if you modify your files by typing the updates directly.
   
   - in file `5gc/open5gs/open5gs-228/charts/mongodb/values.yaml`, line ~105, set
     
@@ -101,7 +101,7 @@ We use custom image of mongodb container able to run on Raspberry Pi. Another op
     ```
     
   - in file `5g-taskforce/open5gs/5gSA-values-enable-metrics-v228.yaml` set
-    Note: With the configuration given below, 20 User Equipments (UE) are registered in the core network database when the 5G core network is deployed. This registration does not set up a bearer session for the terminals, though. It only corresponds to the network provider registering 20 SIM cards (or user accounts), which subsequently will be used in nNAS (Non-Access Stratum) signalling procedures to certify the terminals attaching to the network. In fact, the mobile network operator registers user accounts in the core databases in a separate process when the accounts are created based on orders form customer services. Here, the _populate_ container is a handy add-on from Gradiant that simplifies the use of Open5GS/UERANSIM during experiments by populating user accounts in the Open5GS core network database in bulk. We do not delve into the details of UE specification, suffices it to say that strings as `999700000000001` are IMSI/SUPI nummbers and the pairs `1 111111` terminating each line denote SST (Slice Service Type) and SD (Slice Differentiator), respectively, and together they define S-NSSAI (Single Network Slice Selection Assistance Information) identifier. According to 3GPP standards, Slice Service Type "1" (SST 1) refers to Enhanced Mobile Broadband (eMBB).
+    Note: With the configuration given below, 20 User Equipments (UE) are registered in the core network database when the 5G core network is deployed. This registration does not set up a bearer session for the terminals, though. It only corresponds to the network provider registering 20 SIM cards (or user accounts), which subsequently will be used in nNAS (Non-Access Stratum) signalling procedures to certify the terminals attaching to the network. In fact, the mobile network operator registers user accounts in the core databases in a separate process when the accounts are created based on orders form customer services. Here, the _populate_ container is a handy add-on from Gradiant that simplifies the use of Open5GS/UERANSIM during experiments by populating user accounts in the Open5GS core network database in bulk. We do not delve into the details of UE specification, suffices it to say that strings as `999700000000001` are IMSI/SUPI numbers and the pairs `1 111111` terminating each line denote SST (Slice Service Type) and SD (Slice Differentiator), respectively, and together they define S-NSSAI (Single Network Slice Selection Assistance Information) identifier. According to 3GPP standards, Slice Service Type "1" (SST 1) refers to Enhanced Mobile Broadband (eMBB).
     
 ```
 populate:
