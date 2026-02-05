@@ -54,7 +54,7 @@ $ tar -xvzf open5gs-2.2.8.tgz -C ./open5gs-228
 Chart modifications cover three following areas:
 
 - customize containers `mongod`, `webui` and `populate` to run on Raspberry Pi
-- create extended set of UE when deploying the platform (container populate)
+- create extended set of UE when deploying the platform (container `populate`)
 - enable Prometheus metric exporters in AMF, SMF, UPF and PCF containers (containers `amf`, `upf`, `smf`, `pcf`)
 
 ### Modifications in mongodb, webui and populate charts
