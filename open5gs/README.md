@@ -57,7 +57,7 @@ Chart modifications cover three following areas:
 - create extended set of UE when deploying the platform (container `populate`)
 - enable Prometheus metric exporters in AMF, SMF, UPF and PCF containers (containers `amf`, `upf`, `smf`, `pcf`)
 
-### Modifications in mongodb, webui and populate charts
+### Modify the charts for mongodb, webui and populate
 
 We use custom image of mongodb container able to run on Raspberry Pi. Another option is to use origunal images, but they would have to be quite old (i.e., versions 4.x while latest mongodb versions come form the range 8.x). 
 
