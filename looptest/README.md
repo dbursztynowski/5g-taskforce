@@ -209,6 +209,7 @@ As an example, we read the number of active UE sessions registered in the AMF fu
 
 > [!Note]
 > Open5GS Prometheus targets send metrics only in text format and are unable to negotiate the protocol. Prometheus releases starting from 3.0 need to be configured to fallback to this protocol. To this end the `scrapeClasses` attribute of the Prometheus Operator has to be set to PrometheusText0.0.4. To achieve this (and assuming you are using kube-prometheus) update the `prometheus-prometheus.yaml` spec section of `Prometheus` in the manifest file as shown below. If you are performing this update on a running instance of Prometheus than you have to delete the Prometheus pod (named `prometheus-k8s-<x>`) forcing it to restart with new settings. To this end simply run `kubectl delete pod prometheus-k8s-0`.
+
 `
 scrapeClasses:
   - name: default-scrape
