@@ -24,12 +24,12 @@ If InPlacePodVerticalScaling has already been enabled in your cluster you can sk
 
 ## 1.1. Enable during k3s installation
 
-The easiest way is to install k3s with featureGates InPlacePodVerticalScaling enabled.
+The easiest way is to install k3s with featureGates InPlacePodVerticalScaling enabled. Remember to set the right version of the K3s with the parameter `INSTALL_K3S_VERSION`.
 
 For control nodes run the following (for in-place vertical scaling only the lines with feature-gates matter, and remaining options depend on your specific installation):
 
 ```
-curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.32.3+k3s1   INSTALL_K3S_EXEC="server --write-kubeconfig-mode 644 \
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.34.4+k3s1 INSTALL_K3S_EXEC="server --write-kubeconfig-mode 644 \
   --disable servicelb --disable-cloud-controller \
   --kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true \
   --kube-controller-manager-arg=feature-gates=InPlacePodVerticalScaling=true \
@@ -38,13 +38,13 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.32.3+k3s1   INSTALL_K3S_EX
   --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true" sh -
 ```
 
-For agent nodes, only the following two lines related to feature-gates need to be included compared to the above (refer to k3s documentation to check the format of complete installation command for agent nodes):
+For agent nodes, only the following two lines related to feature-gates need to be included in the installation command compared to the above (refer to the K3s documentation to check the format of a complete installation command for agent nodes):
 ```
   --kubelet-arg=feature-gates=InPlacePodVerticalScaling=true
   --kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true
 ```
 
-If you did not enable in-place pod vertical scaling during installation, follow the steps below.
+If you did not enable in-place pod vertical scaling during the installation, follow the steps below.
 
 ## 1.2 Enable in a running k3s cluster
 
