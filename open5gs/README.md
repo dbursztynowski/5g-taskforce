@@ -164,12 +164,12 @@ $ helm -n <namespace> install open5gs ./open5gs-228 --version 2.2.8 --values ./5
 ```
 Nothe: In what follows, we assume we are working in the _default_ namespace so we will skip the _namspace_ in `kubectl` commands.
 
-Ypu should now wait until all pods are up and running. This may last several minutes, do not be surprised seeing various error notifications. Try this:
+Ypu should now wait until all pods are up and running. This may last several minutes, so do not be surprised seeing various error notifications. Try this:
 ```
 $ kubectl get pods --watch
 ```
 
-Once all the pods are up and running you can step to installing and operating UERANSIM as described in the next section.
+Once all the pods are up and running (their status should be `1/1 Running`) you can step to installing and operating UERANSIM as described in the next section.
 
 ### Delete Open5GS
 
