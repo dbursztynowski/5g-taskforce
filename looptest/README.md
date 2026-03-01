@@ -221,7 +221,7 @@ spec
 ```
 * Restarting Prometheus
   - `apply` the new spec
-````
+```
 $ kubectl apply -f prometheus-prometheus.yaml
 ```
   - restart all pods of the stateful set `prometheus-k83`
