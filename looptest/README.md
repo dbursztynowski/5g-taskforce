@@ -228,11 +228,6 @@ $ kubectl apply -f prometheus-prometheus.yaml
 
   - restart all pods of the stateful set `prometheus-k83`
     - option 1: rollout restart of the stateful set
-
-```
-$ kubectl -n monitoring rollout restart statefulset/prometheus-k8s
-```
-
     - option 2: delete manually all pods of the stateful set `prometheus-k8s` (in our case there will be one pod)
 ```
 $ kubectl delete -n monitoring pod prometheus-k8s-0
