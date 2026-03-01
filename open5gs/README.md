@@ -210,10 +210,10 @@ $ helm uninstall ueransim-gnb
 
 ## Generate UE data plane traffic
 
-This can be achieved by doing `kubectl exec` on respective pod/container. In the following example we log to container shlell and run ping command in the terminal.
+This can be achieved by performing respective commands in selected `uearansin-gnb-uesX` container. In the following example we log to a container shell and run commands in the terminal.
 
 Enter container shell and run ping command and curl after that:
-(Note: To check for the name of the UE deployment simply run `kubectl get deployments'.)
+(Note: To check for the name of the UE deployment simply run `kubectl get deployments`.)
 
 ```
 $ kubectl exec -it deployment/ueransim-gnb-ues -- /bin/bash
@@ -229,7 +229,7 @@ The above commands can be run without directly entering the container shell (no 
 $ kubectl exec deployment/ueransim-gnb-ues -- /bin/bash -c "curl -k --interface uesimtun0 https://pw.edu.pl"
 ```
 
-You can also run iperf to generate higher volume traffic for performance-oriented tests. UERANSIM provides utility `nr-binder` dedicated to bind `uesimtunX` interface to almost any application and allow this application to exchange traffic over the Open5GS 5G network. To this end it is necessary to perform a couple of steps as specified below.
+You can also run iperf to generate higher volume traffic for performance-oriented tests. UERANSIM provides utility `nr-binder` dedicated to bind `uesimtunX` interface to almost any application and allow this application to exchange traffic over the 5G network. To this end it is necessary to perform a couple of steps as specified below.
 
 * enter respective `ueransim-gnb-uesX` Pod and change the permissions of the `nr-binder` executable (to be done once in a given `ueransim-gnb-uesX` Pod)
 ```
