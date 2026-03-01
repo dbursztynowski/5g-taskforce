@@ -209,6 +209,8 @@ As an example, we read the number of active UE sessions registered in the AMF fu
 
 ### Enable Prometheus to scrape Open5GS metrics
 
+If you installed kube-prometheus according to our guidelines from [k3s-taskforce](https://github.com/dbursztynowski/k3s-taskforce) then you can skip this section. 
+
 > [!Note]
 > Open5GS Prometheus targets send metrics only in text format and are unable to negotiate the protocol. Prometheus releases starting from 3.0 need to be configured to fallback to this protocol. To this end the `scrapeClasses` attribute of the Prometheus Operator has to be set to `PrometheusText0.0.4`. To achieve this (and assuming you are using kube-prometheus) first modify the `prometheus-prometheus.yaml` spec section of `Prometheus` CRD in the manifest file adding the `scrapeClasses` attribute with `fallbackScrapeProtocol` set to `PrometheusText0.0.4` as shown below. If you are performing this update on a running instance of kube-prometheus than you have to force restarting all pods of the stateful set `prometheus-k8s` with the new specification (the pods are named `prometheus-k8s-<x>`). The details are given below.
 
@@ -279,6 +281,5 @@ You now know how to monitor the number of UE sessions and how Open5GS functions 
 
 As a next step, you can realise a small project to design a simple scaler of Open5GS functions based on the number of UE sessions in the network. In the simplest case, it can monitor the amf_session metric and scale the UPF pod. This may correspond to a scenario where an increase in the number of sessions indicates that the data plane load in the UPF will increase soon. Anticipating this, we are adding compute resources to the UPF container to handle this increase. A slightly more complex scenario could involve scaling UPF and AMF together, perhaps with some operation dependency, e.g., requiring that the UPF pod be scaled first, and the AMF pod only after we can confirm that the UPF pod has been scaled successfully. Notice such a control of the sequence of operations can not be achieved with standard Kubernetes autoscalers - Horizontal and Vertical Pod Autoscalers (HPA, VPA).
 
-Note: If you want to scale other functions than UPF, you need to update the manifest templates of the corresponding deployments to declare `resources.requests` and/or `resources.limits` properties for the containers being scaled. This is required because best effort containers cannot be scaled vertically (best effort container is one that has neither _requests_ nor _limits_ are declared in its manifest, which is the default setting in our Open5GS Helm charts). Check the UPF configuration file `open5gs/open5gs-228/charts/open5gs-upf/values.yaml` in your Helm charts (line ~ 220) to see how this can look like.
-
-
+> [!Note]
+> If you want to scale other functions than UPF, you need to update the manifest templates of the corresponding deployments to declare `resources.requests` and/or `resources.limits` properties for the containers being scaled. This is required because best effort containers cannot be scaled vertically (best effort container is one that has neither _requests_ nor _limits_ are declared in its manifest, which is the default setting in our Open5GS Helm charts). Check the UPF configuration file `open5gs/open5gs-228/charts/open5gs-upf/values.yaml` in your Helm charts (line ~ 220) to see how this can look like.
