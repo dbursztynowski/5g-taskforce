@@ -242,7 +242,7 @@ root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# chmod g+x nr-binder
   - below, we use a public Iperf server (it may happen to be busy on a given port, then try another port or server)
   - the list of public Iperf servers: https://iperf.fr/iperf-servers.php
   - you can install Ipefr server in your cluster, and even set link metrics as delay or bandwidth using the tc utility
-  - example docker image with Iperf: https://hub.docker.com/r/networkstatic/iperf3
+  - example docker image with Iperf for aarch64 (prepare a deployment manifest yourself): https://hub.docker.com/r/networkstatic/iperf3
 ```
 # unsuccessful run (server busy)
 root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# ./nr-binder 10.45.0.5 iperf3 -c speedtest.serverius.net -i 1 -t 20 -p 5002
