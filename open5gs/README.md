@@ -231,7 +231,7 @@ $ kubectl exec deployment/ueransim-gnb-ues -- /bin/bash -c "curl -k --interface 
 
 You can also run Iperf to generate higher volume traffic for performance-oriented tests. UERANSIM provides utility `nr-binder` dedicated to bind `uesimtunX` interface to almost any application and allow this application to exchange traffic over the 5G network. To this end it is necessary to perform a couple of steps as specified below.
 
-* enter the shell respective `ueransim-gnb-uesX` container and change the permissions of the `nr-binder` executable (to be done once in a given `ueransim-gnb-uesX` Pod)
+* enter the shell of respective `ueransim-gnb-uesX` container and change the permissions of the `nr-binder` executable (to be done once in a given `ueransim-gnb-uesX` Pod)
 ```
 $ kubectl exec -it deployment/ueransim-gnb-ues -- /bin/bash
 root@ueransim-gnb-ues-5bdfb48dc9-m24rp:~# cd /usr/local/bin
