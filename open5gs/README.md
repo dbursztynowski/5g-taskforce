@@ -244,7 +244,7 @@ root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# chmod g+x nr-binder
 root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# ./nr-binder 10.45.0.5 curl -k https://pw.edu.pl
 
 # using iperf in client mode
-# below, we use a public iperf server; you can istall one in your cluster, and even set link metrics as delay or bandwidth using tc utility
+# below, we use a public iperf server; you can install one in your cluster, and even set link metrics as delay or bandwidth using the tc utility
 # example docker image with iperf: https://hub.docker.com/r/networkstatic/iperf3
 root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# ./nr-binder 10.45.0.5 iperf3 -c speedtest.serverius.net -i 1 -t 20 -p 5002
 ```
@@ -276,8 +276,6 @@ $ helm uninstall ueransim-ues-additional
 
 This will detach all UEs emulated by the uninstalled Helm release from the network (respective deployment/pod is deleted under the hood). In a real network, it would correspond to multiple terminals undergoing network detach procedure (e.g., switching off or entering airplane mode). This procedure does not have impact on the initial setup so gNB and the initial group of UEs remain intact.
 
-_Notice that the above uninstall command applies to a Helm release dedicated only to a group of additional UEs (and to respective deployment/container operating under the hood). You should not try to adapt this command to detach in bulk the initial set of UEs (those activated together with gNB when UERANSIM was created)._
-
 ## Next steps
 
-With UERANSIM and the Open5GS core up and running, and knowledge of UE group management, you can move on to service monitoring and resource scaling, as documented in [_looptest_](../looptest).
+With UERANSIM and the Open5GS core up and running, and the knowledge of UE group management, you can move on to service monitoring and resource scaling, as documented in [_looptest_](../looptest).
