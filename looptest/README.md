@@ -211,7 +211,7 @@ As an example, we read the number of active UE sessions registered in the AMF fu
 > Open5GS Prometheus targets send metrics only in text format and are unable to negotiate the protocol. Prometheus releases starting from 3.0 need to be configured to fallback to this protocol. To this end the `scrapeClasses` attribute of the Prometheus Operator has to be set to `PrometheusText0.0.4`. To achieve this (and assuming you are using kube-prometheus) first modify the `prometheus-prometheus.yaml` spec section of `Prometheus` CRD in the manifest file adding the `scrapeClasses` attribute with `fallbackScrapeProtocol` set to `PrometheusText0.0.4` as shown below. If you are performing this update on a running instance of kube-prometheus than you have to force restarting the pods of the `prometheus-k8s` stateful set (the pods are named `prometheus-k8s-<x>`) with the new specification. The details are given below.
 
 
-* Adding scrapeCalsses attribute in the prometheus-prometheus.yaml manifest
+* Adding `scrapeCalsses` attribute in the `prometheus-prometheus.yaml` manifest
 ```
 spec
   scrapeClasses:
@@ -219,16 +219,20 @@ spec
     default: true
     fallbackScrapeProtocol: PrometheusText0.0.4 # Sets the fallback protocol
 ```
+
 * Restarting Prometheus
   - `apply` the new spec
 ```
 $ kubectl apply -f prometheus-prometheus.yaml
 ```
+
   - restart all pods of the stateful set `prometheus-k83`
-    - option 1: rollout restart the StatefulSet of Prometheus
+    - option 1: rollout restart of the stateful set
+
 ```
 $ kubectl -n monitoring rollout restart statefulset/prometheus-k8s
 ```
+
     - option 2: delete manually all pods of the stateful set `prometheus-k8s` (in our case there will be one pod)
 ```
 $ kubectl delete -n monitoring pod prometheus-k8s-0
