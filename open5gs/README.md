@@ -219,6 +219,7 @@ Enter container shell and run ping command and curl after that:
 $ kubectl exec -it deployment/ueransim-gnb-ues -- /bin/bash
 > ping -I uesimtun0 wp.pl
 ...
+> # with curl, use the flag --interface, not -I
 > curl -k --interface uesimtun0 https://pw.ed.pl
 ...
 ```
@@ -227,6 +228,28 @@ The above commands can be run without directly entering the container shell (no 
 ```
 $ kubectl exec deployment/ueransim-gnb-ues -- /bin/bash -c "curl -k --interface uesimtun0 https://pw.edu.pl"
 ```
+
+You can also run iperf to generate higher volume traffic for performance-oriented tests. UERANSIM provides utility `nr-binder` dedicated to bind uesimtunX interface to almost any application and allow this application to echange traffic over 5G network. To this end it is necessary to perform a couple of steps as specified below.
+
+* enter respective `ueransim-gnb-uesX` Pod and change the permissions of the `nr-binder` executable (to be done once in a given `ueransim-gnb-uesX` Pod)
+  `
+  kubectl exec -it deployment/ueransim-gnb-ues -- /bin/bash
+  root@ueransim-gnb-ues-5bdfb48dc9-m24rp:~# cd /usr/local/bin
+  root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# chmod g+x nr-binder
+  `
+* use nr-binder with a given application
+`
+# use curl (use flag --interface, not -I)
+
+root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# ./nr-binder 10.45.0.5 curl -k https://pw.edu.pl
+
+# use iperf in client mode
+# below, we use a public iperf server; you can istall one in your cluster, and even set link metrics as delay or bandwidth using tc utility
+# example docker image with iperf: https://hub.docker.com/r/networkstatic/iperf3
+
+root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# ./nr-binder 10.45.0.5 iperf3 -c speedtest.serverius.net -i 1 -t 20 -p 5002
+`
+
 
 ## Connect additional UEs to the network (bulk attach)
 
