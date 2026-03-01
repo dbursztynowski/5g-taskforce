@@ -229,24 +229,20 @@ The above commands can be run without directly entering the container shell (no 
 $ kubectl exec deployment/ueransim-gnb-ues -- /bin/bash -c "curl -k --interface uesimtun0 https://pw.edu.pl"
 ```
 
-You can also run iperf to generate higher volume traffic for performance-oriented tests. UERANSIM provides utility `nr-binder` dedicated to bind `uesimtunX` interface to almost any application and allow this application to exchange traffic over the 5G network. To this end it is necessary to perform a couple of steps as specified below.
+You can also run Iperf to generate higher volume traffic for performance-oriented tests. UERANSIM provides utility `nr-binder` dedicated to bind `uesimtunX` interface to almost any application and allow this application to exchange traffic over the 5G network. To this end it is necessary to perform a couple of steps as specified below.
 
-* enter respective `ueransim-gnb-uesX` Pod and change the permissions of the `nr-binder` executable (to be done once in a given `ueransim-gnb-uesX` Pod)
+* enter the shell respective `ueransim-gnb-uesX` container and change the permissions of the `nr-binder` executable (to be done once in a given `ueransim-gnb-uesX` Pod)
 ```
 $ kubectl exec -it deployment/ueransim-gnb-ues -- /bin/bash
 root@ueransim-gnb-ues-5bdfb48dc9-m24rp:~# cd /usr/local/bin
 root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# chmod g+x nr-binder
 ```
 
-* using iperf in client mode
-
-  below, we use a public iperf server (it may happen to be busy on a given port, then try another port or server)
-
-  the list of public iperf servers: https://iperf.fr/iperf-servers.php
-
-  you can install ipefr server in your cluster, and even set link metrics as delay or bandwidth using the tc utility
-
-  example docker image with iperf: https://hub.docker.com/r/networkstatic/iperf3
+* using Iperf in client mode
+  - below, we use a public Iperf server (it may happen to be busy on a given port, then try another port or server)
+  - the list of public Iperf servers: https://iperf.fr/iperf-servers.php
+  - you can install Ipefr server in your cluster, and even set link metrics as delay or bandwidth using the tc utility
+  - example docker image with Iperf: https://hub.docker.com/r/networkstatic/iperf3
 ```
 # unsuccessful run (server busy)
 root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# ./nr-binder 10.45.0.5 iperf3 -c speedtest.serverius.net -i 1 -t 20 -p 5002
