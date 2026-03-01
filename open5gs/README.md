@@ -240,7 +240,7 @@ root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# chmod g+x nr-binder
 
 * use nr-binder with a given application
 ```
-# using curl (use the flag --interface, not -I)
+# using curl (use the flag --interface, not -I, and enter the IP address of the interface)
 root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# ./nr-binder 10.45.0.5 curl -k https://pw.edu.pl
 
 # using iperf in client mode
