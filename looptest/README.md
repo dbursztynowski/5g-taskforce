@@ -226,7 +226,7 @@ spec
 $ kubectl apply -f prometheus-prometheus.yaml
 ```
 
-  - restart all pods of the stateful set `prometheus-k83`
+  - restart all pods of the stateful set `prometheus-k83` - use one of the two options below
     - option 1: rollout restart of the stateful set
 
       ```
@@ -234,7 +234,7 @@ $ kubectl apply -f prometheus-prometheus.yaml
       ```
 
     - option 2: delete manually all pods of the stateful set `prometheus-k8s` (in our case there will be one pod)
-    - 
+     
       ```
       $ kubectl delete -n monitoring pod prometheus-k8s-0
       $ kubectl delete -n monitoring pod prometheus-k8s-1
