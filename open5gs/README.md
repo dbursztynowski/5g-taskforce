@@ -229,7 +229,7 @@ The above commands can be run without directly entering the container shell (no 
 $ kubectl exec deployment/ueransim-gnb-ues -- /bin/bash -c "curl -k --interface uesimtun0 https://pw.edu.pl"
 ```
 
-You can also run iperf to generate higher volume traffic for performance-oriented tests. UERANSIM provides utility `nr-binder` dedicated to bind uesimtunX interface to almost any application and allow this application to echange traffic over 5G network. To this end it is necessary to perform a couple of steps as specified below.
+You can also run iperf to generate higher volume traffic for performance-oriented tests. UERANSIM provides utility `nr-binder` dedicated to bind `uesimtunX` interface to almost any application and allow this application to exchange traffic over the Open5GS 5G network. To this end it is necessary to perform a couple of steps as specified below.
 
 * enter respective `ueransim-gnb-uesX` Pod and change the permissions of the `nr-binder` executable (to be done once in a given `ueransim-gnb-uesX` Pod)
   `
@@ -250,6 +250,7 @@ root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# ./nr-binder 10.45.0.5 cur
 root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# ./nr-binder 10.45.0.5 iperf3 -c speedtest.serverius.net -i 1 -t 20 -p 5002
 `
 
+Notice there are also other UERANSIM tools available in `ueransim-gnb-ues` Pod in directory `/usr/local/bin`. A short guide how to use them is available [here](https://github.com/aligungr/UERANSIM/wiki/Usage).
 
 ## Connect additional UEs to the network (bulk attach)
 
