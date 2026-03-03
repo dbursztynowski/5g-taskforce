@@ -225,7 +225,7 @@ spec
 ```
 
 <ul>
-   Restarting Prometheus as instructed below should only be performed if you are updating a running kube-prometheus instance. Otherwise, skip this step. Apply the updated manifest and force restart all pods in the stateful set `prometheus-k8s` (the pods are named `prometheus-k8s-<x>`). The steps are as follows.
+   Restarting Prometheus as instructed below should only be performed if you are updating a running kube-prometheus instance. Otherwise, skip this step. Apply the updated manifest and force restart all pods in the stateful set `prometheus-k8s` (the pods are named `prometheus-k8s-X`). The steps are as follows.
 </ul>
 
 * Restarting Prometheus
@@ -236,7 +236,7 @@ spec
     ```
 
   - restart all pods of the stateful set `prometheus-k83` - use one of the two options below
-    - option 1: rollout restart of the stateful set
+    - option 1: rollout restart of the stateful set (more general solution)
 
     ```
     $ kubectl -n monitoring rollout restart statefulset/prometheus-k8s
