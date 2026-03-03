@@ -138,7 +138,7 @@ spec:
         memory: "500Mi"
 EOT
 ```
-### Run the pod and test in place scaling
+### Run the pod and test in-place scaling
 
 Below, we scale property _limits_ of container CPU resource. We could also scale property _requests_ or scale both properties at a time.
 
@@ -158,8 +158,6 @@ kubectl patch -n $NAMESPACE pod $podname --subresource resize --patch \
 ```
 
 ## 2.2 Scale Open5GS UPF function
-
-_Note: While doing this exercise, you may want to double check the number of amf_sessions by querying Prometheus. In that case, first follow the instructions in section 2.3 and use them when scaling the UPF._
 
 Below, it is assumed that all components (Open5GS/UERANSIM and the monitoring platform) have been installed following our instructions. Otherwise some details may differ and adaptations may be required.
 
