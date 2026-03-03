@@ -22,6 +22,9 @@
 
 If InPlacePodVerticalScaling has already been enabled in your cluster you can skip this section and go directly to [Testing in-place pod scaling](#testing-in-place-scaling-of-pods). This is the case if you installed k3s cluster using our [Ansible guide](https://github.com/dbursztynowski/k3s-taskforce/tree/master/pi-cluster-install). Otherwise follow the rest of this section.
 
+> [!Note]
+> Vertical scaling actually refers to containers, as containers (not pods) are assigned actual resources, such as RAM or CPU. In this guide, the terms "container scalability" and "container scalability" are used interchangeably to refer to container scaling.
+
 ## 1.1. Enable during k3s installation
 
 The easiest way is to install k3s with featureGates InPlacePodVerticalScaling enabled. Remember to set the right version of the K3s with the parameter `INSTALL_K3S_VERSION`.
@@ -288,6 +291,4 @@ You already know how to monitor the number of UE sessions and how Open5GS functi
 As a next step, you can realise a small project to design a simple scaler of Open5GS functions based on the number of UE sessions in the network. In the simplest case, it can monitor the amf_session metric and scale the UPF container. This may correspond to a scenario where an increase in the number of sessions indicates that the data plane load in the UPF will increase soon. Anticipating this, we are adding compute resources to the UPF container to handle this increase. A slightly more complex scenario could involve scaling UPF and AMF together, perhaps with some operation dependency, e.g., requiring that the UPF pod be scaled first, and the AMF pod only after we can confirm that the UPF pod has been scaled successfully. Notice such a control of the sequence of operations can not be achieved with standard Kubernetes autoscalers - Horizontal and Vertical Pod Autoscalers (HPA, VPA).
 
 > [!Note]
-> Vertical scaling actually refers to containers, as containers (not pods) are assigned actual resources, such as RAM or CPU. In this guide, the terms "container scalability" and "container scalability" are used interchangeably to refer to container scaling.
-> 
 > If you want to scale other functions than UPF, you need to update the manifest templates of the corresponding deployments to declare `resources.requests` and/or `resources.limits` properties for the containers being scaled. This is required because best effort containers cannot be scaled vertically (best effort container is one that has neither _requests_ nor _limits_ are declared in its manifest, which is the default setting in our Open5GS Helm charts). Check the UPF configuration file `open5gs/open5gs-228/charts/open5gs-upf/values.yaml` in your Helm charts (line ~ 220) to see how this can look like.
