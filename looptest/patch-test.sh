@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This file is is for testing purposes
+# This file is for testing purposes only
 
 ##name: site-status.sh
 
