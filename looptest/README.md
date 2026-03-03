@@ -224,9 +224,7 @@ spec
     fallbackScrapeProtocol: PrometheusText0.0.4 # Sets the fallback protocol
 ```
 
-<ul>
-   Below steps are only to be performed if you are updating a running instance of kube-prometheus. You then have to apply the new manifest and force restarting all pods of the stateful set `prometheus-k8s` (the pods are named `prometheus-k8s-<x>`). The steps to take are as follows.
-</ul> 
+Restarting Prometheus as instructed below should only be performed if you are updating a running kube-prometheus instance. Otherwise, skip this step. Apply the new manifest and force restart all pods in the stateful set `prometheus-k8s` (the pods are named `prometheus-k8s-<x>`). The steps are as follows.
 
 * Restarting Prometheus
 
@@ -250,12 +248,12 @@ spec
     ...
     ```
 
-### Retrieve using a browser
+### Retrieve the metric using a browser
 ```
 http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-metrics",namespace="default"}
 ```
 
-### Retrieve using curl on Linux
+### Retrieve the metric using curl on Linux
 
 - directly from command line (here, Open5GS runs in default namespace)
 ```
@@ -275,7 +273,7 @@ amf_sessions=$(curl -s ${PROMETHEUS_ADDR}:9090/api/v1/query -G -d \
      ${query} | jq '.data.result[0].value[1]' | tr -d '"')
 ```
 
-### Retrieve using curl on Windows
+### Retrieve the metric using curl on Windows
 (here, Open5GS runs in default namespace)
 ```
 curl 10.254.186.64:9090/api/v1/query -G -d "query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"default\"}"
