@@ -147,6 +147,7 @@ while $continue ; do
   fi
 
   # scale the target
+  # we assume there's only one instance of the UPF function (one UPF deployment/pod/container running)
 
   podname=$(kubectl get pods -n $NAMESPACE | grep $SCALED_POD_GENERIC_NAME | awk '{print $1}')
 
