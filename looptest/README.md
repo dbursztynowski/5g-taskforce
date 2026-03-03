@@ -226,7 +226,7 @@ spec
 
 * Restarting Prometheus
 
-&ensp;&ensp;Below steps are only to be performed if you are updating a running instance of kube-prometheus. You then have to apply the new manifest and force restarting all pods of the stateful set `prometheus-k8s` (the pods are named `prometheus-k8s-<x>`). The steps to take are as follows.
+> Below steps are only to be performed if you are updating a running instance of kube-prometheus. You then have to apply the new manifest and force restarting all pods of the stateful set `prometheus-k8s` (the pods are named `prometheus-k8s-<x>`). The steps to take are as follows.
 
   - `apply` the new spec
     ```
