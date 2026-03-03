@@ -214,7 +214,7 @@ If you installed kube-prometheus according to our guidelines from [k3s-taskforce
 > [!Note]
 > Open5GS Prometheus targets send metrics only in text format (old protocol version). Prometheus releases starting from 3.0 need to be configured to fallback to this older version. To this end `fallbackScrapeProtocol` of the `scrapeClasses` attribute of the Prometheus Operator has to be set to `PrometheusText0.0.4`. To achieve this (assuming you are using kube-prometheus), first modify the `prometheus-prometheus.yaml` spec section of `Prometheus` CRD in the manifest file adding the `scrapeClasses` attribute with `fallbackScrapeProtocol` set to `PrometheusText0.0.4` as shown below. The details are given below.
 
-* Setting the `scrapeClasses` attribute in the `prometheus-prometheus.yaml` manifest
+* Update the manifest `prometheus-prometheus.yaml` by setting the `scrapeClasses` attribute 
 ```
 spec
   # scrapeClasses to be added
@@ -225,12 +225,12 @@ spec
 ```
 
 <ul>
-   Restarting Prometheus as instructed below should only be performed if you are updating a running kube-prometheus instance. Otherwise, skip this step. Apply the new manifest and force restart all pods in the stateful set `prometheus-k8s` (the pods are named `prometheus-k8s-<x>`). The steps are as follows.
+   Restarting Prometheus as instructed below should only be performed if you are updating a running kube-prometheus instance. Otherwise, skip this step. Apply the updated manifest and force restart all pods in the stateful set `prometheus-k8s` (the pods are named `prometheus-k8s-<x>`). The steps are as follows.
 </ul>
 
 * Restarting Prometheus
 
-  - `apply` the new spec
+  - apply the new spec
     ```
     $ kubectl apply -f prometheus-prometheus.yaml
     ```
