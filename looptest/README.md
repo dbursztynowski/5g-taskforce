@@ -244,12 +244,12 @@ spec
     ...
     ```
 
-### Using a browser
+### Retrieve using a browser
 ```
 http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-metrics",namespace="default"}
 ```
 
-### Using curl on Linux
+### Retrieve using curl on Linux
 
 - directly from command line (here, Open5GS runs in default namespace)
 ```
@@ -269,7 +269,7 @@ amf_sessions=$(curl -s ${PROMETHEUS_ADDR}:9090/api/v1/query -G -d \
      ${query} | jq '.data.result[0].value[1]' | tr -d '"')
 ```
 
-### Using curl on Windows
+### Retrieve using curl on Windows
 (here, Open5GS runs in default namespace)
 ```
 curl 10.254.186.64:9090/api/v1/query -G -d "query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"default\"}"
@@ -277,7 +277,7 @@ curl 10.254.186.64:9090/api/v1/query -G -d "query=amf_session{service=\"open5gs-
 
 # 3. Conclusion
 
-You now know how to monitor the number of UE sessions and how Open5GS functions can be scaled vertically without restarting the pod. Vertical scaling can be important in case of stateful functions, i.e., functions whose state can not be recreated after restarting the pod. This is the case with UPF in Open5GS as UPF pod keeps the information about UE data plane sessions in RAM and not in persistent memory.
+You now know how to monitor the number of UE sessions and how Open5GS functions can be scaled vertically without restarting the pod. Vertical scaling can be important in case of stateful functions, i.e., functions whose state can not be recreated after restarting the pod. This is the case with UPF in Open5GS as UPF pod keeps the information about existing UE data plane sessions in RAM and not in persistent memory.
 
 As a next step, you can realise a small project to design a simple scaler of Open5GS functions based on the number of UE sessions in the network. In the simplest case, it can monitor the amf_session metric and scale the UPF pod. This may correspond to a scenario where an increase in the number of sessions indicates that the data plane load in the UPF will increase soon. Anticipating this, we are adding compute resources to the UPF container to handle this increase. A slightly more complex scenario could involve scaling UPF and AMF together, perhaps with some operation dependency, e.g., requiring that the UPF pod be scaled first, and the AMF pod only after we can confirm that the UPF pod has been scaled successfully. Notice such a control of the sequence of operations can not be achieved with standard Kubernetes autoscalers - Horizontal and Vertical Pod Autoscalers (HPA, VPA).
 
