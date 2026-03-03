@@ -2,7 +2,7 @@
 
 # Version 2025.04.17
 
-# This script reads amf_sessions metric from Open5GS Prometheus, compares it to reference ranges and scales the UPF accordingly.
+# This script reads the amf_sessions metric from Open5GS Prometheus, checks the value against a set of defined ranges, and scales the UPF accordingly.
 
 #############
 # PARAMETERS
@@ -11,7 +11,7 @@
 # Prometheus endpoint (adjust to your environment)
 PROMETHEUS_ADDR="192.168.10.56"
 #PROMETHEUS_ADDR="10.0.0.63"
-# check reachability of Prometheus - TCP/port
+# check the reachability of Prometheus - TCP/port
 nc -z -v -w5 ${PROMETHEUS_ADDR} 9090 > /dev/null 2>&1
 response=$?
 if [[ $response -ne 0 ]] ; then
@@ -19,7 +19,7 @@ if [[ $response -ne 0 ]] ; then
   exit 1
 fi
 
-# Base scan time of the Prometheus in seconds
+# Prometheus base scan time in seconds
 BASE_SCAN_TIME=30
 
 # Scaled pod/container names (generic, without random suffix)
