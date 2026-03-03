@@ -214,9 +214,10 @@ If you installed kube-prometheus according to our guidelines from [k3s-taskforce
 > [!Note]
 > Open5GS Prometheus targets send metrics only in text format and are unable to negotiate the protocol. Prometheus releases starting from 3.0 need to be configured to fallback to this protocol. To this end the `scrapeClasses` attribute of the Prometheus Operator has to be set to `PrometheusText0.0.4`. To achieve this (and assuming you are using kube-prometheus) first modify the `prometheus-prometheus.yaml` spec section of `Prometheus` CRD in the manifest file adding the `scrapeClasses` attribute with `fallbackScrapeProtocol` set to `PrometheusText0.0.4` as shown below. If you are performing this update on a running instance of kube-prometheus than you have to force restarting all pods of the stateful set `prometheus-k8s` with the new specification (the pods are named `prometheus-k8s-<x>`). The details are given below.
 
-* Adding the `scrapeClasses` attribute in the `prometheus-prometheus.yaml` manifest
+* Setting the `scrapeClasses` attribute in the `prometheus-prometheus.yaml` manifest
 ```
 spec
+  # scrapeClasses to be added
   scrapeClasses:
   - name: open5gs-scrape
     default: true
