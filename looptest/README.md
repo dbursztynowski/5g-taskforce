@@ -23,7 +23,7 @@
 If InPlacePodVerticalScaling has already been enabled in your cluster you can skip this section and go directly to [Testing in-place pod scaling](#testing-in-place-scaling-of-pods). This is the case if you installed k3s cluster using our [Ansible guide](https://github.com/dbursztynowski/k3s-taskforce/tree/master/pi-cluster-install). Otherwise follow the rest of this section.
 
 > [!Note]
-> Vertical scaling actually refers to containers, as containers (not pods) are assigned actual resources, such as RAM or CPU. In this guide, the terms "container scalability" and "container scalability" are used interchangeably to refer to container scaling.
+> Pod vertical scaling as a "formal" Kubernetes term actually refers to containers, as containers (not pods) are assigned actual resources, such as RAM or CPU. In this guide, the terms "container scaling" and "pod scaling" are used interchangeably.
 
 ## 1.1. Enable during k3s installation
 
