@@ -226,7 +226,7 @@ spec
 
 * Restarting Prometheus
 
-&nbsp;&nbsp;&nbsp;Below steps are to be performed only if you are updating a running instance of kube-prometheus. You have to force restarting all pods of the stateful set `prometheus-k8s` with the new specification (the pods are named `prometheus-k8s-<x>`).
+&ensp;&ennbsp;Below steps are to be performed only if you are updating a running instance of kube-prometheus. You have to force restarting all pods of the stateful set `prometheus-k8s` with the new specification (the pods are named `prometheus-k8s-<x>`).
 
   - `apply` the new spec
     ```
