@@ -258,7 +258,7 @@ spec
 http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-metrics",namespace="default"}
 ```
 
-### Retrieve the metric using curl on Linux
+### Retrieve the metric using curl in Linux
 
 - directly from command line (here, Open5GS runs in default namespace)
 ```
@@ -278,7 +278,7 @@ amf_sessions=$(curl -s ${PROMETHEUS_ADDR}:9090/api/v1/query -G -d \
      ${query} | jq '.data.result[0].value[1]' | tr -d '"')
 ```
 
-### Retrieve the metric using curl on Windows
+### Retrieve the metric using curl in Windows
 (here, Open5GS runs in default namespace)
 ```
 curl 10.254.186.64:9090/api/v1/query -G -d "query=amf_session{service=\"open5gs-amf-metrics\",namespace=\"default\"}"
