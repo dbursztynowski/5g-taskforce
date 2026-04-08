@@ -20,7 +20,7 @@
    
 # 1. Enabling InPlacePodVerticalScaling
 
-If InPlacePodVerticalScaling has already been enabled in your cluster you can skip this section and go directly to [Testing in-place pod scaling](#testing-in-place-scaling-of-pods). For example, this is the case if you installed k3s cluster using our [Ansible guide](https://github.com/dbursztynowski/k3s-taskforce/tree/master/pi-cluster-install). A quick check if this feature is enabled is to log to the master (control) node of your cluster and run `cat /etc/systemd/system/k3s.service`. If you see `feature-gates=InPlacePodVerticalScaling=true` set for k3s modules as shown below then your cluster is ready for InPlacePodVerticalScaling (for agent nodes, only `kubelet-arg` and `kube-proxy-arg` modules should be configured that way).
+If InPlacePodVerticalScaling has already been enabled in your cluster you can skip this section and go directly to [Testing in-place pod scaling](#testing-in-place-scaling-of-pods). For example, this is the case if you installed k3s cluster using our [Ansible guide](https://github.com/dbursztynowski/k3s-taskforce/tree/master/pi-cluster-install). A quick check if this feature is enabled is to log to the master (control) node of your cluster and run `cat /etc/systemd/system/k3s.service`. If you see `feature-gates=InPlacePodVerticalScaling=true` set for k3s modules as shown below then your cluster is ready for InPlacePodVerticalScaling (for agent nodes, only `kubelet-arg` and `kube-proxy-arg` modules should be configured that way). 
 
 ```
 ExecStart=/usr/local/bin/k3s \
@@ -32,7 +32,7 @@ ExecStart=/usr/local/bin/k3s \
         '--kubelet-arg=feature-gates=InPlacePodVerticalScaling=true' \
         '--kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true' \
 ```
-Otherwise you need to enable the feature - follow the rest of this section.
+Otherwise you need to enable the feature - follow the rest of this section. _Note: The newest release of K8s is claimed to have this option enabled by default, but we have not checked that for k3s, though._
 
 > [!Note]
 > Pod vertical scaling as a "formal" Kubernetes term actually refers to containers, as containers (not pods) are assigned actual resources, such as RAM or CPU. In this guide, the terms "container scaling" and "pod scaling" are used interchangeably.
