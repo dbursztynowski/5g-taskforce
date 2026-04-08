@@ -45,7 +45,7 @@ This step is necessary, because we have to modify several settings to adapt the 
 Throughout this document, it is assumed `open5gs` is the the name of the leaf directory on the working directory path.
 
 > [!NOTE]
-> Although Open5GS version 2.2.9 is available as of April 2026, we work with version 2.2.8. You are free to try the newer release applying the modifications documented in this guide, though. If you encounter any problems, you can easily revert to version 2.2.8.
+> Although Open5GS Helm chart versions 2.2.9 and 2.3.2/3/4 are also available as of April 2026, we work with a tested version 2.2.8. You are free to try a newer release applying the modifications documented in this guide, though. If you encounter any problems, you can easily revert to version 2.2.8.
 
 ```
 $ helm pull oci://registry-1.docker.io/gradiantcharts/open5gs --version 2.2.8
@@ -104,8 +104,10 @@ We use custom image of mongodb container able to run on Raspberry Pi. Another op
           image: dburszty/mongodb-raspberrypi:7.0.14
     ```
     
-  - in file `5g-taskforce/open5gs/5gSA-values-enable-metrics-v228.yaml` set
-    Note: With the configuration given below, 20 User Equipments (UE) are registered in the core network database when the 5G core network is deployed. This registration does not set up a bearer session for the terminals, though. It only corresponds to the network provider registering 20 SIM cards (or user accounts), which subsequently will be used in nNAS (Non-Access Stratum) signalling procedures to certify the terminals attaching to the network. In fact, the mobile network operator registers user accounts in the core databases in a separate process when the accounts are created based on orders form customer services. Here, the _populate_ container is a handy add-on from Gradiant that simplifies the use of Open5GS/UERANSIM during experiments by populating user accounts in the Open5GS core network database in bulk. We do not delve into the details of UE specification, suffices it to say that strings as `999700000000001` are IMSI/SUPI numbers and the pairs `1 111111` terminating each line denote SST (Slice Service Type) and SD (Slice Differentiator), respectively, and together they define S-NSSAI (Single Network Slice Selection Assistance Information) identifier. According to 3GPP standards, Slice Service Type "1" (SST 1) refers to Enhanced Mobile Broadband (eMBB). The two long cryptographic keys (given in HEX notation, both 128 bits long) correspond to the long-term Subscriber Authentication Key (K) and the Derived Operator Code (OPc), respectively (for simplicity, in our case all UEs share one pair of these keys).
+  - in file `5g-taskforce/open5gs/5gSA-values-enable-metrics-v228.yaml` set the following
+
+> [!NOTE]
+> With the configuration given below, 20 User Equipments (UE) are registered in the core network database when the 5G core network is deployed. This registration does not set up a bearer session for the terminals, though. It only corresponds to the network provider registering 20 SIM cards (or user accounts), which subsequently will be used in nNAS (Non-Access Stratum) signalling procedures to certify the terminals attaching to the network. In fact, the mobile network operator registers user accounts in the core databases in a separate process when the accounts are created based on orders form customer services. Here, the _populate_ container is a handy add-on from Gradiant that simplifies the use of Open5GS/UERANSIM during experiments by populating user accounts in the Open5GS core network database in bulk. We do not delve into the details of UE specification, suffices it to say that strings as `999700000000001` are IMSI/SUPI numbers and the pairs `1 111111` terminating each line denote SST (Slice Service Type) and SD (Slice Differentiator), respectively, and together they define S-NSSAI (Single Network Slice Selection Assistance Information) identifier. According to 3GPP standards, Slice Service Type "1" (SST 1) refers to Enhanced Mobile Broadband (eMBB). The name `internet` designates the APN to which UE session will be attached. The two long cryptographic keys (given in HEX notation, both 128 bits long) correspond to the long-term Subscriber Authentication Key (K) and the Operator Code (OP ore OPc), respectively (for simplicity, in our case all UEs share one pair of these keys).
     
 ```
 populate:
@@ -113,7 +115,7 @@ populate:
   image:
     registry: docker.io
     repository: gradiant/open5gs-dbctl
-    ## DB tag: 0.10.3  <== original Gradiant, works only for linux/AMD64
+    ## tag: 0.10.3  <== DB: original Gradiant setting, image not available for arm64, works only for linux/AMD64
     tag: 0.10.2
     pullPolicy: IfNotPresent
   initCommands:
