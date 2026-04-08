@@ -37,7 +37,7 @@ populate:
   - open5gs-dbctl add_ue_with_slice 999700000000019 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA internet 1 111111
   - open5gs-dbctl add_ue_with_slice 999700000000020 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA internet 1 111111
 
-## 4G ====
+## For 4G ====
 hss:
   enabled: false
 mme:
@@ -86,7 +86,7 @@ webui:
 #  ingress:
 #    enabled: false
 
-## 5G ====
+## For 5G ====
 
 amf:
   enabled: true
