@@ -40,6 +40,9 @@ A simplified top-level view of the 5G environment we are going to work with is s
 
 ## Download Open5GS Helm chart
 
+> [!Disclaimer]
+> Although Open5GS version 2.2.9 is available as of April 2026, in this repo we work with version 2.2.8. You are free to try the newer release and follow the modifications documented in this guide, though.
+
 This step is necessary, because we have to modify several settings to adapt the platform for Raspberry Pi.
 
 Throughout this document, it is assumed `open5gs` is the the name of the leaf directory on the working directory path.
@@ -60,9 +63,9 @@ Chart modifications cover three following areas:
 
 ### Modify the charts for mongodb, webui and populate
 
-We use custom image of mongodb container able to run on Raspberry Pi. Another option is to use origunal images, but they would have to be quite old (i.e., versions 4.x while latest mongodb versions come form the range 8.x). 
+We use custom image of mongodb container able to run on Raspberry Pi. Another option is to use origunal images, but they would have to be quite old (i.e., we would need versions 4.x while the latest mongodb versions, as of April 2026, come form the range 8.x). 
 
-- Currently (May 2025) the following changes for mongodb, webui and populate apply:
+- Assumming `open5gs-2.2.8` the following changes for mongodb, webui and populate apply:
   Note: configuration files are specified using YAML, so pay attention to leading spaces if you modify your files by typing the updates directly.
   
   - in file `5gc/open5gs/open5gs-228/charts/mongodb/values.yaml`, line ~105, set
