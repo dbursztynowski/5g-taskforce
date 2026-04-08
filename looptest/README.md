@@ -69,7 +69,7 @@ If you did not enable in-place pod vertical scaling during the installation, fol
 
 1) On server (master) node(s)
 
-- modify file /etc/systemd/system/k3s.service to add feature-gates for apiserver, controller-manager and scheduler as follows
+- modify file /etc/systemd/system/k3s.service to add feature-gates for apiserver, controller-manager, scheduler, kubelet and kube-proxy as follows
 
 (Note: remaining settings visible are not relevant to in place scaling)
 ```
@@ -98,7 +98,7 @@ ubuntu@k3s01:~$ sudo systemctl start k3s.service
 
 (Note: one can enable the feature on a subset of workers, but will need to control the placement of vertically scaled pods.)
 
-- modify file /etc/systemd/system/k3s-agent.service to add feature-gates as follows:
+- modify file /etc/systemd/system/k3s-agent.service to add feature-gates for kubelet and kube-proxy as follows:
 ```
 ubuntu@k3s02:~$ sudo nano /etc/systemd/system/k3s-agent.service
 ...
