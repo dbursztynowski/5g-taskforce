@@ -40,12 +40,12 @@ A simplified top-level view of the 5G environment we are going to work with is s
 
 ## Download Open5GS Helm chart
 
-> [!NOTE]
-> Although Open5GS version 2.2.9 is available as of April 2026, in this repo we work with version 2.2.8. You are free to try the newer release and follow the modifications documented in this guide, though.
-
 This step is necessary, because we have to modify several settings to adapt the platform for Raspberry Pi.
 
 Throughout this document, it is assumed `open5gs` is the the name of the leaf directory on the working directory path.
+
+> [!NOTE]
+> Although Open5GS version 2.2.9 is available as of April 2026, we work with version 2.2.8. You are free to try the newer release applying the modifications documented in this guide, though.
 
 ```
 $ helm pull oci://registry-1.docker.io/gradiantcharts/open5gs --version 2.2.8
