@@ -45,7 +45,7 @@ This step is necessary, because we have to modify several settings to adapt the 
 Throughout this document, it is assumed `open5gs` is the the name of the leaf directory on the working directory path.
 
 > [!NOTE]
-> Although Open5GS version 2.2.9 is available as of April 2026, we work with version 2.2.8. You are free to try the newer release applying the modifications documented in this guide, though. In case of problems you can easily fall back to 2.2.8.
+> Although Open5GS version 2.2.9 is available as of April 2026, we work with version 2.2.8. You are free to try the newer release applying the modifications documented in this guide, though. If you encounter any problems, you can easily revert to version 2.2.8.
 
 ```
 $ helm pull oci://registry-1.docker.io/gradiantcharts/open5gs --version 2.2.8
