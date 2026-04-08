@@ -74,7 +74,11 @@ upf:
     serviceMonitor:
       enabled: true
       additionalLabels: {release: prometheus}
-      
+  # optional, to enable running apps (e.g., tcpdump) as root user in upf containers, uncomment below
+  #containerSecurityContext:
+  #  runAsUser: 0
+  #  runAsGroup: 0
+    
 webui:
   enabled: true
 ## for 2.2.5:
