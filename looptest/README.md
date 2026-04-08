@@ -37,7 +37,7 @@ Otherwise you need to enable the feature - follow the rest of this section.
 > [!Note]
 > The latest version of K8s is claimed to have `InPlacePodVerticalScaling` enabled by default, but we haven't checked if this also applies to k3s.
 > 
-> Pod vertical scaling as a "formal" Kubernetes term actually refers to containers, as containers (not pods) are assigned actual resources, such as RAM or CPU. In this guide, the terms "container scaling" and "pod scaling" are used interchangeably.
+> Pod vertical scaling, as an official Kubernetes term, actually refers to containers, as actual resources like RAM or CPU are assigned to containers (not pods). In this guide, the terms "container scaling" and "pod scaling" are used interchangeably.
 
 ## 1.1. Enable during k3s installation
 
