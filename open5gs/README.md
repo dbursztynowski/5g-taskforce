@@ -1,6 +1,6 @@
 ## This the valid version for the SPIW lab.
 
-# Installing and operating Open5GS and UERANSIM in Raspberry Pi cluster
+# Running Open5GS and UERANSIM in Raspberry Pi cluster
 
 ## Contents
 1. [Introduction](#introduction)
