@@ -20,7 +20,23 @@
    
 # 1. Enabling InPlacePodVerticalScaling
 
-If InPlacePodVerticalScaling has already been enabled in your cluster you can skip this section and go directly to [Testing in-place pod scaling](#testing-in-place-scaling-of-pods). This is the case if you installed k3s cluster using our [Ansible guide](https://github.com/dbursztynowski/k3s-taskforce/tree/master/pi-cluster-install). Otherwise follow the rest of this section.
+If InPlacePodVerticalScaling has already been enabled in your cluster you can skip this section and go directly to [Testing in-place pod scaling](#testing-in-place-scaling-of-pods). For example, this is the case if you installed k3s cluster using our [Ansible guide](https://github.com/dbursztynowski/k3s-taskforce/tree/master/pi-cluster-install). A quick check if this feature is enabled is to log to the master (control) node of your cluster and run `cat /etc/systemd/system/k3s.service`. If you see the following then your cluster is ready for InPlacePodVerticalScaling.
+
+```
+ExecStart=/usr/local/bin/k3s \
+    server \
+        '--write-kubeconfig-mode' \
+        '644' \
+        '--disable' \
+        'servicelb' \
+        '--disable-cloud-controller' \
+        '--kube-apiserver-arg=feature-gates=InPlacePodVerticalScaling=true' \
+        '--kube-controller-manager-arg=feature-gates=InPlacePodVerticalScaling=true' \
+        '--kube-scheduler-arg=feature-gates=InPlacePodVerticalScaling=true' \
+        '--kubelet-arg=feature-gates=InPlacePodVerticalScaling=true' \
+        '--kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true' \
+```
+Otherwise the feature has to be enabled - follow the rest of this section.
 
 > [!Note]
 > Pod vertical scaling as a "formal" Kubernetes term actually refers to containers, as containers (not pods) are assigned actual resources, such as RAM or CPU. In this guide, the terms "container scaling" and "pod scaling" are used interchangeably.
