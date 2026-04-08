@@ -268,8 +268,8 @@ Notice there are also other UERANSIM tools available in `ueransim-gnb-ues` Pod i
 
 Subsequent groups (bulks) of UEs can be created in the form of distinct Helm releases as shown below. 
 
-- Note 1: More groups can be created in a similar way, but the total number of connected UEs must not exceed the number of UEs declared (populated) in Open5$GS core (20 if you used our template of container _populate_ shown in this [section](#modifications-in-mongodb-webui-and-populate-charts)).
-- Note 2: Remember that MSISDN of our UEs start from the value `0000000001`, and always keep track of the MSISDNs taken by existing UEs and free MSISDNs when the UEs get connected and disconnected from the network.
+- Note 1: More groups can be created in a similar way, but the total number of connected UEs must not exceed the number of UEs declared (populated) in Open5$GS core (initially, there are 20 UEs if you used our template of container _populate_ shown in this [section](#modifications-in-mongodb-webui-and-populate-charts)).
+- Note 2: Remember that the MSISDN numbers of our UEs start from the value `0000000001` and can take consecutive numbers. Always keep track of the MSISDN numbers occupied by existing UEs and remove the corresponding MSISDN numbers from this record when UEs are removed (disconnected) from the network. In this way you will always work with a continuous range of MSISDN numbers which will be easier to manage.
 ```
 $ helm install ueransim-ues-additional oci://registry-1.docker.io/gradiant/ueransim-ues \
   --set gnb.hostname=ueransim-gnb --set count=5 --set initialMSISDN="0000000005"
