@@ -10,7 +10,7 @@
    
 3. [Testing in-place pod scaling](./README.md#2-testing-in-place-pod-scaling)
    
-   2.1 [Scale a simple test pod](./README.md#21-scale-a-simple-test-pod)
+   2.1 [Scale a test pod](./README.md#21-scale-a-test-pod)
 
    2.2 [Scale Open5GS UPF function](./README.md#22-scale-open5gs-upf-function)
 
@@ -117,7 +117,7 @@ ubuntu@k3s02:~$ sudo systemctl start k3s-agent.service
 
 # 2. Testing in-place pod scaling
 
-## 2.1 Scale a simple test pod
+## 2.1 Scale a test pod
 
 In place pod scaling becomes increasingly better documented than a time ago with official description available [here](https://kubernetes.io/docs/tasks/configure-pod-container/resize-container-resources/). The example provided below derives from an earlier version of that page.
 
