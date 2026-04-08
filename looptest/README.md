@@ -32,9 +32,11 @@ ExecStart=/usr/local/bin/k3s \
         '--kubelet-arg=feature-gates=InPlacePodVerticalScaling=true' \
         '--kube-proxy-arg=feature-gates=InPlacePodVerticalScaling=true' \
 ```
-Otherwise you need to enable the feature - follow the rest of this section. _Note: The newest release of K8s is claimed to have this option enabled by default, but we have not checked that for k3s, though._
+Otherwise you need to enable the feature - follow the rest of this section.
 
 > [!Note]
+> The newest release of K8s is claimed to have this option enabled by default, but we have not checked that for k3s, though.
+> 
 > Pod vertical scaling as a "formal" Kubernetes term actually refers to containers, as containers (not pods) are assigned actual resources, such as RAM or CPU. In this guide, the terms "container scaling" and "pod scaling" are used interchangeably.
 
 ## 1.1. Enable during k3s installation
