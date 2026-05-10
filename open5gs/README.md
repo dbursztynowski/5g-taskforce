@@ -21,7 +21,7 @@
 
 # Introduction
 
-This document describes how to install and run Open5GS 5G core network and UERANSIM RAN emulator using Helm charts from Gradiant on Raspberry Pi. The original reference page can be found [here](https://gradiant.github.io/5g-charts/open5gs-ueransim-gnb.html), but it cannot be used directly, as some adaptations are necessary to make the platform work on ARM64/Raspberry Pi.
+This document describes how to install and run Open5GS 5G core network and UERANSIM RAN emulator using Helm charts from Gradiant on Raspberry Pi. The original reference page can be found [here](https://gradiant.github.io/5g-charts/open5gs-ueransim-gnb.html). It cannot be used directly in our case, as some adaptations are necessary to make the platform work on ARM64/Raspberry Pi. Nevertheless, you are encouraged to take a look at it. Hopefully you will find it helpful anyway.
 
 The main results of this lab are a working instance of the Open5GS and UERANSIM platform and the ability to manage UEs in the network by attaching groups of UEs to the network and detaching such gropus from the network. In our project, we will be attaching/detaching the UEs to trigger the UPF CPU scaling operation (UPF is the User Plane Function) in Open5GS core network. Also covered in this guide is traffic generation by the UEs although this skill is not mandatory to complete the lab (well, `ping` command can be used to verify that all works fine on the network level).
 
