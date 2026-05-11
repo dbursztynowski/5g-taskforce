@@ -17,7 +17,8 @@
    - [Generate UE data plane traffic](#generate-ue-data-plane-traffic)
    - [Connect additional UEs to the network (bulk attach)](#connect-additional-ues-to-the-network-bulk-attach)
    - [Bulk disconnection (detachement) of additional connected UEs](#bulk-disconnection-detachement-of-additional-connected-ues)
-5. [Next steps](#next-steps)
+5. [Troubleshooting](#troubleshooting)
+6. [Next steps](#next-steps)
 
 # Introduction
 
@@ -109,7 +110,7 @@ We use custom image of mongodb container able to run on Raspberry Pi. Another op
   - in file `5g-taskforce/open5gs/5gSA-values-enable-metrics-v228.yaml` set the following
 
 > [!NOTE]
-> With the configuration given below, 20 User Equipments (UE) are registered in the core network database when the 5G core network is deployed. This registration does not set up a bearer session for the terminals, though. It only corresponds to the network provider registering 20 SIM cards (or user accounts), which subsequently will be used in nNAS (Non-Access Stratum) signalling procedures to certify the terminals attaching to the network. In fact, the mobile network operator registers user accounts in the core databases in a separate process when the accounts are created based on orders form customer services. Here, the _populate_ container is a handy add-on from Gradiant that simplifies the use of Open5GS/UERANSIM during experiments by populating user accounts in the Open5GS core network database in bulk. We do not delve into the details of UE specification, suffices it to say that strings as `999700000000001` are IMSI/SUPI numbers and the pairs `1 111111` terminating each line denote SST (Slice Service Type) and SD (Slice Differentiator), respectively, and together they define S-NSSAI (Single Network Slice Selection Assistance Information) identifier. According to 3GPP standards, Slice Service Type "1" (SST 1) refers to Enhanced Mobile Broadband (eMBB). The name `internet` designates the APN to which UE session will be attached. The two long cryptographic keys (given in HEX notation, both 128 bits long) correspond to the long-term Subscriber Authentication Key (K) and the Operator Code (OP or OPc), respectively (for simplicity, in our case all UEs share one pair of these keys).
+> With the configuration given below, 20 User Equipments (UE) are registered in the core network database when the 5G core network is deployed. This registration does not set up a bearer session for the terminals, though. It only corresponds to the network provider registering 20 SIM cards (orsubscriber accounts), which subsequently will be used in the NAS (Non-Access Stratum) signalling procedures to certify the terminals attaching to the network. In fact, the mobile network operator registers subscriber accounts in the core databases in a separate process when the accounts are created based on orders form the customer services. Here, the _populate_ container is a handy add-on from Gradiant that simplifies the use of Open5GS/UERANSIM during experiments by populating user accounts in the Open5GS core network database in bulk. We do not delve into the details of UE specification, suffices it to say that strings as `999700000000001` are IMSI/SUPI numbers; and the pairs `1 111111` terminating each line denote SST (Slice Service Type) and SD (Slice Differentiator), respectively, and together they define S-NSSAI (Single Network Slice Selection Assistance Information) identifier. According to 3GPP standards, Slice Service Type "1" (SST 1) refers to Enhanced Mobile Broadband (eMBB). The name `internet` designates the APN to which UE session will be attached. The two long cryptographic keys (given in HEX notation, both 128 bits long) correspond to the long-term Subscriber Authentication Key (K) and the Operator Code (OP or OPc), respectively (for simplicity, in our case all UEs share one pair of these keys).
     
 ```
 populate:
@@ -252,16 +253,16 @@ root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# chmod g+x nr-binder
 ```
 
 * using Iperf in client mode
-  - below, we use a public Iperf server (it may happen to be busy on a given port, then try another port or server)
+  - below, we use a public Iperf server (it may happen to be busy on a given port, then try another port or another server)
   - the list of public Iperf servers: https://iperf.fr/iperf-servers.php
   - you can install Ipefr server in your cluster, and even set link metrics as delay or bandwidth using the tc utility
-  - example docker image with Iperf for aarch64 (prepare a deployment manifest yourself): https://hub.docker.com/r/networkstatic/iperf3
+  - example docker image with Iperf for aarch64 is here: https://hub.docker.com/r/networkstatic/iperf3 (you have to prepare a deployment manifest yourself)
 ```
-# unsuccessful run (server busy)
+# public Iperf server: unsuccessful run (server busy)
 root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# ./nr-binder 10.45.0.5 iperf3 -c speedtest.serverius.net -i 1 -t 20 -p 5002
 iperf3: error - the server is busy running a test. try again later
 
-# successful run (another server)
+# public Iperf server: successful run (another server)
 root@ueransim-gnb-ues-5bdfb48dc9-m24rp:/usr/local/bin# ./nr-binder 10.45.0.5 iperf3 -c paris.bbr.iperf.bytel.fr -i 1 -t 20 -p 9239
 Connecting to host paris.bbr.iperf.bytel.fr, port 9239
 [  5] local 10.45.0.5 port 54847 connected to 5.51.3.41 port 9239
@@ -282,13 +283,14 @@ Notice there are also other UERANSIM tools available in `ueransim-gnb-ues` Pod i
 Subsequent groups (bulks) of UEs can be created in the form of distinct Helm releases as shown below. 
 
 - Note 1: More groups can be created in a similar way, but the total number of connected UEs must not exceed the number of UEs declared (populated) in Open5$GS core (initially, there are 20 UEs if you used our template of container _populate_ shown in this [section](#modifications-in-mongodb-webui-and-populate-charts)).
-- Note 2: Remember that the MSISDN numbers of our UEs start from the value `0000000001` and can take consecutive numbers. Always keep track of the MSISDN numbers occupied by existing UEs and remove the corresponding MSISDN numbers from this record when UEs are removed (disconnected) from the network. In this way you will always work with a continuous range of MSISDN numbers which will be easier to manage.
+- Note 2: Remember that the MSISDN numbers of our UEs start from the value `0000000001` and can take consecutive numbers. Always **keep track of the MSISDN numbers taken** by existing UEs and remove the corresponding MSISDN numbers from your record when those UEs are removed (disconnected) from the network. In this way you will always work with a continuous range of MSISDN numbers which will be easier to manage.
+
+In the following example, we create Helm release named `ueransim-ues-additional` that will deploy a separate deployment/container implementing a group of UEs. This deployment will be named `ueransim-ues-additional`, so after its Helm release. Its UEs will be connected to the existing gNB named `ueransim-gnb` (`--set gnb.hostname=ueransim-gnb`) implemented by a deployment with the same name `ueransim-gnb`. This UE group will contain 5 additional UEs (`--set count=5`). We assume MSISDN numbers from 0000000001 to 0000000004 are taken, so the new group will occupy numbers starting from 0000000005. The first of the additional UEs will be assigned MSISDN `0000000005` (`initialMSISDN="0000000005"`) and consecutive UEs will receive subsequent MSISDN numbers. Mind that you must not exceed the set of subscribers populated when open5gs was deployed. If you need more subscribers you will have to populate them manually as described [here](https://gradiant.github.io/5g-charts/open5gs-ueransim-gnb.html)
+
 ```
 $ helm install ueransim-ues-additional oci://registry-1.docker.io/gradiant/ueransim-ues \
   --set gnb.hostname=ueransim-gnb --set count=5 --set initialMSISDN="0000000005"
 ```
-
-In this example, we create Helm release named `ueransim-ues-additional` that will deploy a separate deployment/container implementing a group of UEs. This deployment will be named `ueransim-ues-additional`, so after its Helm release. Its UEs will be connected to the existing gNB named `ueransim-gnb` (`--set gnb.hostname=ueransim-gnb`) implemented by a deployment with the same name `ueransim-gnb`. This UE group will contain 5 additional UEs (`--set count=5`). The first of the additional UEs will be assigned MSISDN `0000000005` (`initialMSISDN="0000000005"`) and (according the population rules of the `populate` container) consecutive UEs will receive subsequent MSISDN numbers.
 
 You can execute commands related to particular UEs (respective TUN interfaces) the same way as before for the initial set of UEs.
 
@@ -301,6 +303,10 @@ $ helm uninstall ueransim-ues-additional
 ```
 
 This will detach all UEs emulated by the uninstalled Helm release from the network (respective deployment/pod is deleted under the hood). In a real network, it would correspond to multiple terminals undergoing network detach procedure (e.g., switching off or entering airplane mode). This procedure does not have impact on the initial setup so gNB and the initial group of UEs remain intact.
+
+## Troubleshooting
+
+Our platform serves educational purposes and as for now has been used for relatively simple experiments. Also, the installation procedure is not too complicated, and can be easily repeated if needed. On the other hand, depending on your environment and the way you use the cluster (e.g., the cluster may be shut down for some reason and rebooted later) misbehaviors of UERANSIM or Open5GS are possible (and do happen from time to time). Considering cost/time tradeoffs, we have found that reinstalling UERANSIM or UERANSIM and Open5GS (uninstalling and installing via Helm) is an effective way to deal with the abnormal behavior. We recommend this approach in case of problems.
 
 ## Next steps
 
