@@ -228,9 +228,11 @@ Enter container shell and run ping command and curl after that:
 
 ```
 $ kubectl exec -it deployment/ueransim-gnb-ues -- /bin/bash
+
+# running the ping command
 > ping -I uesimtun0 wp.pl
 ...
-> # with curl, use the flag --interface, not -I
+# generating HTTP query with curl; use the flag --interface, not -I
 > curl -k --interface uesimtun0 https://pw.ed.pl
 ...
 ```
