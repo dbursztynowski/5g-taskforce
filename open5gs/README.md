@@ -310,7 +310,7 @@ This will detach all UEs emulated by the uninstalled Helm release from the netwo
 
 ## Troubleshooting
 
-Our platform serves educational purposes and as for now has been used for relatively simple experiments. Also, the installation procedure is not too complicated, and can be easily repeated if needed. On the other hand, depending on your environment and the way you use the cluster (e.g., the cluster may be shut down for some reason and rebooted later) misbehaviors of UERANSIM or Open5GS are possible (and do happen from time to time). Considering cost/time tradeoffs, we have found that reinstalling UERANSIM or both UERANSIM and Open5GS (uninstalling and installing via Helm) is an effective way to deal with the abnormal behavior. We recommend this approach in case of problems.
+Our platform serves educational purposes and as for now has been used for relatively simple experiments. Also, the installation procedure is rather straightforward, and can be quickly repeated if needed. On the other hand, depending on your environment and the way you use the cluster (e.g., the cluster may be shut down for some reason and rebooted later) misbehaviors of UERANSIM or Open5GS are possible (and do happen from time to time). Considering cost/time tradeoffs, we have found that reinstalling UERANSIM or both UERANSIM and Open5GS (uninstalling and installing via Helm) is an effective way to deal with the abnormal behavior. We recommend this approach in case of problems.
 
 ## Next steps
 
