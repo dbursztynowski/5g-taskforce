@@ -230,7 +230,7 @@ As an example, we read the number of active UE sessions registered in the AMF fu
 If you installed kube-prometheus according to our guidelines from [k3s-taskforce](https://github.com/dbursztynowski/k3s-taskforce) then you can skip this subsection. 
 
 > [!Note]
-> Open5GS Prometheus targets send metrics only in text format (old protocol version). Prometheus releases starting from 3.0 need to be configured to fallback to this older version. To this end `fallbackScrapeProtocol` of the `scrapeClasses` attribute of the Prometheus Operator has to be set to `PrometheusText0.0.4`. To achieve this (assuming you are using kube-prometheus), first modify the `prometheus-prometheus.yaml` spec section of `Prometheus` CRD in the manifest file adding the `scrapeClasses` attribute with `fallbackScrapeProtocol` set to `PrometheusText0.0.4` as shown below. The details are given below.
+> Open5GS Prometheus targets send metrics only in text format (old protocol version). Prometheus releases starting from 3.0 need to be explicitly configured to fallback to this older version. To this end `fallbackScrapeProtocol` property of the `scrapeClasses` attribute of the Prometheus Operator has to be set to `PrometheusText0.0.4`. To achieve this (assuming you are using kube-prometheus), first modify the `prometheus-prometheus.yaml` spec section of `Prometheus` CRD in the manifest file adding the `scrapeClasses` attribute with `fallbackScrapeProtocol` set to `PrometheusText0.0.4` as shown below. The details are given below.
 
 * Update the manifest `prometheus-prometheus.yaml` by setting the `scrapeClasses` attribute 
 ```
