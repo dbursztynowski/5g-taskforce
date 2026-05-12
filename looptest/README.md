@@ -175,6 +175,9 @@ kubectl patch -n $NAMESPACE pod $podname --subresource resize --patch \
 
 Below, it is assumed that all components (Open5GS/UERANSIM and the monitoring platform) have been installed following our instructions. Otherwise some details may differ and adaptations may be required.
 
+> [!Note]
+> Below, in the kubectl command, actual name of UPF pod is used (open5gs-upf-8444fdb48d-sv26l in the example). You will have to replace it with the name of your instance. Writing the controller for the project, it will be useful to derive the name programatically. A simple method relying on the kubectl command again would be: (1) retrieve pods from your 5G demo namespace: `kubectl get pods -n NAMESPACE` and (2) filter out pod name (string) prefixed 'open5gs-ups'.
+
 <pre>
 # get pods to have their names displayed
 
