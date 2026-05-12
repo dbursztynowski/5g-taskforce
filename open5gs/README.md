@@ -286,17 +286,17 @@ Notice there are also other UERANSIM tools available in `ueransim-gnb-ues` Pod i
 
 Subsequent groups (bulks) of UEs can be created in the form of distinct Helm releases as shown below. 
 
-- Note 1: More groups can be created in a similar way, but the total number of connected UEs must not exceed the number of UEs declared (populated) in Open5$GS core (initially, there are 20 UEs if you used our template of container _populate_ shown in this [section](#modifications-in-mongodb-webui-and-populate-charts)).
+- Note 1: More groups can be created in a similar way, but the total number of connected UEs must not exceed the number of UEs declared (populated) in Open5GS core (initially, there are 20 UEs if you used our template of container _populate_ shown in this [section](#modifications-in-mongodb-webui-and-populate-charts)).
 - Note 2: Remember that the MSISDN numbers of our UEs start from the value `0000000001` and can take consecutive numbers. Always **keep track of the MSISDN numbers taken** by existing UEs and remove the corresponding MSISDN numbers from your record when those UEs are removed (disconnected) from the network. In this way you will always work with a continuous range of MSISDN numbers which will be easier to manage.
 
-In the following example, we create Helm release named `ueransim-ues-additional` that will deploy a separate deployment/container implementing a group of UEs. This deployment will be named `ueransim-ues-additional`, so after its Helm release. Its UEs will be connected to the existing gNB named `ueransim-gnb` (`--set gnb.hostname=ueransim-gnb`) implemented by a deployment with the same name `ueransim-gnb`. This UE group will contain 5 additional UEs (`--set count=5`). We assume MSISDN numbers from 0000000001 to 0000000004 are taken, so the new group will occupy numbers starting from 0000000005. The first of the additional UEs will be assigned MSISDN `0000000005` (`initialMSISDN="0000000005"`) and consecutive UEs will receive subsequent MSISDN numbers. Mind that you must not exceed the set of subscribers populated when open5gs was deployed. If you need more subscribers you will have to populate them manually as described [here](https://gradiant.github.io/5g-charts/open5gs-ueransim-gnb.html)
+In the following example, we create Helm release named `ueransim-ues-additional` that will deploy a separate deployment implementing a group of UEs. This deployment will be named `ueransim-ues-additional` (same as the release). Its UEs will be connected to the existing gNB named `ueransim-gnb` (parameter `--set gnb.hostname=ueransim-gnb`) implemented by a deployment with the same name `ueransim-gnb`. This UE group will contain 5 additional UEs (`--set count=5`). We assume MSISDN numbers from 0000000001 to 0000000004 are taken, so the new group will occupy numbers starting from 0000000005. The first of the additional UEs will be assigned MSISDN `0000000005` (`initialMSISDN="0000000005"`) and consecutive UEs will receive subsequent MSISDN numbers. Mind that you must not exceed the set of subscribers populated when open5gs was deployed. If you need more subscribers you will have to populate them manually as described [here](https://gradiant.github.io/5g-charts/open5gs-ueransim-gnb.html)
 
 ```
 $ helm install ueransim-ues-additional oci://registry-1.docker.io/gradiant/ueransim-ues \
   --set gnb.hostname=ueransim-gnb --set count=5 --set initialMSISDN="0000000005"
 ```
 
-You can execute commands related to particular UEs (respective TUN interfaces) the same way as before for the initial set of UEs.
+You can execute commands related to particular UEs (respective TUN interfaces) the same way as before for the initial set of UEs (need to specify appropriate deployment in the kubectl command).
 
 ## Bulk disconnection (detachement) of additional connected UEs
 
