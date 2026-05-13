@@ -265,7 +265,7 @@ spec
 
 ### Retrieve the metric using a browser
 
-Metrics can be retrieved using HTTP protocol. Here is a query example to be used in a browser:
+Metrics can be retrieved using HTTP protocol. Below is a query example to be used in a browser (here, Open5GS runs in `default` namespace):
 
 ```
 http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-metrics",namespace="default"}
@@ -273,7 +273,7 @@ http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-me
 
 ### Retrieve the metric using curl in Linux
 
-- directly from command line (here, Open5GS runs in default namespace)
+- directly from command line
 ```
 # complete record
 curl 10.254.186.64:9090/api/v1/query -G -d 'query=amf_session{service="open5gs-amf-metrics",namespace="default"}' | jq
