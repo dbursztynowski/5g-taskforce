@@ -242,11 +242,11 @@ spec
     fallbackScrapeProtocol: PrometheusText0.0.4 # Sets the fallback protocol
 ```
 
+* Restarting Prometheus
+
 <ul>
    Restarting Prometheus as instructed below should only be performed if you are updating a running kube-prometheus instance. Otherwise, skip this step. Apply the updated manifest and force restart all pods in the stateful set `prometheus-k8s` (the pods are named `prometheus-k8s-X`). The steps are as follows.
 </ul>
-
-* Restarting Prometheus
 
   - apply the new spec
     ```
