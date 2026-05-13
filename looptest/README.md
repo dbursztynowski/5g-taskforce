@@ -264,6 +264,9 @@ spec
     ```
 
 ### Retrieve the metric using a browser
+
+Metrics can be retrieved using HTTP protocol. Here is a query example to be used in a browser:
+
 ```
 http://10.254.186.64:9090/api/v1/query?query=amf_session{service="open5gs-amf-metrics",namespace="default"}
 ```
