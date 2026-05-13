@@ -221,7 +221,7 @@ pod/<font color="#26A269"><b>open5gs-upf-8444fdb48d-sv26l</b></font> patched
 <b>}</b>
 <font color="#26A269"><b>ubuntu@labs</b></font>:<font color="#12488B"><b>~/labs/5gtask</b></font>$</pre>
 
-## 2.3 Retrieve the number of active UE sessions in Open5G core network
+## 2.3 Retrieve the number of active UE sessions in Open5GS core network
 
 As an example, we read the number of active UE sessions registered in the AMF function. Prometheus scrapes this metric from the AMF target every 15 seconds. We read it by querying Prometheus. Below, several examples of reading metric value are given. They can be adapted to implement more complex control loops, e.g., in bash or Python.
 
