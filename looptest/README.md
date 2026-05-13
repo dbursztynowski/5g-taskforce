@@ -227,10 +227,10 @@ As an example, we read the number of active UE sessions registered in the AMF fu
 
 ### Enable Prometheus to scrape Open5GS metrics
 
-If you installed kube-prometheus according to our guidelines from [k3s-taskforce](https://github.com/dbursztynowski/k3s-taskforce) then you can skip this subsection. 
+Skip this subsection if you installed kube-prometheus according to our guidelines from [k3s-taskforce](https://github.com/dbursztynowski/k3s-taskforce). 
 
 > [!Note]
-> Open5GS Prometheus targets send metrics only in text format (old protocol version). Prometheus releases starting from 3.0 need to be explicitly configured to fallback to this older version. To this end `fallbackScrapeProtocol` property of the `scrapeClasses` attribute of the Prometheus Operator has to be set to `PrometheusText0.0.4`. To achieve this (assuming you are using kube-prometheus), first modify the `prometheus-prometheus.yaml` spec section of `Prometheus` CRD in the manifest file adding the `scrapeClasses` attribute with `fallbackScrapeProtocol` set to `PrometheusText0.0.4` as shown below. The details are given below.
+> Open5GS Prometheus targets send metrics only in text format (old protocol version). Prometheus releases starting from 3.0 need to be explicitly configured to fallback to this older version. To this end `fallbackScrapeProtocol` property of the `scrapeClasses` attribute of the Prometheus Operator has to be set to `PrometheusText0.0.4`. To achieve this, first update the `prometheus-prometheus.yaml` spec section of `Prometheus` CRD in the manifest file adding the `scrapeClasses` attribute with `fallbackScrapeProtocol` set to `PrometheusText0.0.4` and then restart Prometheus. The details are given below.
 
 * Update the manifest `prometheus-prometheus.yaml` by setting the `scrapeClasses` attribute 
 ```
@@ -242,12 +242,7 @@ spec
     fallbackScrapeProtocol: PrometheusText0.0.4 # Sets the fallback protocol
 ```
 
-<ul>
-   Restarting Prometheus as instructed below should only be performed if you are updating a running kube-prometheus instance. Otherwise, skip this step. Apply the updated manifest and force restart all pods in the stateful set `prometheus-k8s` (the pods are named `prometheus-k8s-X`). The steps are as follows.
-</ul>
-
-* Restarting Prometheus
-
+* Restarting Prometheus (perform this step only if you are updating a running kube-prometheus instance, otherwise skip it)
   - apply the new spec
     ```
     $ kubectl apply -f prometheus-prometheus.yaml
@@ -260,7 +255,7 @@ spec
     $ kubectl -n monitoring rollout restart statefulset/prometheus-k8s
     ```
 
-    - option 2: delete manually all pods of the stateful set `prometheus-k8s` (in our case there will be one pod)
+    - option 2: delete manually all pods of the stateful set `prometheus-k8s` so they are recreated (in our case there will be one pod)
      
     ```
     $ kubectl delete -n monitoring pod prometheus-k8s-0
